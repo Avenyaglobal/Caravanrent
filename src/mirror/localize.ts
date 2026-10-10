@@ -70,6 +70,7 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     const next = rewriteHref(decode(href), lang);
     return next ? `href="${next}"` : full;
   });
+  out = out.replace(/<link\b[^>]*rel="(?:canonical|shortlink)"[^>]*>/gi, "");
 
   out = out.replace(/<a\b([^>]*)>/g, (full, attrs: string) => {
     const href = attrs.match(/href="([^"]*)"/)?.[1] ?? "";

@@ -15,6 +15,7 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#1F4A38" },
+      { name: "google-site-verification", content: "YIu2MBC0QYyj8EiTDEslr3a_EUJO9s_e_GKQOzQQy2o" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },

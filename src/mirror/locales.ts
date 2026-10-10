@@ -37,7 +37,7 @@ export function pagePath(lang: Lang, slug = "") {
   return `${prefix}/${clean}`;
 }
 
-export const siteOrigin = "https://caravanrent-alicante.com";
+export const siteOrigin = "https://www.caravanrent-alicante.com";
 
 export const pageMeta: Record<Lang, { title: string; description: string }> = {
   es: {

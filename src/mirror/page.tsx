@@ -90,6 +90,21 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
 
 const fixes = `
 .mirror-page { overflow-x: clip; }
+.mirror-page .site-download {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1000008;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #127384;
+  color: #fff;
+  border-radius: 999px;
+  font: 700 15px/1 "Fira Sans", sans-serif;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+}
 .mirror-page img { max-width: 100%; height: auto; }
 .mirror-page iframe { max-width: 100%; }
 .mirror-page .blog-section { padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -524,16 +539,38 @@ export function mirrorHead(lang: Lang, slug = "") {
   const meta = pageCopy[clean]?.[lang] ?? pageMeta[lang];
   const path = pagePath(lang, clean);
   const hrefLang: Record<Lang, string> = { es: "es", en: "en", fr: "fr", de: "de", ru: "ru", ua: "uk" };
+  const canonical = `${siteOrigin}${path === "/" ? "/" : path}`;
+  const business = !clean
+    ? {
+        "@context": "https://schema.org",
+        "@type": "AutoRental",
+        name: "Caravan Rent Alicante",
+        url: `${siteOrigin}/`,
+        image: `${siteOrigin}/og.jpg`,
+        telephone: "+34607223726",
+        email: "info@caravanrent-alicante.com",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Calle La Sagra 92, Las Fuentes II",
+          addressLocality: "Torrevieja",
+          postalCode: "03185",
+          addressRegion: "Alicante",
+          addressCountry: "ES",
+        },
+        areaServed: ["Torrevieja", "Alicante", "Costa Blanca"],
+      }
+    : null;
   return {
     meta: [
       { title: meta.title },
       { name: "description", content: meta.description },
       { property: "og:title", content: meta.title },
       { property: "og:description", content: meta.description },
+      { property: "og:url", content: canonical },
       { property: "og:locale", content: lang === "en" ? "en_GB" : lang === "ua" ? "uk_UA" : `${lang}_${lang.toUpperCase()}` },
     ],
     links: [
-      { rel: "canonical", href: `${siteOrigin}${path === "/" ? "/" : path}` },
+      { rel: "canonical", href: canonical },
       ...languages.map((code) => ({
         rel: "alternate",
         hrefLang: hrefLang[code],
@@ -548,6 +585,9 @@ export function mirrorHead(lang: Lang, slug = "") {
       { rel: "stylesheet", href: themeCss },
       ...(vehicleCss[clean] ? [{ rel: "stylesheet", href: vehicleCss[clean] }] : []),
     ],
+    scripts: business
+      ? [{ type: "application/ld+json", children: JSON.stringify(business) }]
+      : [],
   };
 }
 
@@ -565,6 +605,9 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
     <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang}>
       <style dangerouslySetInnerHTML={{ __html: extraCss + fixes }} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
+      <a className="site-download" href="/caravanrent-github.zip" download>
+        Скачать для GitHub
+      </a>
     </div>
   );
 }
