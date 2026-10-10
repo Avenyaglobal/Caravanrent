@@ -121,6 +121,21 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     return `<ul class="elementor-icon-list-items elementor-inline-items">${inner}${langItem}</ul>`;
   });
 
+  const cities: Record<Lang, string> = {
+    es: "Recogida en Alicante, Torrevieja y Elche",
+    en: "Pickup in Alicante, Torrevieja and Elche",
+    fr: "Prise en charge à Alicante, Torrevieja et Elche",
+    de: "Abholung in Alicante, Torrevieja und Elche",
+    ru: "Выдача в Аликанте, Торревьехе и Эльче",
+    ua: "Видача в Аліканте, Торрев'єсі та Ельче",
+  };
+  if (!slug) out = out.replace("</h1>", `</h1><p class="cr-cities">${cities[lang]}</p>`);
+  for (const name of ["Ford - Weinsberg CaraSuite 650 MEG", "Fiat-McLouis MC4 379", "Peugeot - Chausson 724 EtapeLine"]) {
+    out = out.replaceAll(`${name}</figcaption>`, `${name}<br><span class="cr-cities">${cities[lang]}</span></figcaption>`);
+  }
+  out = out.replace(/<div id="(faq_\d+)" class="card-collapse[^"]*">/g, `<div id="$1" class="card-collapse show" style="display:block">`);
+  out = out.replace(/<div id="faq_\d+" class="card-collapse show" style="display:block"><p>/g, (full) => full.replace("<p>", `<p style="display:block;color:#201f1d;font-size:16px;line-height:1.45;margin:12px 0 0">`));
+
   const maps = "https://www.google.com/maps/dir/?api=1&destination=Calle%20La%20Sagra%2092%2C%20Torrevieja";
   out = out.replaceAll('href="tel:+34 607 223 726"', 'href="tel:+34607223726"');
   out = out.replaceAll('href="tel:(+1) 88888 88888"', 'href="tel:+34607223726"');

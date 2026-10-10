@@ -41,9 +41,9 @@ export const siteOrigin = "https://www.caravanrent-alicante.com";
 
 export const pageMeta: Record<Lang, { title: string; description: string }> = {
   es: {
-    title: "Alquiler de autocaravanas en Alicante y Torrevieja | Caravan Rent",
+    title: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche | Caravan Rent",
     description:
-      "Alquiler de autocaravanas en Torrevieja y Alicante. Vehículos nuevos, kilometraje ilimitado en España y Starlink incluido.",
+      "Alquiler de autocaravanas en Alicante, Torrevieja y Elche. Vehículos nuevos, kilometraje ilimitado en España y Starlink incluido.",
   },
   en: {
     title: "Motorhome rental in Alicante and Torrevieja | Caravan Rent",
@@ -82,11 +82,11 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   Blog: { es: "Blog", fr: "Blog", de: "Blog", ru: "Блог", ua: "Блог" },
   "\u0421ontacts": { es: "Contacto", fr: "Contact", de: "Kontakt", ru: "Контакты", ua: "Контакти" },
   "100% Trusted caravan rental platform": {
-    es: "Plataforma de alquiler de autocaravanas 100% de confianza",
-    fr: "Plateforme de location de camping-cars 100 % de confiance",
-    de: "100 % vertrauenswürdige Wohnmobilvermietung",
-    ru: "Надёжная платформа аренды автодомов",
-    ua: "Надійна платформа оренди автодомів",
+    es: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche",
+    fr: "Location de camping-car à Alicante, Torrevieja et Elche",
+    de: "Wohnmobil mieten in Alicante, Torrevieja und Elche",
+    ru: "Аренда автодомов в Аликанте, Торревьехе и Эльче",
+    ua: "Оренда автодомів в Аліканте, Торрев'єсі та Ельче",
   },
   "Your travel story": { es: "Tu historia de viaje", fr: "Votre histoire de voyage", de: "Ihre Reisegeschichte", ru: "Ваша история путешествия", ua: "Ваша історія подорожі" },
   "begins here": { es: "empieza aquí", fr: "commence ici", de: "beginnt hier", ru: "начинается здесь", ua: "починається тут" },
@@ -107,6 +107,13 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   "How book": { es: "Cómo reservar", fr: "Réserver", de: "Buchen", ru: "Как забронировать", ua: "Як забронювати" },
   "Pickup Location": { es: "Lugar de recogida", fr: "Lieu de prise en charge", de: "Abholort", ru: "Место выдачи", ua: "Місце видачі" },
   "All Location": { es: "Todos los lugares", fr: "Tous les lieux", de: "Alle Orte", ru: "Все места", ua: "Усі місця" },
+  "Alicante Airport, free": {
+    es: "Aeropuerto de Alicante, gratis",
+    fr: "Aéroport d'Alicante, gratuit",
+    de: "Flughafen Alicante, kostenlos",
+    ru: "Аэропорт Аликанте, бесплатно",
+    ua: "Аеропорт Аліканте, безкоштовно",
+  },
   "Pickup Date": { es: "Fecha de recogida", fr: "Date de départ", de: "Abholdatum", ru: "Дата получения", ua: "Дата отримання" },
   "Return Date": { es: "Fecha de devolución", fr: "Date de retour", de: "Rückgabedatum", ru: "Дата возврата", ua: "Дата повернення" },
   Search: { es: "Buscar", fr: "Rechercher", de: "Suchen", ru: "Найти", ua: "Знайти" },
@@ -135,11 +142,11 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   },
   "3. Pick-Up Locations": { es: "3. Lugar de recogida", fr: "3. Lieu de prise en charge", de: "3. Abholort", ru: "3. Место выдачи", ua: "3. Місце видачі" },
   "On the day of your booking, simply arrive at the designated pickup location, where our team will be ready to hand over your motorhome and provide any additional instructions or support.": {
-    es: "El día de la reserva, ven al punto de recogida. Nuestro equipo te entregará la autocaravana y te explicará todo lo que necesites.",
-    fr: "Le jour convenu, venez au point de rendez-vous. Notre équipe vous remet le camping-car et vous explique tout ce qu'il faut.",
-    de: "Am gebuchten Tag kommen Sie zum Abholort. Unser Team übergibt das Wohnmobil und erklärt Ihnen alles Weitere.",
-    ru: "В день аренды приезжайте в место выдачи. Мы передадим автодом и расскажем всё, что нужно для поездки.",
-    ua: "У день оренди приїжджайте на місце видачі. Ми передамо автодім і розповімо все, що потрібно для поїздки.",
+    es: "Recogida y devolución en Alicante, Torrevieja, Elche y en el aeropuerto de Alicante, gratis.",
+    fr: "Prise en charge et retour à Alicante, Torrevieja, Elche et à l'aéroport d'Alicante, gratuit.",
+    de: "Abholung und Rückgabe in Alicante, Torrevieja, Elche und am Flughafen Alicante, kostenlos.",
+    ru: "Выдача и возврат в Аликанте, Торревьехе, Эльче и в аэропорту Аликанте, бесплатно.",
+    ua: "Видача і повернення в Аліканте, Торрев'єсі, Ельче та в аеропорту Аліканте, безкоштовно.",
   },
   "ABOUT OUR COMPANY": { es: "SOBRE NOSOTROS", fr: "À PROPOS", de: "ÜBER UNS", ru: "О КОМПАНИИ", ua: "ПРО КОМПАНІЮ" },
   "We are your trusted partner for mobile home or autocaravan rentals in the stunning Alicante region of Spain! We’re dedicated to helping travelers experience Costa Blanca with the freedom and flexibility only a caravan can offer.": {
@@ -195,11 +202,11 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   },
   "Where do I pick up and drop off the mobile home?": { es: "¿Dónde recojo y devuelvo la autocaravana?", fr: "Où prendre et rendre le camping-car ?", de: "Wo hole ich das Wohnmobil ab und bringe es zurück?", ru: "Где забирать и возвращать автодом?", ua: "Де забирати й повертати автодім?" },
   "The pickup and drop-off location will be provided in your confirmation email. Our team will meet you at the designated spot in the Alicante region, ensuring a smooth start and end to your trip.": {
-    es: "El punto de recogida y devolución va en el correo de confirmación. Te esperamos en la zona de Alicante para que el viaje empiece y termine sin complicaciones.",
-    fr: "Le lieu de prise en charge et de retour figure dans l'e-mail de confirmation. Nous vous retrouvons dans la région d'Alicante pour un départ et un retour simples.",
-    de: "Abholung und Rückgabe stehen in der Bestätigungsmail. Wir treffen Sie in der Region Alicante, damit Start und Ende der Reise reibungslos laufen.",
-    ru: "Место выдачи и возврата указано в письме с подтверждением. Встретим вас в районе Аликанте, чтобы поездка началась и закончилась спокойно.",
-    ua: "Місце видачі та повернення вказано в листі з підтвердженням. Зустрінемо вас в районі Аліканте, щоб поїздка почалася й закінчилася спокійно.",
+    es: "Recogida y devolución en Alicante, Torrevieja, Elche y en el aeropuerto de Alicante, gratis. El punto concreto va en el correo de confirmación.",
+    fr: "Prise en charge et retour à Alicante, Torrevieja, Elche et à l'aéroport d'Alicante, gratuit. Le point exact est dans l'e-mail de confirmation.",
+    de: "Abholung und Rückgabe in Alicante, Torrevieja, Elche und am Flughafen Alicante, kostenlos. Der genaue Punkt steht in der Bestätigungsmail.",
+    ru: "Выдача и возврат в Аликанте, Торревьехе, Эльче и в аэропорту Аликанте, бесплатно. Точная точка приходит в письме с подтверждением.",
+    ua: "Видача і повернення в Аліканте, Торрев'єсі, Ельче та в аеропорту Аліканте, безкоштовно. Точна точка приходить у листі з підтвердженням.",
   },
   "Is there a mileage limit for rentals?": { es: "¿Hay límite de kilómetros?", fr: "Y a-t-il une limite de kilométrage ?", de: "Gibt es ein Kilometerlimit?", ru: "Есть лимит пробега?", ua: "Чи є ліміт пробігу?" },
   "No, we offer unlimited mileage within Spain, so you’re free to explore the country without extra fees. However, please let us know if you plan to travel outside of Spain, as additional arrangements may be necessary.": {

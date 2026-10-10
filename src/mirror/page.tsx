@@ -520,6 +520,37 @@ const fixes = `
     min-height: 210px !important;
     height: auto !important;
   }
+  .mirror-page .section-search select.form-control {
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 0 36px 0 12px;
+    border: 0;
+    background: transparent;
+    color: #17191a;
+    font-size: 15px;
+  }
+  .mirror-page figcaption.wp-caption-text,
+  .mirror-page figcaption .cr-cities {
+    color: #fff !important;
+  }
+  .mirror-page .faq-card p,
+  .mirror-page .card-collapse,
+  .mirror-page .card-collapse p {
+    color: #201f1d !important;
+  }
+  .mirror-page .card-collapse.show {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .mirror-page .cr-cities {
+    margin: 10px 0 0;
+    color: #1aa6b8;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.3;
+  }
   .mirror-page .wp-gr .grw-review-inner {
     height: auto !important;
     min-height: 200px !important;
@@ -557,7 +588,7 @@ export function mirrorHead(lang: Lang, slug = "") {
           addressRegion: "Alicante",
           addressCountry: "ES",
         },
-        areaServed: ["Torrevieja", "Alicante", "Costa Blanca"],
+        areaServed: ["Alicante", "Torrevieja", "Elche"],
       }
     : null;
   return {
