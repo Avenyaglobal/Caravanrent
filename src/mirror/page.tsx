@@ -90,21 +90,6 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
 
 const fixes = `
 .mirror-page { overflow-x: clip; }
-.mirror-page .site-download {
-  position: fixed;
-  left: 16px;
-  bottom: 16px;
-  z-index: 1000008;
-  display: inline-flex;
-  align-items: center;
-  padding: 12px 16px;
-  background: #127384;
-  color: #fff;
-  border-radius: 999px;
-  font: 700 15px/1 "Fira Sans", sans-serif;
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
-}
 .mirror-page img { max-width: 100%; height: auto; }
 .mirror-page iframe { max-width: 100%; }
 .mirror-page .blog-section { padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -636,9 +621,6 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
     <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang}>
       <style dangerouslySetInnerHTML={{ __html: extraCss + fixes }} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <a className="site-download" href="/caravanrent-github.zip" download>
-        Скачать для GitHub
-      </a>
     </div>
   );
 }
