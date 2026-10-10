@@ -536,10 +536,10 @@ const fixes = `
     font-size: 18px;
     line-height: 1.3;
   }
-  .mirror-page .wp-gr .grw-review-inner {
-    height: auto !important;
-    min-height: 200px !important;
-    background: #fff !important;
+  .mirror-page .cr-trustindex {
+    min-height: 240px;
+    margin: 8px auto 24px;
+    max-width: 1100px;
   }
 }
 `;
@@ -614,7 +614,16 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const vehicle = ["ford-weinsberg", "fiat-mclouis-mc4-379", "peugeot-chausson"].includes(slug);
 
   useEffect(() => {
-    return startMirrorBehaviors();
+    const stop = startMirrorBehaviors();
+    const box = document.getElementById("trustindex-reviews");
+    if (box && !box.querySelector("script")) {
+      const script = document.createElement("script");
+      script.src = "https://cdn.trustindex.io/loader.js?0fb2a0c83438342bad6613b3125";
+      script.async = true;
+      script.defer = true;
+      box.appendChild(script);
+    }
+    return stop;
   }, [lang, slug]);
 
   return (
