@@ -481,7 +481,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
             ))}
             {days.map((day) => {
               const past = day.iso < today;
-              const blocked = day.inMonth && !past && dayBusy(day.iso, ranges);
+              const blocked = !past && dayBusy(day.iso, ranges);
               const waitingReturn = Boolean(from && !to && day.iso > from);
               const tooShort = waitingReturn && nightsBetween(from, day.iso) < 2;
               const crosses = waitingReturn && linked && rangeBusy(from, day.iso, busy);
@@ -496,7 +496,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
                 between ? "cr-cal-range" : "",
                 on ? "cr-cal-on" : "",
               ].filter(Boolean).join(" ");
-              const price = day.inMonth && !blocked && !past ? dayRate(Number(day.iso.slice(5, 7)), van.auto) : null;
+              const price = !blocked && !past ? dayRate(Number(day.iso.slice(5, 7)), van.auto) : null;
               return (
                 <button key={day.iso} type="button" className={className} disabled={past || tooShort || crosses} onClick={() => pickDay(day.iso)}>
                   <span>{day.label}</span>
