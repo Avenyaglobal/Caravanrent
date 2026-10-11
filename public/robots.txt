@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://www.caravanrent-alicante.com/sitemap-google.xml
 Sitemap: https://www.caravanrent-alicante.com/sitemap.xml
