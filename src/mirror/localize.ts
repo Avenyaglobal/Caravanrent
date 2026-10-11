@@ -28,6 +28,30 @@ function encode(value: string) {
   return value.replace(/&/g, "\u0026amp;").replace(/</g, "\u0026lt;").replace(/>/g, "\u0026gt;");
 }
 
+function afterGallery(html: string) {
+  const mark = "elementor-widget-gallery";
+  const at = html.indexOf(mark);
+  if (at < 0) return html;
+  const start = html.lastIndexOf("<div", at);
+  if (start < 0) return html;
+  let depth = 0;
+  let i = start;
+  while (i < html.length) {
+    const open = html.indexOf("<div", i);
+    const close = html.indexOf("</div>", i);
+    if (close < 0) return html;
+    if (open !== -1 && open < close) {
+      depth += 1;
+      i = open + 4;
+    } else {
+      depth -= 1;
+      i = close + 6;
+      if (depth === 0) return `${html.slice(0, i)}<div id="cr-booking-slot"></div>${html.slice(i)}`;
+    }
+  }
+  return html;
+}
+
 function rewriteHref(href: string, lang: Lang) {
   if (!href.startsWith("/mirror")) return null;
   const path = href.slice("/mirror".length).replace(/^\/+/, "").replace(/\/+$/, "");
@@ -153,6 +177,10 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
       /(data-widget_type="text-editor\.default">)[\s\S]*?(<\/div><\/div><\/div><\/div><div class="clearfix")/,
       `$1${copy}$2`,
     );
+  }
+
+  if (slug === "ford-weinsberg" || slug === "fiat-mclouis-mc4-379" || slug === "peugeot-chausson") {
+    out = afterGallery(out);
   }
 
   return out;

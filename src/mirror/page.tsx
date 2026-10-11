@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { notFound } from "@tanstack/react-router";
+import { BookingForm } from "@/mirror/booking";
 import extraCss from "@/mirror/extra.css?raw";
 import { startMirrorBehaviors } from "@/mirror/behaviors";
 import { localizeHtml } from "@/mirror/localize";
@@ -257,13 +259,23 @@ const fixes = `
   text-align: right !important;
   box-sizing: border-box !important;
 }
+.mirror-page .elementor-nav-menu--dropdown .menu-item,
+.mirror-page .elementor-nav-menu--dropdown .current-menu-item,
+.mirror-page .elementor-nav-menu--dropdown .current_page_item,
+.mirror-page .elementor-nav-menu--dropdown a.elementor-item,
+.mirror-page .elementor-nav-menu--dropdown a.elementor-item-active,
+.mirror-page .elementor-nav-menu--dropdown a.elementor-item:hover,
+.mirror-page .elementor-nav-menu--dropdown a.elementor-item:focus {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #2b2b2b !important;
+}
 .mirror-page .elementor-nav-menu--dropdown a.elementor-item {
   display: flex !important;
   justify-content: flex-end !important;
   padding: 14px 18px !important;
   font-size: 16px !important;
   line-height: 1.35 !important;
-  color: #2b2b2b !important;
 }
 @media (max-width: 1024px) {
   .mirror-page .elementor-element-e7fc08a > .e-con-inner {
@@ -536,6 +548,190 @@ const fixes = `
     font-size: 18px;
     line-height: 1.3;
   }
+  .mirror-page .cr-book {
+    margin: 16px auto 8px;
+    max-width: 920px;
+    padding: 18px 16px 16px;
+    background: #fff;
+    color: #17191a;
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
+  }
+  .mirror-page .cr-book h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .mirror-page .cr-book p { margin: 0 0 12px; color: #4d5558; }
+  .mirror-page .cr-book .cr-van-name {
+    margin: -4px 0 8px;
+    color: #127384;
+    font-weight: 700;
+  }
+  .mirror-page .cr-book form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .mirror-page .cr-book label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .mirror-page .cr-phone {
+    display: grid;
+    grid-template-columns: 124px 1fr;
+    gap: 8px;
+  }
+  .mirror-page .cr-dial {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 44px;
+    padding: 0 8px;
+    border: 1px solid #d5e4e7;
+    border-radius: 10px;
+    background: #fff;
+    font-weight: 600;
+  }
+  .mirror-page .cr-dial input {
+    width: 48px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .mirror-page .cr-done { padding: 36px 16px; }
+  .mirror-page .cr-done,
+  .mirror-page .cr-done p {
+    text-align: center !important;
+  }
+  .mirror-page .cr-thanks {
+    margin: 0 0 10px;
+    color: #127384;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .mirror-page .cr-thanks-rest {
+    margin: 0 auto;
+    max-width: 460px;
+    color: #4d5558;
+    font-size: 18px;
+    line-height: 1.4;
+    text-align: center !important;
+  }
+  .mirror-page .cr-book input::placeholder {
+    color: rgba(23, 25, 26, .35);
+  }
+  .mirror-page .cr-book input,
+  .mirror-page .cr-book select {
+    height: 44px;
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #d5e4e7;
+    border-radius: 10px;
+    background: #fff;
+    color: #17191a;
+    font: 500 15px/1.2 "Fira Sans", sans-serif;
+  }
+  .mirror-page .cr-book .wide { grid-column: 1 / -1; }
+  .mirror-page .cr-quote {
+    padding: 12px;
+    background: #f3fbfc;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .mirror-page .cr-quote strong {
+    display: block;
+    margin-top: 6px;
+    color: #127384;
+    font-size: 22px;
+  }
+  .mirror-page .cr-book form > button {
+    height: 48px;
+    border: 0;
+    border-radius: 999px;
+    background: #1aa6b8;
+    color: #fff;
+    font: 700 16px/1 "Fira Sans", sans-serif;
+    cursor: pointer;
+  }
+  .mirror-page .cr-cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .mirror-page .cr-cal-head button {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: #e7f6f8;
+    color: #127384;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .mirror-page .cr-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .mirror-page .cr-cal-day {
+    height: auto;
+    min-height: 46px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    line-height: 1;
+    padding: 3px 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #17191a;
+    font: 600 13px/1 "Fira Sans", sans-serif;
+    cursor: pointer;
+  }
+  .mirror-page .cr-cal-price {
+    font-size: 9px;
+    font-weight: 700;
+    color: #127384;
+  }
+  .mirror-page .cr-cal-day.cr-cal-on .cr-cal-price { color: #fff; }
+  .mirror-page .cr-cal-tap { margin: 0 0 8px; font-size: 13px; }
+  .mirror-page .cr-cal-day.cr-cal-past {
+    background: #b7bec2 !important;
+    color: #fff !important;
+    text-decoration: line-through;
+    cursor: default;
+  }
+  .mirror-page .cr-cal-day.cr-cal-busy {
+    background: #d94b3a !important;
+    color: #fff !important;
+    text-decoration: line-through;
+  }
+  .mirror-page .cr-cal-day.cr-cal-off { opacity: .45; cursor: not-allowed; }
+  .mirror-page .cr-cal-day.cr-cal-range { background: #e7f6f8; }
+  .mirror-page .cr-cal-day.cr-cal-on { background: #1aa6b8; color: #fff; }
+  .mirror-page .cr-book-error { color: #a33b2b; }
+  .mirror-page .cr-places {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 700px) {
+    .mirror-page .cr-book form { grid-template-columns: 1fr; }
+    .mirror-page .cr-places { grid-template-columns: 1fr 1fr; }
+  }
   .mirror-page .cr-trustindex {
     min-height: 240px;
     margin: 8px auto 24px;
@@ -612,9 +808,11 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   if (!source) throw notFound();
   const html = localizeHtml(source, lang, slug.replace(/^\/+|\/+$/g, ""));
   const vehicle = ["ford-weinsberg", "fiat-mclouis-mc4-379", "peugeot-chausson"].includes(slug);
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
     const stop = startMirrorBehaviors();
+    setSlot(document.getElementById("cr-booking-slot"));
     const box = document.getElementById("trustindex-reviews");
     if (box && !box.querySelector("script")) {
       const script = document.createElement("script");
@@ -623,13 +821,17 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
       script.defer = true;
       box.appendChild(script);
     }
-    return stop;
+    return () => {
+      stop();
+      setSlot(null);
+    };
   }, [lang, slug]);
 
   return (
     <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang}>
       <style dangerouslySetInnerHTML={{ __html: extraCss + fixes }} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
+      {slot ? createPortal(<BookingForm lang={lang} vehicle={vehicle ? slug : undefined} />, slot) : null}
     </div>
   );
 }
