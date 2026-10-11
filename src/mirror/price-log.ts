@@ -1,39 +1,21 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getSql } from "@/lib/db";
 
-const TO = "info@caravanrent-alicante.com";
+const FALLBACK = "https://crudcrud.com/api/01c88142b9b6420295d74222d74df9e2/looks";
 const known = new Set(["ford-weinsberg", "peugeot-chausson", "fiat-mclouis-mc4-379"]);
-const order = ["fiat-mclouis-mc4-379", "ford-weinsberg", "peugeot-chausson"] as const;
-const names: Record<(typeof order)[number], string> = {
-  "fiat-mclouis-mc4-379": "Фиат",
-  "ford-weinsberg": "Форд",
-  "peugeot-chausson": "Пежо",
-};
 
-type LookRow = { id: number; vehicle: string; from_date: string; to_date: string; total: number };
-
-function pretty(iso: string) {
-  const [, month, day] = iso.split("-");
-  return `${day}.${month}`;
-}
-
-function letter(rows: LookRow[]) {
-  const blocks: string[] = [];
-  for (const id of order) {
-    const list = rows.filter((row) => row.vehicle === id);
-    if (!list.length) continue;
-    const lines = list.map((row, index) => `${index + 1}  ${pretty(row.from_date)}–${pretty(row.to_date)} — ${row.total} €`);
-    blocks.push(`${names[id]}\n${lines.join("\n")}`);
+async function storeUrl() {
+  try {
+    const response = await fetch("https://raw.githubusercontent.com/Avenyaglobal/Caravanrent/main/data/store-url.txt", {
+      cache: "no-store",
+    });
+    if (response.ok) {
+      const text = (await response.text()).trim();
+      if (text.startsWith("https://crudcrud.com/api/") && text.endsWith("/looks")) return text;
+    }
+  } catch {
+    // The address in the repository is missing. Use the current list.
   }
-  return blocks.join("\n\n");
-}
-
-function madridHour(now: Date) {
-  return new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/Madrid",
-    hour: "2-digit",
-    hourCycle: "h23",
-  }).format(now);
+  return FALLBACK;
 }
 
 export const logPriceLook = createServerFn({ method: "POST" })
@@ -50,59 +32,11 @@ export const logPriceLook = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data }) => {
-    const sql = await getSql();
-    await sql`
-      insert into price_looks (vehicle, from_date, to_date, total, session)
-      select ${data.vehicle}, ${data.from}, ${data.to}, ${data.total}, ${data.session}
-      where not exists (
-        select 1 from price_looks
-        where sent_at is null
-          and vehicle = ${data.vehicle}
-          and from_date = ${data.from}::date
-          and to_date = ${data.to}::date
-          and total = ${data.total}
-          and session = ${data.session}
-          and created_at > now() - interval '1 day'
-      )
-    `;
+    const response = await fetch(await storeUrl(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, at: new Date().toISOString() }),
+    });
+    if (!response.ok) throw new Error("store");
     return { ok: true as const };
   });
-
-export async function sendPriceDigest(now = new Date()) {
-  if (madridHour(now) !== "09") return { sent: false as const, reason: "time" };
-  const sql = await getSql();
-  const rows = await sql<LookRow>`
-    select id, vehicle, from_date::text as from_date, to_date::text as to_date, total
-    from price_looks
-    where sent_at is null
-      and created_at > now() - interval '26 hours'
-    order by created_at
-  `;
-  const text = letter(rows);
-  if (!text) {
-    await sql`delete from price_looks where created_at < now() - interval '2 days'`;
-    return { sent: false as const, reason: "empty" };
-  }
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/Madrid",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).formatToParts(now);
-  const stamp = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  const response = await fetch(`https://formsubmit.co/ajax/${TO}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      name: "Календарь сайта",
-      email: TO,
-      _subject: `Просмотры цен ${stamp.day}.${stamp.month}.${stamp.year}`,
-      _template: "box",
-      _captcha: "false",
-      message: text,
-    }),
-  });
-  if (!response.ok) return { sent: false as const, reason: "mail" };
-  for (const row of rows) await sql`delete from price_looks where id = ${row.id}`;
-  return { sent: true as const };
-}

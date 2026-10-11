@@ -1,0 +1,23 @@
+name: price-digest
+on:
+  schedule:
+    - cron: "0 7 * * *"
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/price-digest-send.mjs
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/store-url.txt data/digest-day.txt
+          git diff --cached --quiet || git commit -m "Rotate the daily price list"
+          git push
