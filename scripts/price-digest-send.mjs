@@ -87,7 +87,13 @@ const text = letter(rows);
 if (text) {
   const response = await fetch(`https://formsubmit.co/ajax/${TO}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "User-Agent": "Mozilla/5.0",
+      Origin: "https://www.caravanrent-alicante.com",
+      Referer: "https://www.caravanrent-alicante.com/",
+    },
     body: JSON.stringify({
       name: "Календарь сайта",
       email: TO,
@@ -98,12 +104,13 @@ if (text) {
     }),
   });
   if (!response.ok) {
-    console.error("mail", response.status);
+    console.error("mail", response.status, await response.text());
     process.exit(1);
   }
   console.log("mailed", rows.length);
 } else {
   console.log("empty");
+  process.exit(0);
 }
 
 const created = await fetch("https://crudcrud.com/api", { method: "POST" });
