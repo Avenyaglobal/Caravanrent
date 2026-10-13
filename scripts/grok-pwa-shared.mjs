@@ -345,6 +345,7 @@ export function grokOgHeadTags({
   site = {},
   documentTitle = "",
   cwd = process.cwd(),
+  imageOverride = "",
 } = {}) {
   const title = resolveOgTitle(site, appName, host, documentTitle);
   const publicHost = resolvePublicHost(host);
@@ -362,7 +363,12 @@ export function grokOgHeadTags({
   if (publicHost) {
     const asset = resolveOgCardAsset(site, cwd);
     const custom = Boolean(asset);
-    let image = custom
+    const override = String(imageOverride ?? "").trim();
+    let image = override
+      ? (/^https?:\/\//i.test(override)
+        ? override
+        : `https://${publicHost}${override.startsWith("/") ? override : `/${override}`}`)
+      : custom
       ? `https://${publicHost}${asset.startsWith("/") ? asset : `/${asset}`}`
       : `${ogServiceUrl()}/v1/card.png?host=${encodeURIComponent(publicHost)}&title=${encodeURIComponent(title)}`;
     const color = !custom ? placeholderCardColor(site) : "";
@@ -386,6 +392,16 @@ function stripGrokExtensionsScript(html) {
     /<script\b[^>]*\bsrc\s*=\s*["'][^"']*\/grok-app-builder\/extensions\.js[^"']*["'][^>]*>\s*<\/script>/gi,
     "",
   );
+}
+
+function existingShareImage(html) {
+  const tags = String(html).match(/<meta\b[^>]*>/gi) ?? [];
+  for (const tag of tags) {
+    if (!/\bproperty\s*=\s*["']og:image["']/i.test(tag)) continue;
+    const content = tag.match(/\bcontent\s*=\s*["']([^"']+)["']/i);
+    if (content?.[1]) return content[1];
+  }
+  return "";
 }
 
 export function stripShareMetaTags(html) {
@@ -439,6 +455,7 @@ export function injectGrokPwaHead(html, ctx = {}) {
   if (typeof html !== "string") return html;
   const { site, projectId, creator, creatorId, host, cwd } = normalizeHeadContext(ctx);
   const documentTitle = titleFromDocument(html);
+  const pageImage = existingShareImage(html);
   const appName = resolveOgTitle(
     site,
     ctx.appName ?? DEFAULT_APP_NAME,
@@ -458,7 +475,7 @@ export function injectGrokPwaHead(html, ctx = {}) {
 
   next = insertAfterHeadOpen(
     next,
-    grokOgHeadTags({ host, appName, site, documentTitle, cwd }).join(""),
+    grokOgHeadTags({ host, appName, site, documentTitle, cwd, imageOverride: pageImage }).join(""),
   );
 
   if (readGrokExtensionsEnabled() && !next.includes("/grok-app-builder/extensions.js")) {

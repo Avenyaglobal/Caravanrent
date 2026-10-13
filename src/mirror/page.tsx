@@ -772,6 +772,12 @@ export function mirrorHead(lang: Lang, slug = "") {
         areaServed: ["Alicante", "Torrevieja", "Elche"],
       }
     : null;
+  const vehicleOg: Record<string, string> = {
+    "ford-weinsberg": "/og/ford.jpg",
+    "fiat-mclouis-mc4-379": "/og/fiat.jpg",
+    "peugeot-chausson": "/og/peugeot.jpg",
+  };
+  const shareImage = vehicleOg[clean] ? `${siteOrigin}${vehicleOg[clean]}` : "";
   return {
     meta: [
       { title: meta.title },
@@ -780,6 +786,7 @@ export function mirrorHead(lang: Lang, slug = "") {
       { property: "og:description", content: meta.description },
       { property: "og:url", content: canonical },
       { property: "og:locale", content: lang === "en" ? "en_GB" : lang === "ua" ? "uk_UA" : `${lang}_${lang.toUpperCase()}` },
+      ...(shareImage ? [{ property: "og:image", content: shareImage }] : []),
     ],
     links: [
       { rel: "canonical", href: canonical },
