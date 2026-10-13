@@ -777,7 +777,7 @@ export function mirrorHead(lang: Lang, slug = "") {
     "fiat-mclouis-mc4-379": "/og/fiat.jpg",
     "peugeot-chausson": "/og/peugeot.jpg",
   };
-  const shareImage = vehicleOg[clean] ? `${siteOrigin}${vehicleOg[clean]}` : "";
+  const shareImage = vehicleOg[clean] ? `${siteOrigin}${vehicleOg[clean]}?v=2` : "";
   return {
     meta: [
       { title: meta.title },

@@ -374,8 +374,10 @@ export function grokOgHeadTags({
     const color = !custom ? placeholderCardColor(site) : "";
     if (color) image += `&color=${encodeURIComponent(color)}`;
     tags.push(`<meta property="og:image" content="${escapeHtml(image)}">`);
-    tags.push(`<meta property="og:image:width" content="1200">`);
-    tags.push(`<meta property="og:image:height" content="630">`);
+    if (!override) {
+      tags.push(`<meta property="og:image:width" content="1200">`);
+      tags.push(`<meta property="og:image:height" content="630">`);
+    }
     const banner = String(site.banner ?? "").trim();
     if (banner) {
       const bannerUrl = `https://${publicHost}${banner.startsWith("/") ? banner : `/${banner}`}`;
