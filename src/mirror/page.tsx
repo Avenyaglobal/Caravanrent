@@ -907,6 +907,7 @@ function PeugeotPromo({ lang, slug }: { lang: Lang; slug: string }) {
 }
 
 export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
+  const clean = slug.replace(/^\/+|\/+$/g, "");
   const source = getPageHtml(slug);
   if (!source) throw notFound();
   const html = localizeHtml(source, lang, slug.replace(/^\/+|\/+$/g, ""));
