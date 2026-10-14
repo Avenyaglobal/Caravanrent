@@ -134,24 +134,6 @@ export function startMirrorBehaviors() {
     if (!link) return;
     event.preventDefault();
     event.stopPropagation();
-    const panel = document.querySelector(link.getAttribute("href") || "");
-    if (!(panel instanceof HTMLElement)) return;
-    const willOpen = !panel.classList.contains("show");
-    document.querySelectorAll<HTMLElement>(".card-collapse").forEach((item) => {
-      item.classList.remove("show");
-      item.classList.add("collapsed");
-      item.style.display = "";
-    });
-    document.querySelectorAll(".faq-title a").forEach((item) => {
-      item.classList.add("collapsed");
-      item.setAttribute("aria-expanded", "false");
-    });
-    if (willOpen) {
-      panel.classList.add("show");
-      panel.classList.remove("collapsed");
-      link.classList.remove("collapsed");
-      link.setAttribute("aria-expanded", "true");
-    }
   };
   document.addEventListener("click", onFaq, true);
 
