@@ -137,9 +137,10 @@ export function startMirrorBehaviors() {
     const panel = document.querySelector(link.getAttribute("href") || "");
     if (!(panel instanceof HTMLElement)) return;
     const willOpen = !panel.classList.contains("show");
-    document.querySelectorAll(".card-collapse").forEach((item) => {
+    document.querySelectorAll<HTMLElement>(".card-collapse").forEach((item) => {
       item.classList.remove("show");
       item.classList.add("collapsed");
+      item.style.display = "";
     });
     document.querySelectorAll(".faq-title a").forEach((item) => {
       item.classList.add("collapsed");

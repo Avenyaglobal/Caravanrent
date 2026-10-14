@@ -157,8 +157,6 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   for (const name of ["Ford - Weinsberg CaraSuite 650 MEG", "Fiat-McLouis MC4 379", "Peugeot - Chausson 724 EtapeLine"]) {
     out = out.replaceAll(`${name}</figcaption>`, `${name}<br><span class="cr-cities">${cities[lang]}</span></figcaption>`);
   }
-  out = out.replace(/<div id="(faq_\d+)" class="card-collapse[^"]*">/g, `<div id="$1" class="card-collapse show" style="display:block">`);
-  out = out.replace(/<div id="faq_\d+" class="card-collapse show" style="display:block"><p>/g, (full) => full.replace("<p>", `<p style="display:block;color:#201f1d;font-size:16px;line-height:1.45;margin:12px 0 0">`));
 
   const maps = "https://www.google.com/maps/dir/?api=1&destination=Calle%20La%20Sagra%2092%2C%20Torrevieja";
   out = out.replaceAll('href="tel:+34 607 223 726"', 'href="tel:+34607223726"');

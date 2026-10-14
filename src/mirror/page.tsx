@@ -131,8 +131,8 @@ const fixes = `
 .mirror-page img { max-width: 100%; height: auto; }
 .mirror-page iframe { max-width: 100%; }
 .mirror-page .blog-section { padding-top: 0 !important; padding-bottom: 0 !important; }
-.mirror-page .card-collapse { display: none; }
-.mirror-page .card-collapse.show { display: block; animation: faq-in .3s ease; }
+.mirror-page .card-collapse { display: none !important; }
+.mirror-page .card-collapse.show { display: block !important; height: auto !important; overflow: visible !important; animation: faq-in .3s ease; }
 @keyframes faq-in { from { opacity: 0; } to { opacity: 1; } }
 .mirror-page .elementor-element-9ba51d6 .elementor-widget-image,
 .mirror-page .elementor-element-9ba51d6 .elementor-widget-image a,
