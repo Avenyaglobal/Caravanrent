@@ -238,7 +238,8 @@ const places = {
 
 const WEEK = ["L", "M", "X", "J", "V", "S", "D"];
 
-function dayRate(month: number, auto: boolean) {
+function dayRate(month: number, auto: boolean, iso = "", vehicleId = "") {
+  if (vehicleId === "peugeot-chausson" && iso >= "2026-10-20" && iso <= "2026-12-28") return 100;
   const manual = month === 8 ? 175 : month === 6 || month === 7 || month === 9 ? 145 : month === 4 || month === 5 ? 135 : 120;
   return auto ? manual + 10 : manual;
 }
@@ -286,7 +287,10 @@ export function quoteFor(vehicleId: string, from: string, to: string) {
   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) return { error: "dates" as const };
   const lines = new Map<number, number>();
   for (let cursor = new Date(start); cursor <= end; cursor.setDate(cursor.getDate() + 1)) {
-    const rate = dayRate(cursor.getMonth() + 1, van.auto);
+    const month = String(cursor.getMonth() + 1).padStart(2, "0");
+    const day = String(cursor.getDate()).padStart(2, "0");
+    const iso = `${cursor.getFullYear()}-${month}-${day}`;
+    const rate = dayRate(cursor.getMonth() + 1, van.auto, iso, van.id);
     lines.set(rate, (lines.get(rate) ?? 0) + 1);
   }
   const nights = [...lines.values()].reduce((sum, count) => sum + count, 0);
@@ -496,7 +500,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
                 between ? "cr-cal-range" : "",
                 on ? "cr-cal-on" : "",
               ].filter(Boolean).join(" ");
-              const price = !blocked && !past ? dayRate(Number(day.iso.slice(5, 7)), van.auto) : null;
+              const price = !blocked && !past ? dayRate(Number(day.iso.slice(5, 7)), van.auto, day.iso, van.id) : null;
               return (
                 <button key={day.iso} type="button" className={className} disabled={past || tooShort || crosses} onClick={() => pickDay(day.iso)}>
                   <span>{day.label}</span>
