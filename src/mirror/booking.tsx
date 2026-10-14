@@ -239,7 +239,7 @@ const places = {
 const WEEK = ["L", "M", "X", "J", "V", "S", "D"];
 
 function dayRate(month: number, auto: boolean, iso = "", vehicleId = "") {
-  if (vehicleId === "peugeot-chausson" && iso >= "2026-10-20" && iso <= "2026-12-28") return 100;
+  if (vehicleId === "peugeot-chausson" && iso >= "2026-10-19" && iso <= "2026-12-28") return 100;
   const manual = month === 8 ? 175 : month === 6 || month === 7 || month === 9 ? 145 : month === 4 || month === 5 ? 135 : 120;
   return auto ? manual + 10 : manual;
 }
