@@ -91,6 +91,42 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
 };
 
 const fixes = `
+.cr-promo {
+  position: fixed;
+  inset: 0;
+  z-index: 10000020;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 52px 10px 10px;
+  background: rgba(0, 0, 0, .78);
+}
+.cr-promo-x {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+.cr-promo-link { display: block; max-width: 100%; max-height: 100%; }
+.cr-promo-link img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 64px);
+  object-fit: contain;
+  border-radius: 12px;
+}
 .mirror-page { overflow-x: clip; }
 .mirror-page img { max-width: 100%; height: auto; }
 .mirror-page iframe { max-width: 100%; }
@@ -832,6 +868,44 @@ export function mirrorHead(lang: Lang, slug = "") {
   };
 }
 
+function PeugeotPromo({ lang, slug }: { lang: Lang; slug: string }) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (slug === "peugeot-chausson") return;
+    try {
+      if (sessionStorage.getItem("cr-peugeot-100")) return;
+    } catch {
+      /* ignore */
+    }
+    setOpen(true);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [slug]);
+  if (!open) return null;
+  const close = () => {
+    try {
+      sessionStorage.setItem("cr-peugeot-100", "1");
+    } catch {
+      /* ignore */
+    }
+    document.body.style.overflow = "";
+    setOpen(false);
+  };
+  return (
+    <div className="cr-promo" role="dialog" aria-modal="true">
+      <button type="button" className="cr-promo-x" onClick={close} aria-label="Cerrar">
+        ×
+      </button>
+      <a className="cr-promo-link" href={pagePath(lang, "peugeot-chausson")} onClick={close}>
+        <img src="/promo/peugeot-100.png" alt="Peugeot Chausson desde 100 euros al día" />
+      </a>
+    </div>
+  );
+}
+
 export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const source = getPageHtml(slug);
   if (!source) throw notFound();
@@ -859,6 +933,7 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   return (
     <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang}>
       <style dangerouslySetInnerHTML={{ __html: extraCss + fixes }} />
+      <PeugeotPromo lang={lang} slug={clean} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
       {slot ? createPortal(<BookingForm lang={lang} vehicle={vehicle ? slug : undefined} />, slot) : null}
     </div>
