@@ -286,7 +286,21 @@ const fixes = `
     justify-content: flex-start !important;
     gap: 6px !important;
     width: 100% !important;
-    padding: 4px 8px !important;
+    padding: 0 6px !important;
+  }
+  .mirror-page .elementor-element-e7fc08a {
+    --min-height: 0px !important;
+    --padding-top: 0px !important;
+    --padding-bottom: 0px !important;
+    min-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .mirror-page .elementor-element-12f2d0c,
+  .mirror-page .elementor-element-12f2d0c img {
+    width: 32px !important;
+    max-width: 32px !important;
+    height: auto !important;
   }
   .mirror-page .elementor-element-e7fc08a > .e-con-inner > .elementor-element,
   .mirror-page .elementor-element-eaccd6c,
@@ -329,14 +343,15 @@ const fixes = `
   .mirror-page .elementor-element-e7fc08a > .e-con-inner {
     max-width: 100% !important;
     box-sizing: border-box !important;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
   }
-  .mirror-page .elementor-element-e7fc08a > .e-con-inner { gap: 4px !important; }
+  .mirror-page .elementor-element-e7fc08a > .e-con-inner { gap: 4px !important; padding-top: 0 !important; padding-bottom: 0 !important; }
   .mirror-page .elementor-element-12f2d0c,
   .mirror-page .elementor-element-12f2d0c img {
-    width: 72px !important;
-    max-width: 72px !important;
+    width: 32px !important;
+    max-width: 32px !important;
+    height: auto !important;
   }
   .mirror-page .elementor-element-eaccd6c { --e-icon-list-icon-size: 22px; }
   .mirror-page .elementor-inline-items .elementor-icon-list-item { margin-inline: 4px !important; }
