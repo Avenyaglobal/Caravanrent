@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const FALLBACK = "https://crudcrud.com/api/01c88142b9b6420295d74222d74df9e2/looks";
+const FALLBACK = "https://crudcrud.com/api/676d67483d854d3db9c66a1454e7dd6e/looks";
 const known = new Set(["ford-weinsberg", "peugeot-chausson", "fiat-mclouis-mc4-379"]);
 
 async function storeUrl() {
@@ -32,11 +32,19 @@ export const logPriceLook = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data }) => {
-    const response = await fetch(await storeUrl(), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, at: new Date().toISOString() }),
-    });
-    if (!response.ok) throw new Error("store");
-    return { ok: true as const };
+    const payload = JSON.stringify({ ...data, at: new Date().toISOString() });
+    const send = (url) =>
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      });
+    const primary = await storeUrl();
+    const first = await send(primary);
+    if (first.ok) return { ok: true as const };
+    if (primary !== FALLBACK) {
+      const second = await send(FALLBACK);
+      if (second.ok) return { ok: true as const };
+    }
+    throw new Error("store");
   });

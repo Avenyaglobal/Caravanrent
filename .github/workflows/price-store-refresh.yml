@@ -1,0 +1,23 @@
+name: price-store-refresh
+on:
+  schedule:
+    # 06:30 and 18:30 Madrid in summer. Renews the 24-hour list before it expires.
+    - cron: "30 4,16 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/price-store-refresh.mjs
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/store-url.txt
+          git diff --cached --quiet || git commit -m "Renew the price view list"
+          git push
