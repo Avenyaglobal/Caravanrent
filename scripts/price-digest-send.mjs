@@ -46,7 +46,7 @@ function letter(rows) {
     const list = rows.filter((row) => row.vehicle === id);
     if (!list.length) continue;
     const lines = list.map((row, index) => `${index + 1}. ${pretty(row.from)}–${pretty(row.to)} — ${row.total} €`);
-    blocks.push([NAMES[id], "", ...lines].join("\n"));
+    blocks.push([NAMES[id], "", lines.join("\n\n")].join("\n"));
   }
   return blocks.length ? `${blocks.join("\n\n")}\n` : `${EMPTY}\n`;
 }
