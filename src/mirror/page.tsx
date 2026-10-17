@@ -924,10 +924,12 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
     setSlot(document.getElementById("cr-booking-slot"));
     const box = document.getElementById("trustindex-reviews");
     if (box && !box.querySelector("script")) {
+      box.innerHTML =
+        '<div id="featurable-263dfd17-ad7e-4a70-8315-c35669f66a6f" data-featurable-async data-location-code="undefined"></div>';
       const script = document.createElement("script");
-      script.src = "https://cdn.trustindex.io/loader.js?0fb2a0c83438342bad6613b3125";
-      script.async = true;
+      script.src = "https://cdn.featurable.com/widget/v2/embed.js";
       script.defer = true;
+      script.setAttribute("charset", "UTF-8");
       box.appendChild(script);
     }
     return () => {
