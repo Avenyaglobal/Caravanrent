@@ -1,8 +1,8 @@
 name: price-digest
 on:
   schedule:
-    # 08:40 Madrid: 06:40 UTC in summer, 07:40 UTC in winter. The script sends only at 08:xx.
-    - cron: "40 6,7 * * *"
+    # 08:15 Madrid in summer or winter. A late start still sends: the script accepts 07:00–10:59.
+    - cron: "15 6,7 * * *"
   workflow_dispatch:
 permissions:
   contents: write

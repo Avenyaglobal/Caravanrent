@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 
+const TO = "caravanrentalicante@gmail.com";
 const ORDER = ["fiat-mclouis-mc4-379", "ford-weinsberg", "peugeot-chausson"];
 const NAMES = {
   "fiat-mclouis-mc4-379": "Фиат",
@@ -71,7 +72,7 @@ const clock = madrid();
 const today = `${clock.year}-${clock.month}-${clock.day}`;
 const hour = Number(clock.hour);
 const forced = process.env.FORCE === "1";
-if (!forced && hour !== 8) {
+if (!forced && (hour < 7 || hour > 10)) {
   console.log(`skip hour ${clock.hour}`);
   process.exit(0);
 }
@@ -95,6 +96,27 @@ if (url.startsWith("https://crudcrud.com/api/")) {
 const text = letter(rows);
 await writeFile("data/digest-letter.txt", text);
 console.log("letter", rows.length);
+
+const response = await fetch(`https://formsubmit.co/ajax/${TO}`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "User-Agent": "Mozilla/5.0",
+    Origin: "https://www.caravanrent-alicante.com",
+    Referer: "https://www.caravanrent-alicante.com/",
+  },
+  body: JSON.stringify({
+    name: "Календарь сайта",
+    email: TO,
+    _subject: `Просмотры цен ${clock.day}.${clock.month}.${clock.year}`,
+    _template: "box",
+    _captcha: "false",
+    message: text,
+  }),
+});
+const mailBody = await response.text();
+console.log("mail", response.status, mailBody.slice(0, 180));
 
 const nextUrl = await createStore();
 await writeFile("data/store-url.txt", `${nextUrl}\n`);
