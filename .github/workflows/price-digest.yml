@@ -18,6 +18,6 @@ jobs:
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/store-url.txt data/digest-day.txt data/digest-letter.txt
+          git add data/store-url.txt data/digest-day.txt data/digest-letter.txt public/price-letter.txt
           git diff --cached --quiet || git commit -m "Send the daily price views"
           git push
