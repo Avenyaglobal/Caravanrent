@@ -286,6 +286,13 @@ export function startMirrorBehaviors() {
   document.querySelector(".progress-wrap")?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
+  const whatsappHref =
+    "https://wa.me/34607223726?text=" + encodeURIComponent("Hola, solicitud desde la web de Caravanrent Alicante");
+  document.querySelectorAll<HTMLAnchorElement>('a[href*="wa.me/34607223726"]').forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    if (!href.includes("text=")) link.href = whatsappHref;
+  });
+
   const contact = document.getElementById("arcontactus");
   if (contact) {
     contact.classList.remove("right");
@@ -297,7 +304,7 @@ export function startMirrorBehaviors() {
     event.preventDefault();
     event.stopPropagation();
     const link = document.createElement("a");
-    link.href = "https://wa.me/34607223726";
+    link.href = whatsappHref;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.click();
