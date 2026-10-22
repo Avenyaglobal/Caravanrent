@@ -83,6 +83,7 @@ export function startMirrorBehaviors() {
   const onOutsideMenu = (event: Event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
+    if (!target.closest("details.lang-switch")) closeLang();
     if (!document.querySelector(".nav-check:checked")) return;
     if (target.closest(".elementor-nav-menu--dropdown, .elementor-menu-toggle, .nav-check")) return;
     document.documentElement.classList.remove("menu-opened");

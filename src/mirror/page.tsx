@@ -454,18 +454,16 @@ const fixes = `
 .lang-switch[open] .lang-switch-btn { background: #127384; }
 .lang-switch:not([open]) .lang-switch-list { display: none !important; }
 .lang-switch[open] .lang-switch-list {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
+  display: block !important;
   position: absolute;
   right: 0;
   left: auto;
   top: calc(100% + 8px);
   transform: none;
-  width: 230px;
+  width: max-content;
   z-index: 1000006;
   margin: 0;
-  padding: 6px 0;
+  padding: 6px 14px;
   list-style: none;
   background: #fff;
   border-radius: 8px;
@@ -477,7 +475,7 @@ const fixes = `
   align-items: center !important;
   justify-content: flex-start !important;
   gap: 10px;
-  width: 148px !important;
+  width: 100% !important;
   box-sizing: border-box;
   padding: 9px 0;
   color: #201f1d;
