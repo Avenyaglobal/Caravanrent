@@ -261,7 +261,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "Caravan Rent Alicante",
     ua: "Caravan Rent Alicante",
   },
-  "August 5, 2024": { es: "5 de agosto de 2024", fr: "5 août 2024", de: "5. August 2024", ru: "5 августа 2024", ua: "5 серпня 2024" },
+  "August 5, 2024": { es: "15 de octubre de 2026", en: "October 15, 2026", fr: "15 octobre 2026", de: "15. Oktober 2026", ru: "15 октября 2026", ua: "15 жовтня 2026" },
   "What to Take on a Motorhome Trip to Spain: Essential Packing Guide": {
     es: "Qué llevar en un viaje en autocaravana por España",
     fr: "Que emporter pour un voyage en camping-car en Espagne",
@@ -277,7 +277,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "Практичный список вещей, чтобы поездка прошла спокойно...",
     ua: "Практичний список речей, щоб поїздка минула спокійно...",
   },
-  "April 1, 2024": { es: "1 de abril de 2024", fr: "1 avril 2024", de: "1. April 2024", ru: "1 апреля 2024", ua: "1 квітня 2024" },
+  "April 1, 2024": { es: "18 de septiembre de 2026", en: "September 18, 2026", fr: "18 septembre 2026", de: "18. September 2026", ru: "18 сентября 2026", ua: "18 вересня 2026" },
   "How to Choose a Motorhome for Rent and Key Things to Consider": {
     es: "Cómo elegir una autocaravana de alquiler",
     fr: "Comment choisir un camping-car à louer",
@@ -292,7 +292,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "Аренда автодома — это свобода ехать по маршруту в своём темпе...",
     ua: "Оренда автодома — це свобода їхати маршрутом у своєму темпі...",
   },
-  "January 30, 2024": { es: "30 de enero de 2024", fr: "30 janvier 2024", de: "30. Januar 2024", ru: "30 января 2024", ua: "30 січня 2024" },
+  "January 30, 2024": { es: "20 de agosto de 2026", en: "August 20, 2026", fr: "20 août 2026", de: "20. August 2026", ru: "20 августа 2026", ua: "20 серпня 2026" },
   "View All Blogs": { es: "Ver todos los artículos", fr: "Voir tous les articles", de: "Alle Beiträge", ru: "Все статьи", ua: "Усі статті" },
   "Our contacts": { es: "Contacto", fr: "Nous contacter", de: "Kontakt", ru: "Контакты", ua: "Контакти" },
   "Have a question? Contact us in a convenient way": {
