@@ -225,6 +225,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "Отзывы тех, кто уже ездил с нами",
     ua: "Відгуки тих, хто вже їздив із нами",
   },
+  "Leave a review": { es: "Dejar una reseña", en: "Leave a review", fr: "Laisser un avis", de: "Bewertung schreiben", ru: "Оставить отзыв", ua: "Залишити відгук" },
   "Based on 12 reviews": { es: "Basado en 12 opiniones", fr: "Sur 12 avis", de: "Basierend auf 12 Bewertungen", ru: "На основе 12 отзывов", ua: "На основі 12 відгуків" },
   "powered by": { es: "con tecnología de", fr: "propulsé par", de: "betrieben von", ru: "на базе", ua: "на базі" },
   "review us on": { es: "danos tu opinión en", fr: "laissez un avis sur", de: "bewerten Sie uns auf", ru: "оставьте отзыв в", ua: "залиште відгук у" },

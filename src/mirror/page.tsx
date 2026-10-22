@@ -903,8 +903,18 @@ const fixes = `
   }
   .mirror-page .cr-trustindex {
     min-height: 240px;
-    margin: 8px auto 24px;
+    margin: 8px auto 12px;
     max-width: 1100px;
+  }
+  .mirror-page .cr-review-cta { text-align: center; margin: 4px 0 28px; }
+  .mirror-page .cr-review-cta a {
+    display: inline-block;
+    background: #fff;
+    color: #127384;
+    font-weight: 700;
+    padding: 12px 22px;
+    border-radius: 8px;
+    text-decoration: none;
   }
 }
 `;

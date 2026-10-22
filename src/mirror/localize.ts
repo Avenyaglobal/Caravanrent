@@ -97,6 +97,42 @@ function stripThemeHeader(html: string) {
 
 const footerSocial = `<ul class="nav-social"><li><a href="https://www.instagram.com/caravanrentalicante" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li><li><a href="https://www.facebook.com/profile.php?id=61572446753379" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li><li><a href="https://www.youtube.com/@caravanrentalicante" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></li><li><a href="https://t.me/caravanrentalicante" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a></li></ul>`;
 
+function stripElement(html: string, id: string) {
+  const start = html.indexOf(`<div class="elementor-element elementor-element-${id}`);
+  if (start < 0) return html;
+  const re = /<\/?div\b[^>]*>/g;
+  re.lastIndex = start;
+  let depth = 0;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html))) {
+    depth += match[0].startsWith("</") ? -1 : 1;
+    if (depth === 0) return html.slice(0, start) + html.slice(match.index + match[0].length);
+  }
+  return html;
+}
+
+function cutSection(html: string, id: string) {
+  const marker = html.indexOf(`id="${id}"`);
+  if (marker < 0) return null;
+  const start = html.lastIndexOf("<section", marker);
+  if (start < 0) return null;
+  const re = /<\/?section\b[^>]*>/g;
+  re.lastIndex = start;
+  let depth = 0;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html))) {
+    depth += match[0].startsWith("</") ? -1 : 1;
+    if (depth === 0) {
+      const end = match.index + match[0].length;
+      return { rest: html.slice(0, start) + html.slice(end), section: html.slice(start, end) };
+    }
+  }
+  return null;
+}
+
+const googleReview =
+  "https://www.google.com/maps?cid=10053196144775619233&hl=es#lrd=0x6c7de1883dccdd2f:0x8b8420a12aad62a1,3";
+
 export function localizeHtml(html: string, lang: Lang, slug = "") {
   let source = html;
   if (!source.includes("elementor-sticky--active")) {
@@ -129,6 +165,19 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   });
 
   out = out.replace(/<div class="gtranslate_wrapper[\s\S]*?<div id="google_translate_element2"><\/div><\/div><\/div>/, "");
+
+  if (!slug) {
+    const cut = cutSection(out, "reviews");
+    if (cut) {
+      const section = stripElement(cut.section, "298626b").replace(
+        '<div id="trustindex-reviews" class="cr-trustindex"></div>',
+        `<div id="trustindex-reviews" class="cr-trustindex"></div><p class="cr-review-cta"><a href="${googleReview}" target="_blank" rel="noopener">Leave a review</a></p>`,
+      );
+      const faq = cut.rest.indexOf('id="faq"');
+      const faqStart = faq >= 0 ? cut.rest.lastIndexOf("<section", faq) : -1;
+      out = faqStart >= 0 ? cut.rest.slice(0, faqStart) + section + cut.rest.slice(faqStart) : section + cut.rest;
+    }
+  }
 
   out = out.replace(/>([^<]+)</g, (full, text: string) => {
     const key = decode(text).replace(/\s+/g, " ").trim();
