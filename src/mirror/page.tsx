@@ -67,28 +67,28 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
     ua: { title: "Умови оренди | Caravan Rent Alicante", description: "Загальні умови оренди автодома." },
   },
   "ford-weinsberg": {
-    es: { title: "Ford Weinsberg | Alquiler de autocaravanas", description: "Ford Weinsberg CaraSuite: diésel, manual, 4 plazas y 4 camas." },
-    en: { title: "Ford Weinsberg | Motorhome rental", description: "Ford Weinsberg CaraSuite: diesel, manual, 4 seats and 4 beds." },
-    fr: { title: "Ford Weinsberg | Location de camping-car", description: "Ford Weinsberg CaraSuite : diesel, manuelle, 4 places et 4 couchages." },
-    de: { title: "Ford Weinsberg | Wohnmobil mieten", description: "Ford Weinsberg CaraSuite: Diesel, Schaltgetriebe, 4 Sitze und 4 Betten." },
-    ru: { title: "Ford Weinsberg | Аренда автодома", description: "Ford Weinsberg CaraSuite: дизель, механика, 4 места и 4 спальных места." },
-    ua: { title: "Ford Weinsberg | Оренда автодома", description: "Ford Weinsberg CaraSuite: дизель, механіка, 4 місця і 4 спальних місця." },
+    es: { title: "Alquiler Ford Weinsberg en Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite en Alicante, Torrevieja y Elche. Diésel, manual, 4 plazas y 4 camas. Desde 120 € al día, kilómetros ilimitados." },
+    en: { title: "Ford Weinsberg motorhome rental in Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite in Alicante, Torrevieja and Elche. Diesel, manual, 4 seats and 4 beds. From €120 a day, unlimited kilometres." },
+    fr: { title: "Location Ford Weinsberg à Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite à Alicante, Torrevieja et Elche. Diesel, manuelle, 4 places et 4 couchages. Dès 120 € par jour." },
+    de: { title: "Ford Weinsberg Wohnmobil mieten in Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite in Alicante, Torrevieja und Elche. Diesel, Schaltung, 4 Sitze und 4 Betten. Ab 120 € pro Tag." },
+    ru: { title: "Аренда Ford Weinsberg в Аликанте | Caravan Rent", description: "Ford Weinsberg CaraSuite в Аликанте, Торревьехе и Эльче. Дизель, механика, 4 места и 4 спальных. От 120 € в день." },
+    ua: { title: "Оренда Ford Weinsberg в Аліканте | Caravan Rent", description: "Ford Weinsberg CaraSuite в Аліканте, Торрев'єсі та Ельче. Дизель, механіка, 4 місця і 4 спальних. Від 120 € на день." },
   },
   "fiat-mclouis-mc4-379": {
-    es: { title: "Fiat-McLouis MC4 379 | Alquiler de autocaravanas", description: "Fiat McLouis MC4 379: diésel, automático, 5 plazas y 5 camas." },
-    en: { title: "Fiat-McLouis MC4 379 | Motorhome rental", description: "Fiat McLouis MC4 379: diesel, automatic, 5 seats and 5 beds." },
-    fr: { title: "Fiat-McLouis MC4 379 | Location de camping-car", description: "Fiat McLouis MC4 379 : diesel, automatique, 5 places et 5 couchages." },
-    de: { title: "Fiat-McLouis MC4 379 | Wohnmobil mieten", description: "Fiat McLouis MC4 379: Diesel, Automatik, 5 Sitze und 5 Betten." },
-    ru: { title: "Fiat-McLouis MC4 379 | Аренда автодома", description: "Fiat McLouis MC4 379: дизель, автомат, 5 мест и 5 спальных мест." },
-    ua: { title: "Fiat-McLouis MC4 379 | Оренда автодома", description: "Fiat McLouis MC4 379: дизель, автомат, 5 місць і 5 спальних місць." },
+    es: { title: "Alquiler Fiat McLouis en Alicante | Caravan Rent", description: "Fiat McLouis MC4 379 en Alicante, Torrevieja y Elche. Diésel, automático, 5 plazas y 5 camas. Desde 130 € al día." },
+    en: { title: "Fiat McLouis motorhome rental in Alicante | Caravan Rent", description: "Fiat McLouis MC4 379 in Alicante, Torrevieja and Elche. Diesel, automatic, 5 seats and 5 beds. From €130 a day." },
+    fr: { title: "Location Fiat McLouis à Alicante | Caravan Rent", description: "Fiat McLouis MC4 379 à Alicante, Torrevieja et Elche. Diesel, automatique, 5 places et 5 couchages. Dès 130 € par jour." },
+    de: { title: "Fiat McLouis Wohnmobil mieten in Alicante | Caravan Rent", description: "Fiat McLouis MC4 379 in Alicante, Torrevieja und Elche. Diesel, Automatik, 5 Sitze und 5 Betten. Ab 130 € pro Tag." },
+    ru: { title: "Аренда Fiat McLouis в Аликанте | Caravan Rent", description: "Fiat McLouis MC4 379 в Аликанте, Торревьехе и Эльче. Дизель, автомат, 5 мест и 5 спальных. От 130 € в день." },
+    ua: { title: "Оренда Fiat McLouis в Аліканте | Caravan Rent", description: "Fiat McLouis MC4 379 в Аліканте, Торрев'єсі та Ельче. Дизель, автомат, 5 місць і 5 спальних. Від 130 € на день." },
   },
   "peugeot-chausson": {
-    es: { title: "Peugeot Chausson | Alquiler de autocaravanas", description: "Peugeot Chausson 724: diésel, manual, 5 plazas y 6 camas." },
-    en: { title: "Peugeot Chausson | Motorhome rental", description: "Peugeot Chausson 724: diesel, manual, 5 seats and 6 beds." },
-    fr: { title: "Peugeot Chausson | Location de camping-car", description: "Peugeot Chausson 724 : diesel, manuelle, 5 places et 6 couchages." },
-    de: { title: "Peugeot Chausson | Wohnmobil mieten", description: "Peugeot Chausson 724: Diesel, Schaltgetriebe, 5 Sitze und 6 Betten." },
-    ru: { title: "Peugeot Chausson | Аренда автодома", description: "Peugeot Chausson 724: дизель, механика, 5 мест и 6 спальных мест." },
-    ua: { title: "Peugeot Chausson | Оренда автодома", description: "Peugeot Chausson 724: дизель, механіка, 5 місць і 6 спальних місць." },
+    es: { title: "Alquiler Peugeot Chausson en Alicante | Caravan Rent", description: "Peugeot Chausson 724 en Alicante, Torrevieja y Elche. Diésel, manual, 5 plazas y 6 camas. Desde 100 € al día, kilómetros ilimitados." },
+    en: { title: "Peugeot Chausson motorhome rental in Alicante | Caravan Rent", description: "Peugeot Chausson 724 in Alicante, Torrevieja and Elche. Diesel, manual, 5 seats and 6 beds. From €100 a day, unlimited kilometres." },
+    fr: { title: "Location Peugeot Chausson à Alicante | Caravan Rent", description: "Peugeot Chausson 724 à Alicante, Torrevieja et Elche. Diesel, manuelle, 5 places et 6 couchages. Dès 100 € par jour." },
+    de: { title: "Peugeot Chausson Wohnmobil mieten in Alicante | Caravan Rent", description: "Peugeot Chausson 724 in Alicante, Torrevieja und Elche. Diesel, Schaltung, 5 Sitze und 6 Betten. Ab 100 € pro Tag." },
+    ru: { title: "Аренда Peugeot Chausson в Аликанте | Caravan Rent", description: "Peugeot Chausson 724 в Аликанте, Торревьехе и Эльче. Дизель, механика, 5 мест и 6 спальных. От 100 € в день." },
+    ua: { title: "Оренда Peugeot Chausson в Аліканте | Caravan Rent", description: "Peugeot Chausson 724 в Аліканте, Торрев'єсі та Ельче. Дизель, механіка, 5 місць і 6 спальних. Від 100 € на день." },
   },
 };
 
@@ -206,6 +206,9 @@ const fixes = `
     width: auto !important;
   }
   .mirror-page .elementor-menu-toggle { display: none !important; }
+}
+.mirror-page .elementor-element-2c1a51c > .elementor-element-dede770 ~ .elementor-element-dede770 {
+  display: none !important;
 }
 .mirror-page .elementor-element-eaccd6c .elementor-icon-list-icon i,
 .mirror-page .elementor-element-ddb11c1 .elementor-icon-list-icon i { color: #ffa633 !important; }
@@ -694,7 +697,26 @@ const fixes = `
     font-size: 16px;
     font-weight: 500;
     line-height: 1.45;
-    margin: 0 0 16px;
+    margin: 0 0 10px;
+  }
+  .mirror-page .cr-hero-price {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 0 0 14px;
+  }
+  .mirror-page .cr-hero-price a {
+    color: #fff !important;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .vehicle-page h1.breadcrumb-title {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 15px;
   }
   .mirror-page .cr-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
   .mirror-page .cr-hero-actions a.btn {
@@ -1051,7 +1073,8 @@ export function mirrorHead(lang: Lang, slug = "") {
           addressRegion: "Alicante",
           addressCountry: "ES",
         },
-        areaServed: ["Alicante", "Torrevieja", "Elche"],
+        areaServed: ["Alicante", "Torrevieja", "Elche", "Alicante Airport"],
+        priceRange: "€100-€185",
       }
     : null;
   const vehicleOg: Record<string, string> = {
@@ -1074,10 +1097,10 @@ export function mirrorHead(lang: Lang, slug = "") {
       { rel: "canonical", href: canonical },
       ...languages.map((code) => ({
         rel: "alternate",
-        hrefLang: hrefLang[code],
+        hreflang: hrefLang[code],
         href: `${siteOrigin}${pagePath(code, clean) === "/" ? "/" : pagePath(code, clean)}`,
       })),
-      { rel: "alternate", hrefLang: "x-default", href: `${siteOrigin}${clean ? `/${clean}` : "/"}` },
+      { rel: "alternate", hreflang: "x-default", href: `${siteOrigin}${clean ? `/${clean}` : "/"}` },
       { rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.8.1/css/all.css" },
       {
         rel: "stylesheet",

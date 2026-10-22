@@ -184,7 +184,7 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     const heroStart = out.indexOf('<p class="explore-text">');
     const heroStop = heroStart >= 0 ? out.indexOf(heroEnd, heroStart) : -1;
     if (heroStart >= 0 && heroStop >= 0) {
-      const hero = `<div class="cr-hero"><h1>Motorhome rental in Alicante, Torrevieja and Elche</h1><p class="cr-hero-slogan">Your travel story begins here</p><ul class="cr-badges"><li>Wi-Fi Starlink</li><li>Unlimited kilometres</li><li>Free handover at Alicante Airport</li></ul><p class="cr-hero-lead">Your house on wheels on the Costa Blanca. Choose your dates and collect it in Alicante, Torrevieja, Elche or at the airport.</p><div class="view-all cr-hero-actions"><a href="#vans" class="btn btn-view d-inline-flex align-items-center">See availability</a><a href="https://wa.me/34607223726?text=Hola%2C%20solicitud%20desde%20la%20web%20de%20Caravanrent%20Alicante" class="btn btn-view cr-wa" target="_blank" rel="noopener">WhatsApp</a></div><div id="cr-place-slot"></div></div>`;
+      const hero = `<div class="cr-hero"><h1>Motorhome rental in Alicante, Torrevieja and Elche</h1><p class="cr-hero-slogan">Your travel story begins here</p><ul class="cr-badges"><li>Wi-Fi Starlink</li><li>Unlimited kilometres</li><li>Free handover at Alicante Airport</li></ul><p class="cr-hero-lead">Your house on wheels on the Costa Blanca. Choose your dates and collect it in Alicante, Torrevieja, Elche or at the airport.</p><p class="cr-hero-price"><a href="#vans">From €100 a day</a><a href="#reviews">Google reviews</a></p><div class="view-all cr-hero-actions"><a href="#vans" class="btn btn-view d-inline-flex align-items-center">See availability</a><a href="https://wa.me/34607223726?text=Hola%2C%20solicitud%20desde%20la%20web%20de%20Caravanrent%20Alicante" class="btn btn-view cr-wa" target="_blank" rel="noopener">WhatsApp</a></div><div id="cr-place-slot"></div></div>`;
       out = out.slice(0, heroStart) + hero + out.slice(heroStop + heroEnd.length);
     }
     const cut = cutSection(out, "reviews");
@@ -304,6 +304,39 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   out = out.replace(/https:\/\/www\.facebook\.com\/profile\.php\?id=61572446753379(?:&|&)[^"']*/g, "https://www.facebook.com/profile.php?id=61572446753379");
   out = out.replaceAll("callProcessText: 'We are calling you to phone'", "callProcessText: 'We\\'re calling you now'");
   out = out.replaceAll("callSuccessText: 'Thank you.<br/>We are call you back soon.'", "callSuccessText: 'Thank you.<br/>We\\'ll call you back soon.'");
+
+  const vehicleHeading: Record<string, Record<Lang, string>> = {
+    "ford-weinsberg": {
+      es: "Alquiler Ford Weinsberg en Alicante",
+      en: "Ford Weinsberg motorhome rental in Alicante",
+      fr: "Location Ford Weinsberg à Alicante",
+      de: "Ford Weinsberg in Alicante mieten",
+      ru: "Аренда Ford Weinsberg в Аликанте",
+      ua: "Оренда Ford Weinsberg в Аліканте",
+    },
+    "fiat-mclouis-mc4-379": {
+      es: "Alquiler Fiat McLouis en Alicante",
+      en: "Fiat McLouis motorhome rental in Alicante",
+      fr: "Location Fiat McLouis à Alicante",
+      de: "Fiat McLouis in Alicante mieten",
+      ru: "Аренда Fiat McLouis в Аликанте",
+      ua: "Оренда Fiat McLouis в Аліканте",
+    },
+    "peugeot-chausson": {
+      es: "Alquiler Peugeot Chausson en Alicante",
+      en: "Peugeot Chausson motorhome rental in Alicante",
+      fr: "Location Peugeot Chausson à Alicante",
+      de: "Peugeot Chausson in Alicante mieten",
+      ru: "Аренда Peugeot Chausson в Аликанте",
+      ua: "Оренда Peugeot Chausson в Аліканте",
+    },
+  };
+  if (vehicleHeading[slug]) {
+    out = out.replace(
+      /<h2 class="breadcrumb-title">[\s\S]*?<\/h2>/,
+      `<h1 class="breadcrumb-title">${vehicleHeading[slug][lang]}</h1>`,
+    );
+  }
 
   return out;
 }

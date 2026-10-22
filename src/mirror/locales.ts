@@ -43,32 +43,32 @@ export const pageMeta: Record<Lang, { title: string; description: string }> = {
   es: {
     title: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche | Caravan Rent",
     description:
-      "Alquiler de autocaravanas en Alicante, Torrevieja y Elche. Vehículos nuevos, kilometraje ilimitado en España y Starlink incluido.",
+      "Alquiler de autocaravanas en Alicante, Torrevieja y Elche. Autocaravanas nuevas, kilómetros ilimitados y Wi-Fi Starlink. Desde 100 € al día.",
   },
   en: {
-    title: "Motorhome rental in Alicante and Torrevieja | Caravan Rent",
+    title: "Motorhome rental in Alicante, Torrevieja and Elche | Caravan Rent",
     description:
-      "Motorhome rental in Torrevieja and Alicante. New caravans, unlimited mileage in Spain, Starlink included.",
+      "Motorhome rental in Alicante, Torrevieja and Elche. New motorhomes, unlimited kilometres and Starlink Wi-Fi. From €100 a day.",
   },
   fr: {
-    title: "Location de camping-car à Alicante et Torrevieja | Caravan Rent",
+    title: "Location de camping-car à Alicante, Torrevieja et Elche | Caravan Rent",
     description:
-      "Location de camping-cars à Torrevieja et Alicante. Véhicules neufs, kilométrage illimité en Espagne et Starlink inclus.",
+      "Location de camping-cars à Alicante, Torrevieja et Elche. Véhicules neufs, kilométrage illimité et Wi-Fi Starlink. Dès 100 € par jour.",
   },
   de: {
-    title: "Wohnmobil mieten in Alicante und Torrevieja | Caravan Rent",
+    title: "Wohnmobil mieten in Alicante, Torrevieja und Elche | Caravan Rent",
     description:
-      "Wohnmobilvermietung in Torrevieja und Alicante. Neue Fahrzeuge, unbegrenzte Kilometer in Spanien und Starlink inklusive.",
+      "Wohnmobil mieten in Alicante, Torrevieja und Elche. Neue Wohnmobile, unbegrenzte Kilometer und Starlink-WLAN. Ab 100 € pro Tag.",
   },
   ru: {
-    title: "Аренда автодомов в Аликанте и Торревьехе | Caravan Rent",
+    title: "Аренда автодомов в Аликанте, Торревьехе и Эльче | Caravan Rent",
     description:
-      "Аренда автодомов в Торревьехе и Аликанте. Новые автодома, безлимитный пробег по Испании и Starlink в комплекте.",
+      "Аренда автодомов в Аликанте, Торревьехе и Эльче. Новые автодома, пробег без лимита и Wi-Fi Starlink. От 100 € в день.",
   },
   ua: {
-    title: "Оренда автодомів в Аліканте та Торрев'єсі | Caravan Rent",
+    title: "Оренда автодомів в Аліканте, Торрев'єсі та Ельче | Caravan Rent",
     description:
-      "Оренда автодомів у Торрев'єсі та Аліканте. Нові автодоми, безлімітний пробіг Іспанією та Starlink у комплекті.",
+      "Оренда автодомів в Аліканте, Торрев'єсі та Ельче. Нові автодоми, пробіг без ліміту та Wi-Fi Starlink. Від 100 € на день.",
   },
 };
 
@@ -80,6 +80,8 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   FAQ: { es: "Preguntas", fr: "FAQ", de: "FAQ", ru: "Вопросы", ua: "Питання" },
   Reviews: { es: "Opiniones", fr: "Avis", de: "Bewertungen", ru: "Отзывы", ua: "Відгуки" },
   Blog: { es: "Blog", fr: "Blog", de: "Blog", ru: "Блог", ua: "Блог" },
+  "From €100 a day": { es: "Desde 100 € al día", fr: "Dès 100 € par jour", de: "Ab 100 € pro Tag", ru: "От 100 € в день", ua: "Від 100 € на день" },
+  "Google reviews": { es: "Opiniones en Google", fr: "Avis Google", de: "Google-Bewertungen", ru: "Отзывы в Google", ua: "Відгуки в Google" },
   "\u0421ontacts": { es: "Contacto", en: "Contacts", fr: "Contact", de: "Kontakt", ru: "Контакты", ua: "Контакти" },
   "100% Trusted caravan rental platform": {
     es: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche",
