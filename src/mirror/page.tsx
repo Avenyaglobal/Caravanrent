@@ -284,8 +284,8 @@ const fixes = `
   top: calc(var(--nav-top, 72px) + 8px) !important;
   right: 10px !important;
   left: auto !important;
-  width: min(280px, calc(100vw - 20px)) !important;
-  max-width: min(280px, calc(100vw - 20px)) !important;
+  width: max-content !important;
+  max-width: calc(100vw - 20px) !important;
   height: auto !important;
   max-height: calc(100vh - var(--nav-top, 72px) - 24px) !important;
   margin: 0 !important;
@@ -304,11 +304,11 @@ const fixes = `
 .mirror-page .elementor-nav-menu--dropdown .elementor-nav-menu,
 .mirror-page .elementor-nav-menu--dropdown .menu-item,
 .mirror-page .elementor-nav-menu--dropdown a.elementor-item {
-  width: 100% !important;
-  max-width: 100% !important;
+  width: auto !important;
+  max-width: none !important;
   overflow: visible !important;
-  white-space: normal !important;
-  text-align: right !important;
+  white-space: nowrap !important;
+  text-align: left !important;
   box-sizing: border-box !important;
 }
 .mirror-page .elementor-nav-menu--dropdown .menu-item,
@@ -324,7 +324,7 @@ const fixes = `
 }
 .mirror-page .elementor-nav-menu--dropdown a.elementor-item {
   display: flex !important;
-  justify-content: flex-end !important;
+  justify-content: flex-start !important;
   padding: 14px 18px !important;
   font-size: 16px !important;
   line-height: 1.35 !important;
