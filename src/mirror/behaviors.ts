@@ -286,6 +286,12 @@ export function startMirrorBehaviors() {
   document.querySelector(".progress-wrap")?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
+  const contact = document.getElementById("arcontactus");
+  if (contact) {
+    contact.classList.remove("right");
+    contact.classList.add("left");
+  }
+
   document.querySelector(".callback-countdown-block")?.classList.remove("display-flex", "show-messageners-block");
   document.querySelector(".arcontactus-message-button")?.addEventListener("click", (event) => {
     event.preventDefault();

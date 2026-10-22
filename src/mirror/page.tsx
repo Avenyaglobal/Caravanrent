@@ -251,6 +251,10 @@ const fixes = `
 .mirror-page .single-contact-info a::after { content: ""; position: absolute; inset: 0; }
 .mirror-page .progress-wrap { cursor: pointer; }
 .mirror-page .callback-countdown-block { display: none !important; }
+#arcontactus.arcontactus-widget.arcontactus-message:not(.open):not(.opened):not(.popup-opened) {
+  left: 20px !important;
+  right: auto !important;
+}
 .mirror-page .elementor-element-de578ca {
   background: #68a4a4 !important;
 }
