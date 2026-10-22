@@ -453,16 +453,20 @@ const fixes = `
 .lang-switch-btn::marker { content: ""; }
 .lang-switch[open] .lang-switch-btn { background: #127384; }
 .lang-switch:not([open]) .lang-switch-list { display: none !important; }
-.lang-switch-list {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
+.lang-switch[open] .lang-switch-list {
+  display: block !important;
+  position: fixed;
+  left: 50%;
+  right: auto;
+  top: calc(var(--nav-top, 56px) + 8px);
+  transform: translateX(-50%);
+  width: max-content;
+  min-width: 210px;
   z-index: 1000006;
   margin: 0;
   padding: 6px 0;
   list-style: none;
   background: #fff;
-  min-width: 196px;
   border-radius: 8px;
   box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
 }
