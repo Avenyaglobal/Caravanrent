@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { notFound } from "@tanstack/react-router";
 import { BookingForm } from "@/mirror/booking";
+import { RentalFacts } from "@/mirror/rental-facts";
 import extraCss from "@/mirror/extra.css?raw";
 import { startMirrorBehaviors } from "@/mirror/behaviors";
 import { localizeHtml } from "@/mirror/localize";
@@ -686,6 +687,34 @@ const fixes = `
     line-height: 1.4;
     text-align: center !important;
   }
+  .mirror-page .cr-facts {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 980px;
+    margin: 6px auto 26px;
+    text-align: left;
+  }
+  .mirror-page .cr-facts section { min-width: 0; }
+  .mirror-page .cr-facts h3 {
+    margin: 0 0 6px;
+    color: #127384;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .mirror-page .cr-facts p {
+    margin: 0 0 6px;
+    color: #17191a;
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 500;
+  }
+  @media (max-width: 900px) {
+    .mirror-page .cr-facts { grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  }
+  @media (max-width: 560px) {
+    .mirror-page .cr-facts { grid-template-columns: 1fr; }
+  }
   .mirror-page .cr-book input::placeholder {
     color: rgba(23, 25, 26, .35);
   }
@@ -918,10 +947,12 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const html = localizeHtml(source, lang, slug.replace(/^\/+|\/+$/g, ""));
   const vehicle = ["ford-weinsberg", "fiat-mclouis-mc4-379", "peugeot-chausson"].includes(slug);
   const [slot, setSlot] = useState<HTMLElement | null>(null);
+  const [factsSlot, setFactsSlot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
     const stop = startMirrorBehaviors();
     setSlot(document.getElementById("cr-booking-slot"));
+    setFactsSlot(document.getElementById("cr-rental-facts"));
     const box = document.getElementById("trustindex-reviews");
     if (box && !box.querySelector("script")) {
       box.innerHTML =
@@ -935,6 +966,7 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
     return () => {
       stop();
       setSlot(null);
+      setFactsSlot(null);
     };
   }, [lang, slug]);
 
@@ -944,6 +976,7 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
       <PeugeotPromo lang={lang} slug={clean} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
       {slot ? createPortal(<BookingForm lang={lang} vehicle={vehicle ? slug : undefined} />, slot) : null}
+      {factsSlot ? createPortal(<RentalFacts lang={lang} />, factsSlot) : null}
     </div>
   );
 }
