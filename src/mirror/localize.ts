@@ -1,4 +1,5 @@
 import { contentSlugs } from "@/mirror/sources";
+import { homePlaceLinks } from "@/mirror/places";
 import siteHeader from "@/mirror/site-header.html?raw";
 import { languageCode, languageName, languages, pagePath, translate, type Lang } from "@/mirror/locales";
 import { termsCopy } from "@/mirror/terms-copy";
@@ -153,7 +154,7 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     ru: "Выдача в Аликанте, Торревьехе и Эльче",
     ua: "Видача в Аліканте, Торрев'єсі та Ельче",
   };
-  if (!slug) out = out.replace("</h1>", `</h1><p class="cr-cities">${cities[lang]}</p>`);
+  if (!slug) out = out.replace("</h1>", `</h1><p class="cr-cities">${cities[lang]}</p>${homePlaceLinks(lang)}`);
   for (const name of ["Ford - Weinsberg CaraSuite 650 MEG", "Fiat-McLouis MC4 379", "Peugeot - Chausson 724 EtapeLine"]) {
     out = out.replaceAll(`${name}</figcaption>`, `${name}<br><span class="cr-cities">${cities[lang]}</span></figcaption>`);
   }

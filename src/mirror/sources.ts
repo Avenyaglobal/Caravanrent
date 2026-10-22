@@ -1,4 +1,5 @@
 import bodyHtml from "@/mirror/body.html?raw";
+import { placeSlugs } from "@/mirror/places";
 import advantagesHtml from "../../public/mirror/the-advantages-of-traveling-in-motorhomes-in-spain/index.html?raw";
 import packingHtml from "../../public/mirror/what-to-take-on-a-motorhome-trip-to-spain-essential-packing-guide/index.html?raw";
 import chooseHtml from "../../public/mirror/how-to-choose-a-motorhome-for-rent-and-key-things-to-consider/index.html?raw";
@@ -30,7 +31,7 @@ const bodies: Record<string, string> = Object.fromEntries(
   Object.entries(documents).map(([slug, html]) => [slug, extractBody(html)]),
 );
 
-export const contentSlugs = ["", ...Object.keys(bodies)];
+export const contentSlugs = ["", ...Object.keys(bodies), ...placeSlugs];
 
 export function getPageHtml(slug: string) {
   const clean = slug.replace(/^\/+|\/+$/g, "");

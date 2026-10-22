@@ -8,6 +8,7 @@ import { startMirrorBehaviors } from "@/mirror/behaviors";
 import { localizeHtml } from "@/mirror/localize";
 import { languages, pageMeta, pagePath, siteOrigin, type Lang } from "@/mirror/locales";
 import { getPageHtml } from "@/mirror/sources";
+import { placeHtml, placeMeta } from "@/mirror/places";
 
 const themeCss = "/mirror/wp-content/cache/breeze-minification/css/breeze_caravanrent-alicante-com-1-17.css";
 const vehicleCss: Record<string, string> = {
@@ -612,6 +613,73 @@ const fixes = `
     font-size: 18px;
     line-height: 1.3;
   }
+  .mirror-page .cr-home-places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 4px;
+  }
+  .mirror-page .cr-home-places a,
+  .mirror-page .cr-place-more a {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    border: 1px solid #1aa6b8;
+    border-radius: 999px;
+    color: #127384;
+    background: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .mirror-page .cr-place { color: #17191a; background: #fff; }
+  .mirror-page .cr-place-hero {
+    padding: 28px 20px 32px;
+    background: #1aa6b8;
+    color: #fff;
+  }
+  .mirror-page .cr-place-hero h1,
+  .mirror-page .cr-place h2 { margin: 0 0 10px; color: inherit; font-weight: 700; }
+  .mirror-page .cr-place-hero h1 { font-size: 34px; line-height: 1.15; }
+  .mirror-page .cr-place-kicker { margin: 0 0 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .mirror-page .cr-place-hero p { max-width: 760px; margin: 0; font-size: 18px; line-height: 1.45; }
+  .mirror-page .cr-place-facts,
+  .mirror-page .cr-place-copy,
+  .mirror-page .cr-place-fleet,
+  .mirror-page .cr-place-prices,
+  .mirror-page .cr-place-more { max-width: 980px; margin: 0 auto; padding: 22px 20px 0; }
+  .mirror-page .cr-place-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 22px; }
+  .mirror-page .cr-place-facts article { padding: 14px; border-radius: 14px; background: #e7f6f8; }
+  .mirror-page .cr-place-facts h2 { font-size: 18px; color: #127384; }
+  .mirror-page .cr-place-facts p,
+  .mirror-page .cr-place-copy p,
+  .mirror-page .cr-place-prices p { margin: 0 0 12px; line-height: 1.5; }
+  .mirror-page .cr-place-map a { color: #127384; font-weight: 700; }
+  .mirror-page .cr-place-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .mirror-page .cr-place-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #127384;
+    color: #fff;
+    text-decoration: none;
+  }
+  .mirror-page .cr-place-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .mirror-page .cr-place-card strong,
+  .mirror-page .cr-place-card span,
+  .mirror-page .cr-place-card em { padding: 0 12px; color: #fff; font-style: normal; }
+  .mirror-page .cr-place-card em { padding-bottom: 12px; font-weight: 700; }
+  .mirror-page .cr-place-prices table { width: 100%; border-collapse: collapse; margin: 0 0 12px; }
+  .mirror-page .cr-place-prices th,
+  .mirror-page .cr-place-prices td { padding: 8px 6px; border-bottom: 1px solid #d7e6e8; text-align: left; }
+  .mirror-page .cr-place-more { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-bottom: 28px; }
+  .mirror-page .cr-place-more h2 { width: 100%; }
+  @media (max-width: 700px) {
+    .mirror-page .cr-place-facts,
+    .mirror-page .cr-place-cards { grid-template-columns: 1fr; }
+    .mirror-page .cr-place-hero h1 { font-size: 28px; }
+  }
   .mirror-page .cr-book {
     margin: 16px auto 8px;
     max-width: 920px;
@@ -840,7 +908,7 @@ export function languageFromPath(pathname: string): Lang {
 
 export function mirrorHead(lang: Lang, slug = "") {
   const clean = slug.replace(/^\/+|\/+$/g, "");
-  const meta = pageCopy[clean]?.[lang] ?? pageMeta[lang];
+  const meta = placeMeta(clean, lang) ?? pageCopy[clean]?.[lang] ?? pageMeta[lang];
   const path = pagePath(lang, clean);
   const hrefLang: Record<Lang, string> = { es: "es", en: "en", fr: "fr", de: "de", ru: "ru", ua: "uk" };
   const canonical = `${siteOrigin}${path === "/" ? "/" : path}`;
@@ -942,7 +1010,7 @@ function PeugeotPromo({ lang, slug }: { lang: Lang; slug: string }) {
 
 export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const clean = slug.replace(/^\/+|\/+$/g, "");
-  const source = getPageHtml(slug);
+  const source = placeHtml(clean, lang) ?? getPageHtml(slug);
   if (!source) throw notFound();
   const html = localizeHtml(source, lang, slug.replace(/^\/+|\/+$/g, ""));
   const vehicle = ["ford-weinsberg", "fiat-mclouis-mc4-379", "peugeot-chausson"].includes(slug);
