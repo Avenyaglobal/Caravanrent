@@ -167,6 +167,17 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   out = out.replace(/<div class="gtranslate_wrapper[\s\S]*?<div id="google_translate_element2"><\/div><\/div><\/div>/, "");
 
   if (!slug) {
+    out = out.replace(
+      '<h2 class="title text-white">Our caravans</h2>',
+      '<h2 id="vans" class="title text-white">Our caravans</h2>',
+    );
+    const heroEnd = 'How book <span><i class="feather-arrow-right ms-2"></i></span></a></div>';
+    const heroStart = out.indexOf('<p class="explore-text">');
+    const heroStop = heroStart >= 0 ? out.indexOf(heroEnd, heroStart) : -1;
+    if (heroStart >= 0 && heroStop >= 0) {
+      const hero = `<div class="cr-hero"><h1>Motorhome rental in Alicante, Torrevieja and Elche</h1><p class="cr-hero-slogan">Your travel story begins here</p><ul class="cr-badges"><li>Wi-Fi Starlink</li><li>Unlimited kilometres</li><li>Free handover at Alicante Airport</li></ul><p class="cr-hero-lead">Your house on wheels on the Costa Blanca. Choose your dates and collect it in Alicante, Torrevieja, Elche or at the airport.</p><div class="view-all cr-hero-actions"><a href="#vans" class="btn btn-view d-inline-flex align-items-center">See availability</a><a href="https://wa.me/34607223726" class="btn btn-view cr-wa" target="_blank" rel="noopener">WhatsApp</a></div><div id="cr-place-slot"></div></div>`;
+      out = out.slice(0, heroStart) + hero + out.slice(heroStop + heroEnd.length);
+    }
     const cut = cutSection(out, "reviews");
     if (cut) {
       const section = stripElement(cut.section, "298626b").replace(
@@ -215,9 +226,40 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     ru: "Выдача в Аликанте, Торревьехе и Эльче",
     ua: "Видача в Аліканте, Торрев'єсі та Ельче",
   };
-  if (!slug) out = out.replace("</h1>", `</h1><p class="cr-cities">${cities[lang]}</p>${homePlaceLinks(lang)}`);
-  for (const name of ["Ford - Weinsberg CaraSuite 650 MEG", "Fiat-McLouis MC4 379", "Peugeot - Chausson 724 EtapeLine"]) {
-    out = out.replaceAll(`${name}</figcaption>`, `${name}<br><span class="cr-cities">${cities[lang]}</span></figcaption>`);
+  if (!slug && out.includes('id="cr-place-slot"')) out = out.replace('<div id="cr-place-slot"></div>', homePlaceLinks(lang));
+  else if (!slug) out = out.replace("</h1>", `</h1><p class="cr-cities">${cities[lang]}</p>${homePlaceLinks(lang)}`);
+  const peugeotPrice = Date.now() <= Date.parse("2026-12-28T23:59:59+01:00") ? "100" : "120";
+  const cardMeta: Record<string, Record<Lang, string>> = {
+    "Ford - Weinsberg CaraSuite 650 MEG": {
+      es: "desde 120 €/día · 4 plazas · 4 camas · manual",
+      en: "from €120/day · 4 seats · 4 beds · manual",
+      fr: "dès 120 €/jour · 4 places · 4 couchages · manuelle",
+      de: "ab 120 €/Tag · 4 Sitze · 4 Betten · Schaltung",
+      ru: "от 120 €/день · 4 места · 4 спальных · механика",
+      ua: "від 120 €/день · 4 місця · 4 спальних · механіка",
+    },
+    "Fiat-McLouis MC4 379": {
+      es: "desde 130 €/día · 5 plazas · 5 camas · automático",
+      en: "from €130/day · 5 seats · 5 beds · automatic",
+      fr: "dès 130 €/jour · 5 places · 5 couchages · automatique",
+      de: "ab 130 €/Tag · 5 Sitze · 5 Betten · Automatik",
+      ru: "от 130 €/день · 5 мест · 5 спальных · автомат",
+      ua: "від 130 €/день · 5 місць · 5 спальних · автомат",
+    },
+    "Peugeot - Chausson 724 EtapeLine": {
+      es: `desde ${peugeotPrice} €/día · 5 plazas · 6 camas · manual`,
+      en: `from €${peugeotPrice}/day · 5 seats · 6 beds · manual`,
+      fr: `dès ${peugeotPrice} €/jour · 5 places · 6 couchages · manuelle`,
+      de: `ab ${peugeotPrice} €/Tag · 5 Sitze · 6 Betten · Schaltung`,
+      ru: `от ${peugeotPrice} €/день · 5 мест · 6 спальных · механика`,
+      ua: `від ${peugeotPrice} €/день · 5 місць · 6 спальних · механіка`,
+    },
+  };
+  for (const [name, meta] of Object.entries(cardMeta)) {
+    out = out.replaceAll(
+      `${name}</figcaption>`,
+      `${name}<br><span class="cr-van-meta">${meta[lang]}</span><br><span class="cr-cities">${cities[lang]}</span></figcaption>`,
+    );
   }
   out = out.replace(/<div id="(faq_\d+)" class="card-collapse[^"]*">/g, `<div id="$1" class="card-collapse show" style="display:block">`);
   out = out.replace(/<div id="faq_\d+" class="card-collapse show" style="display:block"><p>/g, (full) => full.replace("<p>", `<p style="display:block;color:#201f1d;font-size:16px;line-height:1.45;margin:12px 0 0">`));

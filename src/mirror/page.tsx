@@ -622,6 +622,83 @@ const fixes = `
     font-size: 18px;
     line-height: 1.3;
   }
+}
+  .mirror-page .cr-hero {
+    background: rgba(8, 42, 50, 0.62);
+    border-radius: 16px;
+    padding: 18px 18px 8px;
+  }
+  .mirror-page .banner-section .cr-hero h1 {
+    font-size: clamp(26px, 3.2vw, 40px) !important;
+    line-height: 1.15 !important;
+    height: auto !important;
+    margin: 0 0 8px !important;
+    color: #fff !important;
+  }
+  .mirror-page .banner-section .cr-hero .cr-hero-slogan,
+  .mirror-page .banner-section .cr-hero .cr-hero-lead {
+    color: #fff !important;
+  }
+  .mirror-page .banner-section .cr-hero .cr-hero-slogan { margin: 0 0 12px; font-weight: 600; }
+  .mirror-page .cr-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    list-style: none;
+    margin: 0 0 14px;
+    padding: 0;
+  }
+  .mirror-page .cr-badges li {
+    background: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.3;
+    padding: 0;
+    border-radius: 0;
+    cursor: default;
+  }
+  .mirror-page .cr-badges li::before {
+    content: "✓ ";
+    color: #8ee0cf;
+    font-weight: 700;
+  }
+  .mirror-page .cr-hero-lead {
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0 0 16px;
+  }
+  .mirror-page .cr-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .mirror-page .cr-hero-actions a.btn {
+    margin: 0;
+    background-image: none !important;
+    background-color: #1aa6b8 !important;
+    border: 0 !important;
+    color: #fff !important;
+  }
+  .mirror-page .cr-hero-actions a.cr-wa { background-color: #1ebe5d !important; }
+  .mirror-page .cr-hero .cr-home-places { margin-top: 14px; }
+  .mirror-page .cr-hero .cr-home-places a {
+    background: #fff !important;
+    color: #127384 !important;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    border: 0 !important;
+  }
+  @media (max-width: 991px) {
+    .mirror-page .banner-imgs img { max-height: 210px; width: 100%; object-fit: cover; }
+  }
+  .mirror-page figcaption .cr-van-meta {
+    display: inline-block;
+    margin-top: 6px;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+@media (max-width: 767px) {
   .mirror-page .cr-home-places {
     display: flex;
     flex-wrap: wrap;
