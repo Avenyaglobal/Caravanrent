@@ -452,6 +452,7 @@ const fixes = `
 .lang-switch-btn::-webkit-details-marker { display: none; }
 .lang-switch-btn::marker { content: ""; }
 .lang-switch[open] .lang-switch-btn { background: #127384; }
+.lang-switch:not([open]) .lang-switch-list { display: none !important; }
 .lang-switch-list {
   position: absolute;
   right: 0;
