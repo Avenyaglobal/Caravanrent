@@ -466,7 +466,9 @@ const fixes = `
   border-radius: 8px;
   box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
 }
-.lang-switch-list a { display: block; padding: 9px 14px; color: #201f1d; text-decoration: none; font-size: 15px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.lang-switch-list a { display: flex; align-items: center; gap: 10px; padding: 9px 14px; color: #201f1d; text-decoration: none; font-size: 15px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.lang-flag { display: inline-flex; width: 18px; height: 12px; flex: 0 0 18px; border-radius: 2px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0, 0, 0, .15); }
+.lang-flag svg { display: block; width: 18px; height: 12px; }
 .lang-switch-list a:hover { background: #f3f7f7; }
 .lang-switch-list a[aria-current="true"] { color: #127384; font-weight: 700; }
 .mirror-page .elementor-element-c44b831 img,

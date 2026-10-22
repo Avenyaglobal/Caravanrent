@@ -61,11 +61,20 @@ function rewriteHref(href: string, lang: Lang) {
   return pagePath(lang, path);
 }
 
+const languageFlag: Record<Lang, string> = {
+  es: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#c60b1e"/><rect y="3" width="18" height="6" fill="#ffc400"/></svg>`,
+  en: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#012169"/><path d="M0 0 L18 12 M18 0 L0 12" stroke="#fff" stroke-width="2.4"/><path d="M0 0 L18 12 M18 0 L0 12" stroke="#c8102e" stroke-width="1.2"/><path d="M9 0 V12 M0 6 H18" stroke="#fff" stroke-width="4"/><path d="M9 0 V12 M0 6 H18" stroke="#c8102e" stroke-width="2.2"/></svg>`,
+  fr: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="6" height="12" fill="#0055a4"/><rect x="6" width="6" height="12" fill="#fff"/><rect x="12" width="6" height="12" fill="#ef4135"/></svg>`,
+  de: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="4" fill="#000"/><rect y="4" width="18" height="4" fill="#dd0000"/><rect y="8" width="18" height="4" fill="#ffce00"/></svg>`,
+  ru: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="4" fill="#fff"/><rect y="4" width="18" height="4" fill="#0039a6"/><rect y="8" width="18" height="4" fill="#d52b1e"/></svg>`,
+  ua: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="6" fill="#005bbb"/><rect y="6" width="18" height="6" fill="#ffd500"/></svg>`,
+};
+
 function languageItem(lang: Lang, slug: string) {
   const items = languages
     .map((code) => {
       const current = code === lang ? ' aria-current="true"' : "";
-      return `<li><a href="${pagePath(code, slug)}" hreflang="${code}"${current}>${languageName[code]}</a></li>`;
+      return `<li><a href="${pagePath(code, slug)}" hreflang="${code}"${current}><span class="lang-flag">${languageFlag[code]}</span>${languageName[code]}</a></li>`;
     })
     .join("");
   return `<li class="elementor-icon-list-item elementor-inline-item lang-switch-item"><details class="lang-switch"><summary class="lang-switch-btn">${languageCode[lang]}</summary><ul class="lang-switch-list">${items}</ul></details></li>`;
