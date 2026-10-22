@@ -101,6 +101,7 @@ export const articlePhrases: Record<string, Partial<Record<Lang, string>>> = {
     "Was Sie für eine bequeme Wohnmobilreise durch Spanien einpacken: Papiere, Kleidung, Küche und das Nötigste zum Campen...",
     "Что взять, чтобы поездка по Испании на автодоме была удобной: документы, одежда, кухня и базовый кемпинг...",
     "Що взяти, щоб поїздка Іспанією автодомом була зручною: документи, одяг, кухня і базовий кемпінг...",
+    "Traveling by motorhome in Spain offers freedom and convenience. Pack documents, clothes, kitchen items and camping basics so the trip stays comfortable.",
   ),
   "Renting a motorhome for a trip is an exciting way to experience the freedom of the open road. However, with various models and features to choose from, it’s important to...": row(
     "Alquilar una autocaravana es una forma libre de viajar. Con tantos modelos, conviene mirar tamaño, camas y condiciones antes de...",

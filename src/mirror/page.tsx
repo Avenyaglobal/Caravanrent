@@ -228,6 +228,15 @@ const fixes = `
 @media (max-width: 767px) {
   .mirror-page .cr-head-spacer { height: 56px; }
 }
+.mirror-page .nav-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mirror-page .nav-social a { color: #127384; font-size: 18px; }
 .mirror-page .elementor-sticky__spacer {
   display: block !important;
   visibility: hidden !important;

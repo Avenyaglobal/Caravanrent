@@ -18,7 +18,7 @@ export const posts: Post[] = [
     slug: "advantages-of-motorhomes-in-spain",
     title: "The Advantages of Traveling in Motorhomes in Spain",
     date: "2024-08-05",
-    author: "Адміністратор",
+    author: "Caravan Rent Alicante",
     excerpt:
       "Sun, villages and cities — and the freedom to stay longer wherever Spain gets under your skin.",
     sections: [
@@ -87,7 +87,7 @@ export const posts: Post[] = [
     slug: "packing-guide-spain",
     title: "What to Take on a Motorhome Trip to Spain",
     date: "2024-04-01",
-    author: "Адміністратор",
+    author: "Caravan Rent Alicante",
     excerpt:
       "Documents, layers, a few kitchen staples — and what you can leave at home because the van already has it.",
     sections: [
@@ -144,7 +144,7 @@ export const posts: Post[] = [
     slug: "how-to-choose-a-motorhome",
     title: "How to Choose a Motorhome for Rent",
     date: "2024-01-30",
-    author: "Адміністратор",
+    author: "Caravan Rent Alicante",
     excerpt:
       "Berths, bathroom, mileage and who is actually driving. The short version of a long decision.",
     sections: [

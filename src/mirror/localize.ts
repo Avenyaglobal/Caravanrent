@@ -86,11 +86,23 @@ const menuSections: Record<string, string> = {
   Contacts: "contact",
 };
 
+function stripThemeHeader(html: string) {
+  if (!html.includes("elementor-sticky--active")) return html;
+  const start = html.indexOf('<header class="header">');
+  if (start < 0) return html;
+  const end = html.indexOf("</header>", start);
+  if (end < 0) return html;
+  return html.slice(0, start) + html.slice(end + "</header>".length);
+}
+
+const footerSocial = `<ul class="nav-social"><li><a href="https://www.instagram.com/caravanrentalicante" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li><li><a href="https://www.facebook.com/profile.php?id=61572446753379" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li><li><a href="https://www.youtube.com/@caravanrentalicante" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></li><li><a href="https://t.me/caravanrentalicante" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a></li></ul>`;
+
 export function localizeHtml(html: string, lang: Lang, slug = "") {
   let source = html;
   if (!source.includes("elementor-sticky--active")) {
     source = `${siteHeader}<div class="cr-head-spacer" aria-hidden="true"></div>${source}`;
   }
+  source = stripThemeHeader(source);
   let out = source.replace(/href="([^"]+)"/g, (full, href: string) => {
     const next = rewriteHref(decode(href), lang);
     return next ? `href="${next}"` : full;
@@ -183,6 +195,15 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   if (slug === "ford-weinsberg" || slug === "fiat-mclouis-mc4-379" || slug === "peugeot-chausson") {
     out = afterGallery(out);
   }
+
+  if (lang === "en") {
+    out = out.replace(/<p class="explore-text">[\s\S]*?100% Trusted caravan rental platform<\/p>/, "");
+  }
+  out = out.replace(/<ul class="nav-social">[\s\S]*?<\/ul>/g, footerSocial);
+  out = out.replaceAll("https://www.facebook.com/share/1B68t6WTrZ/", "https://www.facebook.com/profile.php?id=61572446753379");
+  out = out.replace(/https:\/\/www\.facebook\.com\/profile\.php\?id=61572446753379(?:&|&)[^"']*/g, "https://www.facebook.com/profile.php?id=61572446753379");
+  out = out.replaceAll("callProcessText: 'We are calling you to phone'", "callProcessText: 'We\\'re calling you now'");
+  out = out.replaceAll("callSuccessText: 'Thank you.<br/>We are call you back soon.'", "callSuccessText: 'Thank you.<br/>We\\'ll call you back soon.'");
 
   return out;
 }

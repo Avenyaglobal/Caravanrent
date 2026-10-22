@@ -9,7 +9,7 @@ const nav = [
   { href: "/#faq", label: "FAQ" },
   { href: "/#reviews", label: "Reviews" },
   { href: "/#blog", label: "Blog" },
-  { href: "/#contact", label: "Сontacts" },
+  { href: "/#contact", label: "Contacts" },
 ];
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -89,7 +89,7 @@ export function Shell({ children }: { children: ReactNode }) {
               Privacy Policy
             </Link>
           </p>
-          <p>Copyright 2024-2025 © Caravanrent-Alicante S.L., All Rights Reserved.</p>
+          <p>Copyright 2024–2026 © Caravanrent-Alicante S.L., All Rights Reserved.</p>
         </div>
       </footer>
       <a
