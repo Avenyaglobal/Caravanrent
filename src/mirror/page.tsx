@@ -370,8 +370,8 @@ const fixes = `
   .mirror-page .elementor-element-12f2d0c img {
     width: auto !important;
     max-width: none !important;
-    height: 80px !important;
-    max-height: 80px !important;
+    height: 68px !important;
+    max-height: 68px !important;
     object-fit: contain !important;
   }
   .mirror-page .elementor-element-e7fc08a > .e-con-inner > .elementor-element,
