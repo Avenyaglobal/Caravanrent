@@ -661,6 +661,9 @@ const fixes = `
     border-radius: 16px;
     padding: 18px 18px 8px;
   }
+@media (max-width: 1024px) {
+  .mirror-page .banner-section { padding-top: 25px !important; }
+}
   .mirror-page .banner-section .cr-hero h1 {
     font-size: clamp(26px, 3.2vw, 40px) !important;
     line-height: 1.15 !important;
