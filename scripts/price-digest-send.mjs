@@ -59,12 +59,47 @@ async function readText(path) {
   }
 }
 
+async function pause(ms) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function createStore() {
-  const created = await fetch("https://crudcrud.com/api", { method: "POST" });
-  if (!created.ok) throw new Error(`create ${created.status}`);
-  const id = (await created.text()).trim().replace(/^"|"$/g, "");
-  if (!/^[a-f0-9]{32}$/i.test(id)) throw new Error(`bad id ${id}`);
-  return `https://crudcrud.com/api/${id}/looks`;
+  let last = "network";
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    try {
+      const created = await fetch("https://crudcrud.com/api", { method: "POST" });
+      last = String(created.status);
+      if (created.ok) {
+        const id = (await created.text()).trim().replace(/^"|"$/g, "");
+        if (/^[a-f0-9]{32}$/i.test(id)) return `https://crudcrud.com/api/${id}/looks`;
+        last = `bad id ${id}`;
+      }
+    } catch (error) {
+      last = error instanceof Error ? error.message : "network";
+    }
+    await pause(4000 * attempt);
+  }
+  throw new Error(`create ${last}`);
+}
+
+async function readLooks(url) {
+  let last = "network";
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    try {
+      const listed = await fetch(url);
+      last = String(listed.status);
+      if (listed.ok) {
+        const data = await listed.json();
+        if (!Array.isArray(data)) throw new Error("store was not a list");
+        return data;
+      }
+      if (listed.status < 500 && listed.status !== 429) break;
+    } catch (error) {
+      last = error instanceof Error ? error.message : "network";
+    }
+    await pause(4000 * attempt);
+  }
+  throw new Error(`store read ${last}`);
 }
 
 const clock = madrid();
@@ -81,23 +116,18 @@ if (!forced && (await readText("data/digest-day.txt")) === today) {
 }
 
 const url = await readText("data/store-url.txt");
-let rows = [];
-if (url.startsWith("https://crudcrud.com/api/")) {
-  const listed = await fetch(url);
-  if (listed.ok) {
-    const data = await listed.json();
-    if (Array.isArray(data)) rows = fresh(data);
-    else console.error("store was not a list");
-  } else {
-    console.error("store read", listed.status);
-  }
-}
+if (!url.startsWith("https://crudcrud.com/api/")) throw new Error("no store");
+const rows = fresh(await readLooks(url));
 const text = `${today}\n${letter(rows)}`;
 await writeFile("data/digest-letter.txt", text);
 await writeFile("public/price-letter.txt", text);
 console.log("letter", rows.length);
 
-const nextUrl = await createStore();
-await writeFile("data/store-url.txt", `${nextUrl}\n`);
+try {
+  const nextUrl = await createStore();
+  await writeFile("data/store-url.txt", `${nextUrl}\n`);
+  console.log("rotated", nextUrl);
+} catch (error) {
+  console.error("keep current store", error instanceof Error ? error.message : error);
+}
 await writeFile("data/digest-day.txt", `${today}\n`);
-console.log("rotated", nextUrl);

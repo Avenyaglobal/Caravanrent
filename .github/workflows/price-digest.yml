@@ -1,8 +1,8 @@
 name: price-digest
 on:
   schedule:
-    # 08:15 Madrid in summer or winter. A late start still sends: the script accepts 07:00–10:59.
-    - cron: "15 6,7 * * *"
+    # 08:15, 09:15 and 10:15 Madrid. A failed read is retried by the next run.
+    - cron: "15 6,7,8 * * *"
   workflow_dispatch:
 permissions:
   contents: write
