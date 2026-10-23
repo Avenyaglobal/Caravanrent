@@ -697,19 +697,7 @@ const fixes = `
     font-size: 16px;
     font-weight: 500;
     line-height: 1.45;
-    margin: 0 0 10px;
-  }
-  .mirror-page .cr-hero-price {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    margin: 0 0 14px;
-  }
-  .mirror-page .cr-hero-price a {
-    color: #fff !important;
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    margin: 0 0 16px;
   }
   .vehicle-page h1.breadcrumb-title {
     color: #fff;

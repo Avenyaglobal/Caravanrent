@@ -80,8 +80,6 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   FAQ: { es: "Preguntas", fr: "FAQ", de: "FAQ", ru: "Вопросы", ua: "Питання" },
   Reviews: { es: "Opiniones", fr: "Avis", de: "Bewertungen", ru: "Отзывы", ua: "Відгуки" },
   Blog: { es: "Blog", fr: "Blog", de: "Blog", ru: "Блог", ua: "Блог" },
-  "From €100 a day": { es: "Desde 100 € al día", fr: "Dès 100 € par jour", de: "Ab 100 € pro Tag", ru: "От 100 € в день", ua: "Від 100 € на день" },
-  "Google reviews": { es: "Opiniones en Google", fr: "Avis Google", de: "Google-Bewertungen", ru: "Отзывы в Google", ua: "Відгуки в Google" },
   "\u0421ontacts": { es: "Contacto", en: "Contacts", fr: "Contact", de: "Kontakt", ru: "Контакты", ua: "Контакти" },
   "100% Trusted caravan rental platform": {
     es: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche",
