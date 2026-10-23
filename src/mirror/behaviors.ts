@@ -18,18 +18,19 @@ export function startMirrorBehaviors() {
     el.style.maxWidth = "100%";
   });
 
-  const head = document.querySelector<HTMLElement>(".elementor-sticky--active");
+  const head = document.querySelector<HTMLElement>(".elementor-element-dede770.elementor-sticky--active");
   const spacer = document.querySelector<HTMLElement>(".cr-head-spacer");
-  if (head && spacer) spacer.style.height = `${head.offsetHeight}px`;
-
-  const placeNav = () => {
-    const header = document.querySelector<HTMLElement>(".elementor-sticky--active");
+  const stickySpacer = document.querySelector<HTMLElement>(".elementor-sticky__spacer");
+  const syncHeaderSpace = () => {
+    const header = document.querySelector<HTMLElement>(".elementor-element-dede770.elementor-sticky--active");
     if (!header) return;
+    const height = `${header.offsetHeight}px`;
     document.documentElement.style.setProperty("--nav-top", `${Math.round(header.getBoundingClientRect().bottom)}px`);
-    if (spacer) spacer.style.height = `${header.offsetHeight}px`;
+    if (spacer) spacer.style.height = height;
+    if (stickySpacer) stickySpacer.style.setProperty("height", height, "important");
   };
-  placeNav();
-  window.addEventListener("resize", placeNav);
+  syncHeaderSpace();
+  window.addEventListener("resize", syncHeaderSpace);
 
   const menuBtn = document.querySelector("#mobile_btn");
   const menuClose = document.querySelector("#menu_close");
@@ -319,7 +320,7 @@ export function startMirrorBehaviors() {
 
   return () => {
     window.clearInterval(reviewTimer);
-    window.removeEventListener("resize", placeNav);
+    window.removeEventListener("resize", syncHeaderSpace);
     document.removeEventListener("toggle", onPanelToggle, true);
     document.removeEventListener("change", onMenuChange);
     document.removeEventListener("click", onOutsideMenu, true);

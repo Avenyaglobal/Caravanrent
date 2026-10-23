@@ -207,7 +207,7 @@ const fixes = `
   }
   .mirror-page .elementor-menu-toggle { display: none !important; }
 }
-.mirror-page .elementor-element-2c1a51c > .elementor-element-dede770 ~ .elementor-element-dede770 {
+.mirror-page .elementor-element-2c1a51c > .elementor-element-dede770 ~ .elementor-element-dede770:not(.elementor-sticky__spacer) {
   display: none !important;
 }
 .mirror-page .elementor-element-eaccd6c .elementor-icon-list-icon i,
@@ -245,6 +245,10 @@ const fixes = `
   visibility: hidden !important;
   position: relative !important;
   pointer-events: none !important;
+  height: 108px !important;
+}
+@media (max-width: 1024px) {
+  .mirror-page .elementor-sticky__spacer { height: 84px !important; }
 }
 .mirror-page .facts-number,
 .mirror-page .elementor-element-de578ca {
