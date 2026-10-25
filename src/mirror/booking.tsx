@@ -319,6 +319,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
   const [dial, setDial] = useState("34");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
+  const [honey, setHoney] = useState("");
   const [error, setError] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "fail">("idle");
   const [busy, setBusy] = useState<BusyRange[]>([]);
@@ -350,7 +351,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       .catch(() => setBusy([]));
   }, [vehicle]);
 
-  const summary = () => {
+  const summary = (who: { name: string; phone: string; email: string; note: string }) => {
     if (!van || !quote || "error" in quote) return "";
     const stay = quote.lines.map(([rate, count]) => `${count} × ${euro(rate)}`).join(", ");
     return [
@@ -361,10 +362,10 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       `${text.cleaning}: ${euro(quote.cleaning)}`,
       `${text.total}: ${euro(quote.total)}`,
       `${text.deposit}: ${euro(quote.deposit)}`,
-      `${text.name}: ${name}`,
-      `${text.phone}: +${dial} ${phone}`,
-      `${text.email}: ${email}`,
-      note ? `${text.note}: ${note}` : "",
+      `${text.name}: ${who.name}`,
+      `${text.phone}: +${dial} ${who.phone}`,
+      `${text.email}: ${who.email}`,
+      who.note ? `${text.note}: ${who.note}` : "",
     ]
       .filter(Boolean)
       .join("\n");
@@ -385,19 +386,36 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       setError(text.who);
       return;
     }
-    const body = summary();
+    const safeName = name.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 80);
+    const safePhone = phone.replace(/[^\d\s+-]/g, "").trim().slice(0, 20);
+    const safeNote = note.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 400);
+    const safeEmail = email.trim().slice(0, 80);
+    if (safeName.length < 2 || safePhone.replace(/\D/g, "").length < 6) {
+      setError(text.who);
+      return;
+    }
+    if (safeEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmail)) {
+      setError(text.who);
+      return;
+    }
+    if (honey) {
+      setStatus("ok");
+      return;
+    }
+    const body = summary({ name: safeName, phone: safePhone, email: safeEmail, note: safeNote });
     setStatus("sending");
     try {
       const response = await fetch("https://formsubmit.co/ajax/info@caravanrent-alicante.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim() || "info@caravanrent-alicante.com",
-          phone: phone.trim(),
+          name: safeName,
+          email: safeEmail || "info@caravanrent-alicante.com",
+          phone: `+${dial} ${safePhone}`,
           _subject: `Reserva ${van.name} ${from} – ${to} · ${euro(quote.total)}`,
           _template: "table",
           _captcha: "false",
+          _honey: "",
           message: body,
         }),
       });
@@ -528,6 +546,10 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
             </select>
           </label>
         </div>
+        <label className="cr-honey" aria-hidden="true">
+          Company
+          <input tabIndex={-1} autoComplete="off" value={honey} onChange={(event) => setHoney(event.target.value)} />
+        </label>
         <label>
           {text.name}
           <input value={name} onChange={(event) => setName(event.target.value)} required />

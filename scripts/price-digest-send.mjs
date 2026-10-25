@@ -25,11 +25,28 @@ function pretty(iso) {
   return `${day}.${month}`;
 }
 
+function plausible(row) {
+  if (!ORDER.includes(row.vehicle)) return false;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(row.from) || !/^\d{4}-\d{2}-\d{2}$/.test(row.to)) return false;
+  const total = Number(row.total);
+  if (!Number.isInteger(total) || total < 200 || total > 30000) return false;
+  const day = (iso) => {
+    const [year, month, date] = iso.split("-").map(Number);
+    const value = new Date(Date.UTC(year, month - 1, date));
+    return value.getUTCFullYear() === year && value.getUTCMonth() === month - 1 && value.getUTCDate() === date
+      ? value.getTime()
+      : NaN;
+  };
+  const days = (day(row.to) - day(row.from)) / 86400000;
+  return Number.isFinite(days) && days >= 2 && days <= 90;
+}
+
 function fresh(rows) {
   const cutoff = Date.now() - 30 * 60 * 60 * 1000;
   const seen = new Set();
   const next = [];
   for (const row of rows) {
+    if (!plausible(row)) continue;
     const at = Date.parse(row.at || "");
     if (Number.isFinite(at) && at < cutoff) continue;
     const key = `${row.vehicle}|${row.from}|${row.to}|${row.total}|${row.session}`;

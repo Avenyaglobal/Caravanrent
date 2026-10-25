@@ -173,6 +173,11 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     return `<a${nextAttrs}>${lead}${text}${trail}</a>`;
   });
 
+  out = out.replace(/<a\b([^>]*\btarget="_blank"[^>]*)>/g, (full, attrs: string) => {
+    if (/\brel=/.test(attrs)) return full;
+    return `<a${attrs} rel="noopener noreferrer">`;
+  });
+
   out = out.replace(/<div class="gtranslate_wrapper[\s\S]*?<div id="google_translate_element2"><\/div><\/div><\/div>/, "");
 
   if (!slug) {

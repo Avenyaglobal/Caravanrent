@@ -841,6 +841,13 @@ const fixes = `
     font-size: 13px;
     font-weight: 700;
   }
+  .mirror-page .cr-honey {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
   .mirror-page .cr-phone {
     display: grid;
     grid-template-columns: 124px 1fr;
