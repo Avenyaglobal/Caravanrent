@@ -351,8 +351,9 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       .catch(() => setBusy([]));
   }, [vehicle]);
 
-  const summary = (who: { name: string; phone: string; email: string; note: string }) => {
+  const summary = (who?: { name: string; phone: string; email: string; note: string }) => {
     if (!van || !quote || "error" in quote) return "";
+    const person = who ?? { name, phone, email, note };
     const stay = quote.lines.map(([rate, count]) => `${count} × ${euro(rate)}`).join(", ");
     return [
       `${van.name} (${van.auto ? text.auto : text.manual})`,
@@ -362,10 +363,10 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       `${text.cleaning}: ${euro(quote.cleaning)}`,
       `${text.total}: ${euro(quote.total)}`,
       `${text.deposit}: ${euro(quote.deposit)}`,
-      `${text.name}: ${who.name}`,
-      `${text.phone}: +${dial} ${who.phone}`,
-      `${text.email}: ${who.email}`,
-      who.note ? `${text.note}: ${who.note}` : "",
+      `${text.name}: ${person.name}`,
+      `${text.phone}: +${dial} ${person.phone}`,
+      `${text.email}: ${person.email}`,
+      person.note ? `${text.note}: ${person.note}` : "",
     ]
       .filter(Boolean)
       .join("\n");
