@@ -760,6 +760,7 @@ const fixes = `
     font-weight: 700;
     text-decoration: none;
   }
+}
   .mirror-page .cr-place { color: #17191a; background: #fff; }
   .mirror-page .cr-place-hero {
     padding: 28px 20px 32px;
