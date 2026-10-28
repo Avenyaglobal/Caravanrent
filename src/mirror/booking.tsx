@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { getYescapaBusy, type BusyRange } from "@/mirror/availability";
 import { logPriceLook } from "@/mirror/price-log";
 import type { Lang } from "@/mirror/locales";
@@ -227,6 +227,14 @@ const flags: Record<string, string> = {
   "40": "🇷🇴",
 };
 
+function tidyPhone(dial: string, phone: string) {
+  let code = dial.replace(/\D/g, "").slice(0, 4);
+  let local = phone.replace(/\D/g, "");
+  if (code.startsWith("34") && code.length > 2 && local.startsWith(code.slice(2))) code = "34";
+  if (code && local.startsWith(code) && local.length - code.length >= 6) local = local.slice(code.length);
+  return { code: code || "34", local };
+}
+
 const places = {
   es: ["Alicante", "Torrevieja", "Elche", "Aeropuerto de Alicante, gratis"],
   en: ["Alicante", "Torrevieja", "Elche", "Alicante Airport, free"],
@@ -317,6 +325,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [dial, setDial] = useState("34");
+  const phoneRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [honey, setHoney] = useState("");
@@ -354,6 +363,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
   const summary = (who?: { name: string; phone: string; email: string; note: string }) => {
     if (!van || !quote || "error" in quote) return "";
     const person = who ?? { name, phone, email, note };
+    const tidy = tidyPhone(dial, person.phone);
     const stay = quote.lines.map(([rate, count]) => `${count} × ${euro(rate)}`).join(", ");
     return [
       `${van.name} (${van.auto ? text.auto : text.manual})`,
@@ -364,7 +374,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       `${text.total}: ${euro(quote.total)}`,
       `${text.deposit}: ${euro(quote.deposit)}`,
       `${text.name}: ${person.name}`,
-      `${text.phone}: +${dial} ${person.phone}`,
+      `${text.phone}: +${tidy.code} ${tidy.local}`,
       `${text.email}: ${person.email}`,
       person.note ? `${text.note}: ${person.note}` : "",
     ]
@@ -403,7 +413,8 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
       setStatus("ok");
       return;
     }
-    const body = summary({ name: safeName, phone: safePhone, email: safeEmail, note: safeNote });
+    const tidy = tidyPhone(dial, safePhone);
+    const body = summary({ name: safeName, phone: tidy.local, email: safeEmail, note: safeNote });
     setStatus("sending");
     try {
       const response = await fetch("https://formsubmit.co/ajax/info@caravanrent-alicante.com", {
@@ -412,7 +423,7 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
         body: JSON.stringify({
           name: safeName,
           email: safeEmail || "info@caravanrent-alicante.com",
-          phone: `+${dial} ${safePhone}`,
+          phone: `+${tidy.code} ${tidy.local}`,
           _subject: `Reserva ${van.name} ${from} – ${to} · ${euro(quote.total)}`,
           _template: "table",
           _captcha: "false",
@@ -563,13 +574,22 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
               <span>+</span>
               <input
                 value={dial}
-                onChange={(event) => setDial(event.target.value.replace(/\D/g, "").slice(0, 4))}
+                onChange={(event) => {
+                  const digits = event.target.value.replace(/\D/g, "");
+                  if (dial && digits.startsWith(dial) && digits.length > dial.length) {
+                    const extra = digits.slice(dial.length);
+                    setPhone((current) => `${current.replace(/\D/g, "")}${extra}`.slice(0, 15));
+                    requestAnimationFrame(() => phoneRef.current?.focus());
+                    return;
+                  }
+                  setDial(digits.slice(0, 4));
+                }}
                 inputMode="numeric"
                 aria-label="+"
                 placeholder="34"
               />
             </span>
-            <input value={phone} onChange={(event) => setPhone(event.target.value)} inputMode="tel" placeholder="600 000 000" required />
+            <input ref={phoneRef} value={phone} onChange={(event) => setPhone(event.target.value)} inputMode="tel" placeholder="600 000 000" required />
           </span>
         </label>
         <label>
