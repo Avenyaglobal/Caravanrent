@@ -1161,7 +1161,7 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const source = placeHtml(clean, lang) ?? getPageHtml(slug);
   if (!source) throw notFound();
   const html = localizeHtml(source, lang, slug.replace(/^\/+|\/+$/g, "")).replace(
-    /<link\b[^>]*cropped-logo100caravan[^>]*>/gi,
+    /<(?:link|meta)\b[^>]*cropped-logo100caravan[^>]*>/gi,
     "",
   );
   const vehicle = ["ford-weinsberg", "fiat-mclouis-mc4-379", "peugeot-chausson"].includes(slug);
