@@ -1,11 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Shell } from "@/components/shell";
 import { postBySlug, posts } from "@/lib/posts";
+import { MirrorPage, mirrorHead } from "@/mirror/page";
+import { seoPostBySlug } from "@/mirror/seo-posts";
 
-export const Route = createFileRoute("/blog/$slug")({ component: PostPage });
+export const Route = createFileRoute("/blog/$slug")({
+  head: ({ params }) => (seoPostBySlug("es", params.slug) ? mirrorHead("es", `blog/${params.slug}`) : {}),
+  component: PostPage,
+});
 
 function PostPage() {
   const { slug } = Route.useParams();
+  if (seoPostBySlug("es", slug)) return <MirrorPage lang="es" slug={`blog/${slug}`} />;
   const post = postBySlug(slug);
 
   if (!post) {

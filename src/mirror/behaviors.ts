@@ -1,5 +1,84 @@
+import { sendBooking } from "@/mirror/booking-mail";
+
 const BODY_CLASS =
   "home wp-singular page-template page-template-elementor-page-template page page-id-17 wp-theme-dreamsrent theme-dreamsrent";
+
+const commentCopy: Record<string, { ok: string; fail: string; sending: string }> = {
+  es: {
+    ok: "Muchas gracias. Hemos recibido tu comentario y te responderemos por correo.",
+    fail: "No se pudo enviar. Escríbenos por WhatsApp.",
+    sending: "Enviando…",
+  },
+  en: {
+    ok: "Thank you. We have received your comment and will reply by email.",
+    fail: "The message did not go through. Write to us on WhatsApp.",
+    sending: "Sending…",
+  },
+  fr: {
+    ok: "Merci. Nous avons reçu votre commentaire et vous répondrons par e-mail.",
+    fail: "L'envoi a échoué. Écrivez-nous sur WhatsApp.",
+    sending: "Envoi…",
+  },
+  de: {
+    ok: "Vielen Dank. Wir haben Ihren Kommentar erhalten und antworten per E-Mail.",
+    fail: "Der Versand ist fehlgeschlagen. Schreiben Sie uns auf WhatsApp.",
+    sending: "Senden…",
+  },
+  ru: {
+    ok: "Спасибо. Мы получили ваш комментарий и ответим по почте.",
+    fail: "Не удалось отправить. Напишите нам в WhatsApp.",
+    sending: "Отправка…",
+  },
+  uk: {
+    ok: "Дякуємо. Ми отримали ваш коментар і відповімо поштою.",
+    fail: "Не вдалося надіслати. Напишіть нам у WhatsApp.",
+    sending: "Надсилання…",
+  },
+};
+
+function onArticleComment(event: Event) {
+  const form = event.target;
+  if (!(form instanceof HTMLFormElement) || form.id !== "commentform") return;
+  event.preventDefault();
+  void sendArticleComment(form);
+}
+
+async function sendArticleComment(form: HTMLFormElement) {
+  const lang = document.querySelector(".mirror-page")?.getAttribute("lang") || document.documentElement.lang || "es";
+  const text = commentCopy[lang] ?? commentCopy.es;
+  const name = (form.querySelector<HTMLInputElement>("#author")?.value ?? "").replace(/\s+/g, " ").trim().slice(0, 80);
+  const email = (form.querySelector<HTMLInputElement>("#email")?.value ?? "").trim().slice(0, 80);
+  const message = (form.querySelector<HTMLTextAreaElement>("#comment")?.value ?? "").replace(/\s+/g, " ").trim().slice(0, 2000);
+  const title = (document.querySelector("h1")?.textContent ?? "Artículo").replace(/\s+/g, " ").trim().slice(0, 140);
+  const button = form.querySelector<HTMLInputElement>("#submit");
+  const note = form.querySelector<HTMLElement>(".cr-comment-note") ?? document.createElement("p");
+  note.className = "cr-comment-note";
+  note.style.marginTop = "12px";
+  if (!form.contains(note)) form.append(note);
+  if (name.length < 2 || message.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    note.textContent = text.fail;
+    return;
+  }
+  if (button) {
+    button.disabled = true;
+    button.value = text.sending;
+  }
+  try {
+    const body = [`Artículo: ${title}`, `Página: ${location.href}`, `Nombre: ${name}`, `Correo: ${email}`, "", message].join("\n");
+    await sendBooking({ data: { subject: `Comentario: ${title}`, message: body, replyTo: email } });
+    const done = document.createElement("p");
+    done.className = "blog-description";
+    done.style.textAlign = "center";
+    done.textContent = text.ok;
+    form.replaceWith(done);
+  } catch {
+    note.textContent = text.fail;
+    if (button) {
+      button.disabled = false;
+      button.value = "Submit Comment";
+    }
+  }
+}
 
 let started = false;
 
@@ -318,6 +397,8 @@ export function startMirrorBehaviors() {
     if (sorry) sorry.style.display = "block";
   });
 
+  document.addEventListener("submit", onArticleComment);
+
   return () => {
     window.clearInterval(reviewTimer);
     window.removeEventListener("resize", syncHeaderSpace);
@@ -326,6 +407,7 @@ export function startMirrorBehaviors() {
     document.removeEventListener("click", onOutsideMenu, true);
     document.removeEventListener("click", onGalleryClick, true);
     document.removeEventListener("click", onFaq, true);
+    document.removeEventListener("submit", onArticleComment);
     lightbox.remove();
     started = false;
   };

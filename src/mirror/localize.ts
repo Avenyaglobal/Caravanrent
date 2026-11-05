@@ -1,3 +1,6 @@
+import { articlePhrases } from "@/mirror/article-phrases";
+import { seoAlternatePath } from "@/mirror/seo-posts";
+import { injectPublishedBlogCards } from "@/mirror/seo-render";
 import { contentSlugs } from "@/mirror/sources";
 import { homePlaceLinks } from "@/mirror/places";
 import siteHeader from "@/mirror/site-header.html?raw";
@@ -27,6 +30,50 @@ function decode(value: string) {
 
 function encode(value: string) {
   return value.replace(/&/g, "\u0026amp;").replace(/</g, "\u0026lt;").replace(/>/g, "\u0026gt;");
+}
+
+function longestPhrase(start: string) {
+  return Object.keys(articlePhrases)
+    .filter((key) => key.startsWith(start))
+    .sort((a, b) => b.length - a.length)[0];
+}
+
+const oldCardParts: Record<string, string[]> = {
+  "the-advantages-of-traveling-in-motorhomes-in-spain": [
+    longestPhrase("Spain, with its sun-drenched beaches"),
+    longestPhrase("One of the greatest joys of traveling in a motorhome"),
+  ],
+  "what-to-take-on-a-motorhome-trip-to-spain-essential-packing-guide": [
+    longestPhrase("Traveling by motorhome in Spain offers a unique combination"),
+    longestPhrase("Before setting off, make sure you have all necessary documents"),
+  ],
+  "how-to-choose-a-motorhome-for-rent-and-key-things-to-consider": [
+    longestPhrase("Renting a motorhome for a trip is an exciting way"),
+    longestPhrase("Start by thinking about the kind of trip"),
+    longestPhrase("Motorhomes come in different sizes"),
+  ],
+};
+
+function clipExcerpt(value: string) {
+  const text = value.replace(/\s+/g, " ").trim();
+  if (text.length <= 200) return text;
+  const slice = text.slice(0, 200);
+  const space = slice.lastIndexOf(" ");
+  const end = space >= 150 ? space : 200;
+  return `${text.slice(0, end).replace(/[,:;.\s]+$/u, "")}…`;
+}
+
+function fillBlogExcerpts(html: string, lang: Lang) {
+  return html.replace(/<p class="blog-description">[^<]*<\/p>/g, (full, offset: number) => {
+    const before = html.slice(Math.max(0, offset - 900), offset);
+    const href = [...before.matchAll(/href="([^"]+)"/g)].at(-1)?.[1] ?? "";
+    const id = Object.keys(oldCardParts).find((slug) => href.includes(slug));
+    if (!id) return full;
+    const text = clipExcerpt(
+      oldCardParts[id].map((key) => (lang === "en" ? key : (articlePhrases[key]?.[lang] ?? key))).join(" "),
+    );
+    return `<p class="blog-description">${encode(text)}</p>`;
+  });
 }
 
 function afterGallery(html: string) {
@@ -70,11 +117,16 @@ const languageFlag: Record<Lang, string> = {
   ua: `<svg viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="6" fill="#005bbb"/><rect y="6" width="18" height="6" fill="#ffd500"/></svg>`,
 };
 
+function hreflangOf(code: Lang) {
+  return code === "ua" ? "uk" : code;
+}
+
 function languageItem(lang: Lang, slug: string) {
   const items = languages
     .map((code) => {
       const current = code === lang ? ' aria-current="true"' : "";
-      return `<li><a href="${pagePath(code, slug)}" hreflang="${code}"${current}><span class="lang-flag">${languageFlag[code]}</span>${languageName[code]}</a></li>`;
+      const href = seoAlternatePath(lang, slug, code) ?? pagePath(code, slug);
+      return `<li><a href="${href}" hreflang="${hreflangOf(code)}"${current}><span class="lang-flag">${languageFlag[code]}</span>${languageName[code]}</a></li>`;
     })
     .join("");
   return `<li class="elementor-icon-list-item elementor-inline-item lang-switch-item"><details class="lang-switch"><summary class="lang-switch-btn">${languageCode[lang]}</summary><ul class="lang-switch-list">${items}</ul></details></li>`;
@@ -143,7 +195,7 @@ const googleReview =
   "https://www.google.com/maps?cid=10053196144775619233&hl=es#lrd=0x6c7de1883dccdd2f:0x8b8420a12aad62a1,3";
 
 export function localizeHtml(html: string, lang: Lang, slug = "") {
-  let source = html;
+  let source = slug === "category/blog" ? injectPublishedBlogCards(html, lang) : html;
   if (!source.includes("elementor-sticky--active")) {
     source = `${siteHeader}<div class="cr-head-spacer" aria-hidden="true"></div>${source}`;
   }
@@ -219,6 +271,9 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
     if (!key || next === key) return full;
     return `${attr}="${encode(next)}"`;
   });
+
+  if (slug === "category/blog") out = fillBlogExcerpts(out, lang);
+  out = out.replaceAll('action="/mirror/wp-comments-post.php"', 'action="#"');
 
   let navToggle = 0;
   out = out.replace(/<div class="elementor-menu-toggle"([^>]*)>([\s\S]*?)<\/div>/g, (_full, attrs: string, inner: string) => {

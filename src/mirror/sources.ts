@@ -1,3 +1,4 @@
+import { renderSeoArticle } from "@/mirror/seo-render";
 import bodyHtml from "@/mirror/body.html?raw";
 import { placeSlugs } from "@/mirror/places";
 import advantagesHtml from "../../public/mirror/the-advantages-of-traveling-in-motorhomes-in-spain/index.html?raw";
@@ -33,8 +34,10 @@ const bodies: Record<string, string> = Object.fromEntries(
 
 export const contentSlugs = ["", ...Object.keys(bodies), ...placeSlugs];
 
-export function getPageHtml(slug: string) {
+export function getPageHtml(slug: string, lang: "es" | "en" | "fr" | "de" | "ru" | "ua" = "es") {
   const clean = slug.replace(/^\/+|\/+$/g, "");
+  const seo = renderSeoArticle(clean, lang);
+  if (seo) return seo;
   if (!clean) return bodyHtml;
   return bodies[clean] ?? null;
 }

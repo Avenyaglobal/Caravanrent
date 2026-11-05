@@ -7,6 +7,7 @@ import extraCss from "@/mirror/extra.css?raw";
 import { startMirrorBehaviors } from "@/mirror/behaviors";
 import { localizeHtml } from "@/mirror/localize";
 import { languages, pageMeta, pagePath, siteOrigin, type Lang } from "@/mirror/locales";
+import { seoPostByPath } from "@/mirror/seo-posts";
 import { getPageHtml } from "@/mirror/sources";
 import { placeHtml, placeMeta } from "@/mirror/places";
 
@@ -1053,8 +1054,65 @@ export function languageFromPath(pathname: string): Lang {
   return "es";
 }
 
+function seoHead(lang: Lang, post: NonNullable<ReturnType<typeof seoPostByPath>>) {
+  const locale = post.locales[lang];
+  const hrefLang: Record<Lang, string> = { es: "es", en: "en", fr: "fr", de: "de", ru: "ru", ua: "uk" };
+  const pathOf = (code: Lang) => pagePath(code, `blog/${post.locales[code].slug}`);
+  const path = pathOf(lang);
+  const canonical = `${siteOrigin}${path}`;
+  const image = `${siteOrigin}${post.image}`;
+  const graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        headline: locale.h1,
+        description: locale.description,
+        image,
+        author: { "@type": "Organization", name: "Caravan Rent Alicante" },
+        publisher: { "@type": "Organization", name: "Caravan Rent Alicante", logo: { "@type": "ImageObject", url: `${siteOrigin}/og.jpg` } },
+        datePublished: post.datePublished,
+        dateModified: post.dateModified,
+        inLanguage: hrefLang[lang],
+        mainEntityOfPage: canonical,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Caravan Rent Alicante", item: `${siteOrigin}${pagePath(lang)}` },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${siteOrigin}${pagePath(lang, "category/blog")}` },
+          { "@type": "ListItem", position: 3, name: locale.h1, item: canonical },
+        ],
+      },
+    ],
+  };
+  return {
+    meta: [
+      { title: locale.title },
+      { name: "description", content: locale.description },
+      ...(post.status === "draft" ? [{ name: "robots", content: "noindex, nofollow" }] : []),
+      { property: "og:title", content: locale.title },
+      { property: "og:description", content: locale.description },
+      { property: "og:url", content: canonical },
+      { property: "og:image", content: image },
+      { property: "og:locale", content: lang === "en" ? "en_GB" : lang === "ua" ? "uk_UA" : `${lang}_${lang.toUpperCase()}` },
+    ],
+    links: [
+      { rel: "canonical", href: canonical },
+      ...languages.map((code) => ({ rel: "alternate", hreflang: hrefLang[code], href: `${siteOrigin}${pathOf(code)}` })),
+      { rel: "alternate", hreflang: "x-default", href: `${siteOrigin}${pathOf("es")}` },
+      { rel: "stylesheet", href: "https://use.fontawesome.com/releases/v5.8.1/css/all.css" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600;1,700;1,900&display=swap" },
+      { rel: "stylesheet", href: themeCss },
+    ],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(graph) }],
+  };
+}
+
 export function mirrorHead(lang: Lang, slug = "") {
   const clean = slug.replace(/^\/+|\/+$/g, "");
+  const seo = seoPostByPath(lang, clean);
+  if (seo) return seoHead(lang, seo);
   const meta = placeMeta(clean, lang) ?? pageCopy[clean]?.[lang] ?? pageMeta[lang];
   const path = pagePath(lang, clean);
   const hrefLang: Record<Lang, string> = { es: "es", en: "en", fr: "fr", de: "de", ru: "ru", ua: "uk" };
@@ -1158,7 +1216,7 @@ function PeugeotPromo({ lang, slug }: { lang: Lang; slug: string }) {
 
 export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const clean = slug.replace(/^\/+|\/+$/g, "");
-  const source = placeHtml(clean, lang) ?? getPageHtml(slug);
+  const source = placeHtml(clean, lang) ?? getPageHtml(slug, lang);
   if (!source) throw notFound();
   const html = localizeHtml(source, lang, slug.replace(/^\/+|\/+$/g, "")).replace(
     /<(?:link|meta)\b[^>]*cropped-logo100caravan[^>]*>/gi,
@@ -1190,7 +1248,7 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   }, [lang, slug]);
 
   return (
-    <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang}>
+    <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang === "ua" ? "uk" : lang}>
       <style dangerouslySetInnerHTML={{ __html: extraCss + fixes }} />
       <PeugeotPromo lang={lang} slug={clean} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
