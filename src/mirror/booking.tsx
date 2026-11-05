@@ -417,21 +417,20 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
     const body = summary({ name: safeName, phone: tidy.local, email: safeEmail, note: safeNote });
     setStatus("sending");
     try {
-      const response = await fetch("https://formsubmit.co/ajax/info@caravanrent-alicante.com", {
+      const response = await fetch("https://shipmyform.com/to/info@caravanrent-alicante.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
+        headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+        body: new URLSearchParams({
           name: safeName,
           email: safeEmail || "info@caravanrent-alicante.com",
           phone: `+${tidy.code} ${tidy.local}`,
           _subject: `Reserva ${van.name} ${from} – ${to} · ${euro(quote.total)}`,
-          _template: "table",
-          _captcha: "false",
-          _honey: "",
+          _gotcha: "",
           message: body,
         }),
       });
-      if (!response.ok) throw new Error(String(response.status));
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || payload?.ok === false) throw new Error(String(response.status));
       setFrom("");
       setTo("");
       setPlace(places[lang][1]);
