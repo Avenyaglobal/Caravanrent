@@ -417,20 +417,21 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
     const body = summary({ name: safeName, phone: tidy.local, email: safeEmail, note: safeNote });
     setStatus("sending");
     try {
-      const response = await fetch("https://shipmyform.com/to/info@caravanrent-alicante.com", {
+      const response = await fetch("https://silentforms.com/api/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
-        body: new URLSearchParams({
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          accessKey: "aaf1b044841fbaffdae61093cd0375f44cde9a8c648f3988b1bbd1714893c0f3",
           name: safeName,
           email: safeEmail || "info@caravanrent-alicante.com",
           phone: `+${tidy.code} ${tidy.local}`,
           _subject: `Reserva ${van.name} ${from} – ${to} · ${euro(quote.total)}`,
-          _gotcha: "",
+          _honey: "",
           message: body,
         }),
       });
       const payload = await response.json().catch(() => null);
-      if (!response.ok || payload?.ok === false) throw new Error(String(response.status));
+      if (!response.ok || payload?.ok === false || payload?.success === false) throw new Error(String(response.status));
       setFrom("");
       setTo("");
       setPlace(places[lang][1]);
