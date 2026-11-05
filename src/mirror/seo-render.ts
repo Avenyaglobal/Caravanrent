@@ -52,19 +52,32 @@ export function renderSeoArticle(path: string, lang: Lang) {
   return replaceDivInner(heroHtml + rest, "blog-description entry-content", articleBodyHtml(locale, lang));
 }
 
-export function injectPublishedBlogCards(html: string, lang: Lang) {
-  const posts = seoPosts()
+function publishedPosts() {
+  return seoPosts()
     .filter((post) => post.status === "published")
     .slice()
     .sort((a, b) => b.datePublished.localeCompare(a.datePublished) || b.dateModified.localeCompare(a.dateModified) || a.id.localeCompare(b.id));
+}
+
+export function injectPublishedBlogCards(html: string, lang: Lang) {
+  const posts = publishedPosts();
   if (!posts.length) return html;
   const mark = "<article id=\"post-";
   const at = html.indexOf(mark);
   if (at < 0) return html;
-  const cards = posts
-    .map((post) => cardHtml(post, lang))
-    .join("");
-  return `${html.slice(0, at)}${cards}${html.slice(at)}`;
+  return `${html.slice(0, at)}${posts.map((post) => cardHtml(post, lang)).join("")}${html.slice(at)}`;
+}
+
+export function injectHomeBlogCards(html: string, lang: Lang) {
+  const posts = publishedPosts();
+  if (!posts.length) return html;
+  const mark = 'data-widget_type="dreamsrent_elementor_blog.default"';
+  const widget = html.indexOf(mark);
+  if (widget < 0) return html;
+  const row = html.indexOf('<div class="row">', widget);
+  if (row < 0) return html;
+  const insert = row + '<div class="row">'.length;
+  return `${html.slice(0, insert)}${posts.map((post) => homeCardHtml(post, lang)).join("")}${html.slice(insert)}`;
 }
 
 function cardExcerpt(locale: SeoPost["locales"]["es"]) {
@@ -95,6 +108,14 @@ function shownDate(iso: string, lang: Lang) {
     .format(date)
     .replace(/ г\.$/u, "")
     .replace(/ р\.$/u, "");
+}
+
+function homeCardHtml(post: SeoPost, lang: Lang) {
+  const locale = post.locales[lang];
+  const href = pagePath(lang, `blog/${locale.slug}`);
+  const avatar =
+    "https://secure.gravatar.com/avatar/5222de8343502149d945eb3da898b1d9aae3ed388a4013a50e17a45a9692ca21?s=32&d=mm&r=g";
+  return `<div class="col-xl-4 col-lg-4 col-md-4 col-12 flex"><div class="blog grid-blog"><div class="blog-image"><img loading="lazy" decoding="async" class="img-fluid" src="${esc(post.image)}" width="416" height="286" alt="${esc(locale.alt)}"></div><div class="blog-content"><p class="blog-category"></p><h3 class="blog-title"><a href="${esc(href)}">${esc(locale.h1)}</a></h3><div class="blog-description">${esc(cardExcerpt(locale))}</div><ul class="meta-item"><li><div class="post-author"><div class="post-author-img"><img alt="" src="${avatar}" class="avatar avatar-32 photo" height="32" width="32"></div><span class="author-name">Адміністратор</span></div></li><li class="date-icon"><i class="fa-solid fa-calendar-days"></i><span>${esc(shownDate(post.datePublished, lang))}</span></li></ul></div></div></div>`;
 }
 
 function cardHtml(post: SeoPost, lang: Lang) {

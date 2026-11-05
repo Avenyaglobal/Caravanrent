@@ -1,6 +1,6 @@
 import { articlePhrases } from "@/mirror/article-phrases";
 import { seoAlternatePath } from "@/mirror/seo-posts";
-import { injectPublishedBlogCards } from "@/mirror/seo-render";
+import { injectHomeBlogCards, injectPublishedBlogCards } from "@/mirror/seo-render";
 import { contentSlugs } from "@/mirror/sources";
 import { homePlaceLinks } from "@/mirror/places";
 import siteHeader from "@/mirror/site-header.html?raw";
@@ -195,7 +195,9 @@ const googleReview =
   "https://www.google.com/maps?cid=10053196144775619233&hl=es#lrd=0x6c7de1883dccdd2f:0x8b8420a12aad62a1,3";
 
 export function localizeHtml(html: string, lang: Lang, slug = "") {
-  let source = slug === "category/blog" ? injectPublishedBlogCards(html, lang) : html;
+  let source = html;
+  if (slug === "category/blog") source = injectPublishedBlogCards(html, lang);
+  if (!slug) source = injectHomeBlogCards(html, lang);
   if (!source.includes("elementor-sticky--active")) {
     source = `${siteHeader}<div class="cr-head-spacer" aria-hidden="true"></div>${source}`;
   }
