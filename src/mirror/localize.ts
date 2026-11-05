@@ -241,8 +241,8 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
 
   if (!slug) {
     out = out.replace(
-      '<h2 class="title text-white">Our caravans</h2>',
-      '<h2 id="vans" class="title text-white">Our caravans</h2>',
+      '<h2 class="title text-white">Our motorhomes</h2>',
+      '<h2 id="vans" class="title text-white">Our motorhomes</h2>',
     );
     const heroEnd = 'How book <span><i class="feather-arrow-right ms-2"></i></span></a></div>';
     const heroStart = out.indexOf('<p class="explore-text">');
@@ -364,13 +364,26 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   }
 
   if (lang === "en") {
-    out = out.replace(/<p class="explore-text">[\s\S]*?100% Trusted caravan rental platform<\/p>/, "");
+    out = out.replace(/<p class="explore-text">[\s\S]*?100% Trusted motorhome rental platform<\/p>/, "");
   }
   out = out.replace(/<ul class="nav-social">[\s\S]*?<\/ul>/g, footerSocial);
   out = out.replaceAll("https://www.facebook.com/share/1B68t6WTrZ/", "https://www.facebook.com/profile.php?id=61572446753379");
   out = out.replace(/https:\/\/www\.facebook\.com\/profile\.php\?id=61572446753379(?:&|&)[^"']*/g, "https://www.facebook.com/profile.php?id=61572446753379");
   out = out.replaceAll("callProcessText: 'We are calling you to phone'", "callProcessText: 'We\\'re calling you now'");
   out = out.replaceAll("callSuccessText: 'Thank you.<br/>We are call you back soon.'", "callSuccessText: 'Thank you.<br/>We\\'ll call you back soon.'");
+
+  if (slug === "ford-weinsberg") {
+    const link = (path: string, label: string) => `<a href="${pagePath(lang, path)}">${label}</a>`;
+    const note: Record<Lang, string> = {
+      es: `<h2>Para quién es este Ford Weinsberg</h2><p>El Ford Weinsberg CaraSuite 650 MEG encaja en una pareja o una familia de hasta cuatro personas. Tiene cuatro plazas para dormir, cambio manual y dos anclajes ISOFIX. Mide 6,99 m de largo, 2,32 m de ancho y 2,92 m de alto. La recogida y la devolución son en ${link("alquiler-autocaravana-alicante", "Alicante")}, ${link("alquiler-autocaravana-torrevieja", "Torrevieja")} y el ${link("alquiler-autocaravana-aeropuerto-alicante", "aeropuerto de Alicante")}, sin suplemento.</p>`,
+      en: `<h2>Who this Ford Weinsberg is for</h2><p>The Ford Weinsberg CaraSuite 650 MEG suits a couple or a family of up to four. It has four beds, a manual gearbox and two ISOFIX mounts. It is 6.99 m long, 2.32 m wide and 2.92 m high. Pickup and return are in ${link("alquiler-autocaravana-alicante", "Alicante")}, ${link("alquiler-autocaravana-torrevieja", "Torrevieja")} and at ${link("alquiler-autocaravana-aeropuerto-alicante", "Alicante Airport")}, at no extra cost.</p>`,
+      fr: `<h2>À qui convient ce Ford Weinsberg</h2><p>Le Ford Weinsberg CaraSuite 650 MEG convient à un couple ou à une famille de quatre personnes. Il a quatre couchages, une boîte manuelle et deux fixations ISOFIX. Il mesure 6,99 m de long, 2,32 m de large et 2,92 m de haut. La prise en charge et le retour se font à ${link("alquiler-autocaravana-alicante", "Alicante")}, à ${link("alquiler-autocaravana-torrevieja", "Torrevieja")} et à l'${link("alquiler-autocaravana-aeropuerto-alicante", "aéroport d'Alicante")}, sans supplément.</p>`,
+      de: `<h2>Für wen dieses Ford Weinsberg passt</h2><p>Das Ford Weinsberg CaraSuite 650 MEG passt für ein Paar oder eine Familie mit bis zu vier Personen. Es hat vier Betten, ein Schaltgetriebe und zwei ISOFIX-Halterungen. Es ist 6,99 m lang, 2,32 m breit und 2,92 m hoch. Abholung und Rückgabe sind in ${link("alquiler-autocaravana-alicante", "Alicante")}, ${link("alquiler-autocaravana-torrevieja", "Torrevieja")} und am ${link("alquiler-autocaravana-aeropuerto-alicante", "Flughafen Alicante")}, ohne Aufpreis.</p>`,
+      ru: `<h2>Кому подходит этот Ford Weinsberg</h2><p>Ford Weinsberg CaraSuite 650 MEG подходит паре или семье до четырёх человек. В нём четыре спальных места, механическая коробка и два крепления ISOFIX. Размеры: 6,99 м в длину, 2,32 м в ширину и 2,92 м в высоту. Выдача и возврат в ${link("alquiler-autocaravana-alicante", "Аликанте")}, ${link("alquiler-autocaravana-torrevieja", "Торревьехе")} и в ${link("alquiler-autocaravana-aeropuerto-alicante", "аэропорту Аликанте")}, без доплаты.</p>`,
+      ua: `<h2>Кому підходить цей Ford Weinsberg</h2><p>Ford Weinsberg CaraSuite 650 MEG підходить парі або родині до чотирьох осіб. У ньому чотири спальних місця, механічна коробка і два кріплення ISOFIX. Розміри: 6,99 м завдовжки, 2,32 м завширшки і 2,92 м заввишки. Видача і повернення в ${link("alquiler-autocaravana-alicante", "Аліканте")}, ${link("alquiler-autocaravana-torrevieja", "Торрев'єсі")} та в ${link("alquiler-autocaravana-aeropuerto-alicante", "аеропорту Аліканте")}, без доплати.</p>`,
+    };
+    out = out.replace('<div id="cr-booking-slot"></div>', `<div class="cr-vehicle-note">${note[lang]}</div><div id="cr-booking-slot"></div>`);
+  }
 
   const vehicleHeading: Record<string, Record<Lang, string>> = {
     "ford-weinsberg": {

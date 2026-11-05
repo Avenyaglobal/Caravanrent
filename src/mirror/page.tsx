@@ -68,12 +68,12 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
     ua: { title: "Умови оренди | Caravan Rent Alicante", description: "Загальні умови оренди автодома Caravan Rent Alicante: календарні дні, депозит, видача і повернення." },
   },
   "ford-weinsberg": {
-    es: { title: "Alquiler Ford Weinsberg en Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite en Alicante, Torrevieja y Elche. Diésel, manual, 4 plazas y 4 camas. Desde 120 € al día, kilómetros ilimitados." },
-    en: { title: "Ford Weinsberg motorhome rental in Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite in Alicante, Torrevieja and Elche. Diesel, manual, 4 seats and 4 beds. From €120 a day, unlimited kilometres." },
-    fr: { title: "Location Ford Weinsberg à Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite à Alicante, Torrevieja et Elche. Diesel, manuelle, 4 places et 4 couchages. Dès 120 € par jour." },
-    de: { title: "Ford Weinsberg Wohnmobil mieten in Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite in Alicante, Torrevieja und Elche. Diesel, Schaltung, 4 Sitze und 4 Betten. Ab 120 € pro Tag." },
-    ru: { title: "Аренда Ford Weinsberg в Аликанте | Caravan Rent", description: "Ford Weinsberg CaraSuite в Аликанте, Торревьехе и Эльче. Дизель, механика, 4 места и 4 спальных. От 120 € в день." },
-    ua: { title: "Оренда Ford Weinsberg в Аліканте | Caravan Rent", description: "Ford Weinsberg CaraSuite в Аліканте, Торрев'єсі та Ельче. Дизель, механіка, 4 місця і 4 спальних. Від 120 € на день." },
+    es: { title: "Alquiler Ford Weinsberg en Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite para hasta 4 personas: manual, 4 camas, 2 ISOFIX y 6,99 m. Recogida en Alicante, Torrevieja y el aeropuerto. Desde 120 € al día." },
+    en: { title: "Ford Weinsberg motorhome rental in Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite for up to 4 people: manual gearbox, 4 beds, 2 ISOFIX and 6.99 m. Pickup in Alicante, Torrevieja and the airport. From €120 a day." },
+    fr: { title: "Location Ford Weinsberg à Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite pour 4 personnes : boîte manuelle, 4 couchages, 2 ISOFIX et 6,99 m. Prise en charge à Alicante, Torrevieja et à l'aéroport. Dès 120 € par jour." },
+    de: { title: "Ford Weinsberg Wohnmobil mieten in Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite für bis zu 4 Personen: Schaltung, 4 Betten, 2 ISOFIX und 6,99 m. Abholung in Alicante, Torrevieja und am Flughafen. Ab 120 € pro Tag." },
+    ru: { title: "Аренда Ford Weinsberg в Аликанте | Caravan Rent", description: "Ford Weinsberg CaraSuite до 4 человек: механика, 4 спальных места, 2 ISOFIX и 6,99 м. Выдача в Аликанте, Торревьехе и в аэропорту. От 120 € в день." },
+    ua: { title: "Оренда Ford Weinsberg в Аліканте | Caravan Rent", description: "Ford Weinsberg CaraSuite до 4 осіб: механіка, 4 спальних місця, 2 ISOFIX і 6,99 м. Видача в Аліканте, Торрев'єсі та в аеропорту. Від 120 € на день." },
   },
   "fiat-mclouis-mc4-379": {
     es: { title: "Alquiler Fiat McLouis en Alicante | Caravan Rent", description: "Fiat McLouis MC4 379 en Alicante, Torrevieja y Elche. Diésel, automático, 5 plazas y 5 camas. Desde 130 € al día." },
@@ -131,6 +131,10 @@ const fixes = `
   border-radius: 12px;
 }
 .mirror-page { overflow-x: clip; }
+.cr-vehicle-note { max-width: 920px; margin: 8px auto 0; padding: 8px 16px 0; color: #201f1d; }
+.cr-vehicle-note h2 { margin: 0 0 8px; font-size: 22px; line-height: 1.3; }
+.cr-vehicle-note p { margin: 0 0 10px; font-size: 16px; line-height: 1.5; }
+.cr-vehicle-note a { color: #0f6f73; }
 .mirror-page img { max-width: 100%; height: auto; }
 .mirror-page iframe { max-width: 100%; }
 .mirror-page .blog-section { padding-top: 0 !important; padding-bottom: 0 !important; }

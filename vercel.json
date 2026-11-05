@@ -32,6 +32,12 @@
       ]
     },
     {
+      "source": "/(.*)\\.(webp|jpg|jpeg|png|svg|gif|ico|woff2)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+      ]
+    },
+    {
       "source": "/price-letter.txt",
       "headers": [
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },

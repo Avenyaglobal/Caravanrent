@@ -81,7 +81,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   Reviews: { es: "Opiniones", fr: "Avis", de: "Bewertungen", ru: "Отзывы", ua: "Відгуки" },
   Blog: { es: "Blog", fr: "Blog", de: "Blog", ru: "Блог", ua: "Блог" },
   "\u0421ontacts": { es: "Contacto", en: "Contacts", fr: "Contact", de: "Kontakt", ru: "Контакты", ua: "Контакти" },
-  "100% Trusted caravan rental platform": {
+  "100% Trusted motorhome rental platform": {
     es: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche",
     fr: "Location de camping-car à Alicante, Torrevieja et Elche",
     de: "Wohnmobil mieten in Alicante, Torrevieja und Elche",
@@ -177,14 +177,14 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ua: "Автодім Peugeot Chausson",
   },
   "ABOUT OUR COMPANY": { es: "SOBRE NOSOTROS", fr: "À PROPOS", de: "ÜBER UNS", ru: "О КОМПАНИИ", ua: "ПРО КОМПАНІЮ" },
-  "We are your trusted partner for motorhome rentals in the stunning Alicante region of Spain! We’re dedicated to helping travelers experience Costa Blanca with the freedom and flexibility only a caravan can offer.": {
+  "We are your trusted partner for motorhome rentals in the stunning Alicante region of Spain! We’re dedicated to helping travelers experience Costa Blanca with the freedom and flexibility only a motorhome can offer.": {
     es: "Somos tu equipo de confianza para alquilar autocaravanas en Alicante. Queremos que vivas la Costa Blanca con la libertad que solo da una casa sobre ruedas.",
     fr: "Nous sommes votre partenaire de confiance pour la location de camping-cars dans la région d'Alicante. Nous aidons les voyageurs à découvrir la Costa Blanca en toute liberté.",
     de: "Wir sind Ihr Partner für Wohnmobilvermietung in der Region Alicante. Wir helfen Reisenden, die Costa Blanca mit der Freiheit eines Wohnmobils zu erleben.",
     ru: "Мы сдаём автодома в Аликанте и помогаем путешествовать по Коста-Бланке с той свободой, которую даёт только дом на колёсах.",
     ua: "Ми здаємо автодоми в Аліканте й допомагаємо подорожувати Коста-Бланкою з тією свободою, яку дає лише дім на колесах.",
   },
-  "We put our customers first with flexible rental options and tailored solutions to fit your unique schedule and travel plans. Our caravans are regularly maintained to ensure they're in top condition, combining comfort, safety, and style. Our booking process is transparent and straightforward, so you can check availability, confirm dates, and secure your rental in just a few clicks. And as a local business in Alicante, we're here to provide insider tips, must-see destinations, and 24/7 support, making your trip seamless and unforgettable.": {
+  "We put our customers first with flexible rental options and tailored solutions to fit your unique schedule and travel plans. Our motorhomes are regularly maintained to ensure they're in top condition, combining comfort, safety, and style. Our booking process is transparent and straightforward, so you can check availability, confirm dates, and secure your rental in just a few clicks. And as a local business in Alicante, we're here to provide insider tips, must-see destinations, and 24/7 support, making your trip seamless and unforgettable.": {
     es: "Ponemos al cliente primero: alquiler flexible y soluciones a medida de tus fechas y tu ruta. Las autocaravanas se revisan con regularidad para que salgan cómodas, seguras y cuidadas. La reserva es clara: consultas disponibilidad, confirmas fechas y dejas el alquiler cerrado en pocos pasos. Somos un equipo local en Alicante: consejos de verdad, sitios que merece la pena ver y soporte las 24 horas.",
     fr: "Nous privilégions des locations souples, adaptées à vos dates et à votre itinéraire. Les camping-cars sont entretenus régulièrement : confort, sécurité et style. La réservation est simple : disponibilité, dates, confirmation en quelques étapes. Équipe locale à Alicante, nous partageons de vrais conseils, les lieux à voir et une assistance 24 h/24.",
     de: "Flexible Mieten, abgestimmt auf Ihre Daten und Route. Die Wohnmobile werden regelmäßig gewartet: Komfort, Sicherheit und Pflege. Die Buchung ist klar: Verfügbarkeit prüfen, Termine bestätigen, fertig. Als lokales Team in Alicante geben wir echte Tipps, sehenswerte Orte und Support rund um die Uhr.",
@@ -199,10 +199,10 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ua: "Візьміть найкраще з Аліканте із собою й виїжджайте спокійно: поруч місцева команда, якій можна довіряти.",
   },
   "Flexible, Customer-Centric Service": { es: "Servicio flexible y cercano", fr: "Un service souple et attentif", de: "Flexibler, persönlicher Service", ru: "Гибкий сервис под вас", ua: "Гнучкий сервіс під вас" },
-  "Top-Quality Caravans": { es: "Autocaravanas cuidadas", fr: "Camping-cars soignés", de: "Gepflegte Wohnmobile", ru: "Ухоженные автодома", ua: "Доглянуті автодоми" },
+  "Top-quality motorhomes": { es: "Autocaravanas cuidadas", fr: "Camping-cars soignés", de: "Gepflegte Wohnmobile", ru: "Ухоженные автодома", ua: "Доглянуті автодоми" },
   "Simple Booking Process": { es: "Reserva sencilla", fr: "Réservation simple", de: "Einfache Buchung", ru: "Простое бронирование", ua: "Просте бронювання" },
   "Local Knowledge and Support": { es: "Conocemos la zona y te ayudamos", fr: "Connaissance locale et assistance", de: "Lokales Wissen und Support", ru: "Знаем регион и помогаем", ua: "Знаємо регіон і допомагаємо" },
-  "Our caravans": { es: "Nuestras autocaravanas", fr: "Nos camping-cars", de: "Unsere Wohnmobile", ru: "Наши автодома", ua: "Наші автодоми" },
+  "Our motorhomes": { es: "Nuestras autocaravanas", fr: "Nos camping-cars", de: "Unsere Wohnmobile", ru: "Наши автодома", ua: "Наші автодоми" },
   "Choose what you like.": { es: "Elige la que más te guste.", fr: "Choisissez celui qui vous plaît.", de: "Wählen Sie, was Ihnen gefällt.", ru: "Выберите, что вам по душе.", ua: "Оберіть те, що вам до душі." },
   "Frequently Asked Questions": { es: "Preguntas frecuentes", fr: "Questions fréquentes", de: "Häufige Fragen", ru: "Частые вопросы", ua: "Часті питання" },
   "Find answers to your questions from our previous answers": {
@@ -213,7 +213,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ua: "Відповіді на те, про що нас питають найчастіше",
   },
   "How do I book a motorhome?": { es: "¿Cómo reservo una autocaravana?", fr: "Comment réserver un camping-car ?", de: "Wie buche ich ein Wohnmobil?", ru: "Как забронировать автодом?", ua: "Як забронювати автодім?" },
-  "Booking is simple! You can check available dates on our website, choose the caravan that suits your needs, and complete the booking online. Once confirmed, you’ll receive an email with all rental details and pickup instructions.": {
+  "Booking is simple! You can check available dates on our website, choose the motorhome that suits your needs, and complete the booking online. Once confirmed, you’ll receive an email with all rental details and pickup instructions.": {
     es: "Reservar es fácil. Consulta las fechas libres, elige la autocaravana y confirma la reserva. Cuando esté confirmada, te enviamos un correo con los detalles y las instrucciones de recogida.",
     fr: "Réserver est simple. Consultez les dates, choisissez le camping-car et confirmez. Une fois la réservation validée, vous recevez un e-mail avec les détails et les instructions de prise en charge.",
     de: "Buchen ist einfach. Prüfen Sie die freien Tage, wählen Sie das Wohnmobil und bestätigen Sie. Danach erhalten Sie eine E-Mail mit allen Details und der Abholung.",
@@ -221,7 +221,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ua: "Забронювати просто. Подивіться вільні дати, оберіть автодім і підтвердьте бронь. Після підтвердження надішлемо лист із деталями та інструкцією з видачі.",
   },
   "What is included in the rental?": { es: "¿Qué incluye el alquiler?", fr: "Que comprend la location ?", de: "Was ist in der Miete enthalten?", ru: "Что входит в аренду?", ua: "Що входить в оренду?" },
-  "Each caravan comes fully equipped with essential amenities, including a kitchenette, sleeping areas, a bathroom, and basic cookware. Some models also include extra items, like outdoor furniture and additional storage space—check each caravan’s details for specifics!": {
+  "Each motorhome comes fully equipped with essential amenities, including a kitchenette, sleeping areas, a bathroom, and basic cookware. Some models also include extra items, like outdoor furniture and additional storage space—check each motorhome’s details for specifics!": {
     es: "Cada autocaravana va equipada: cocina, camas, baño y menaje básico. Algunos modelos añaden muebles de exterior y más almacenaje. Mira la ficha de cada vehículo para el detalle.",
     fr: "Chaque camping-car est équipé : kitchenette, couchages, salle de bain et batterie de cuisine. Certains ajoutent du mobilier d'extérieur et plus de rangement. Le détail est sur la fiche de chaque véhicule.",
     de: "Jedes Wohnmobil ist ausgestattet: Küche, Schlafplätze, Bad und Geschirr. Manche haben zusätzlich Campingmöbel und mehr Stauraum. Die Details stehen bei jedem Fahrzeug.",
@@ -410,7 +410,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
   "We are call you back soon.": { es: "Te llamaremos muy pronto.", en: "We'll call you back soon.", fr: "Nous vous rappelons très vite.", de: "Wir rufen Sie bald zurück.", ru: "Скоро перезвоним.", ua: "Скоро передзвонимо." },
   "Email us": { es: "Escríbenos", fr: "Écrivez-nous", de: "Schreiben Sie uns", ru: "Написать нам", ua: "Написати нам" },
   "Contact us": { es: "Contacto", fr: "Contact", de: "Kontakt", ru: "Связаться", ua: "Зв'язатися" },
-  "Caravan rental in Alicante": { es: "Alquiler de autocaravanas en Alicante", fr: "Location de camping-car à Alicante", de: "Wohnmobil mieten in Alicante", ru: "Аренда автодомов в Аликанте", ua: "Оренда автодомів в Аліканте" },
+  "Motorhome rental in Alicante": { es: "Alquiler de autocaravanas en Alicante", fr: "Location de camping-car à Alicante", de: "Wohnmobil mieten in Alicante", ru: "Аренда автодомов в Аликанте", ua: "Оренда автодомів в Аліканте" },
 };
 
 export function translate(text: string, lang: Lang): string {

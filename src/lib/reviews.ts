@@ -25,7 +25,7 @@ export const reviews: Review[] = [
   },
   {
     name: "Андрей Сокоренко",
-    text: "I want to note the friendliness and attention of the owner. Thank you for the recommendations and for a wonderful holiday. Six days of joy — and it was my first time in a caravan.",
+    text: "I want to note the friendliness and attention of the owner. Thank you for the recommendations and for a wonderful holiday. Six days of joy — and it was my first time in a motorhome.",
     reply:
       "Thank you. We are glad the trip was comfortable, and we wish you new adventures. You are welcome back.",
   },
@@ -36,7 +36,7 @@ export const reviews: Review[] = [
   },
   {
     name: "Capt. Pavel Lobov",
-    text: "Outstanding service. Support is there when you need it, they help with the route, and the caravans are spotless and comfortable. Prices are fair for the region. Highly recommended.",
+    text: "Outstanding service. Support is there when you need it, they help with the route, and the motorhomes are spotless and comfortable. Prices are fair for the region. Highly recommended.",
     reply: "Thank you for the kind words. We will be glad to see you again.",
   },
   {
@@ -59,11 +59,11 @@ export const reviews: Review[] = [
 export const faqs = [
   {
     q: "How do I book a motorhome?",
-    a: "Booking is simple! You can check available dates on our website, choose the caravan that suits your needs, and complete the booking online. Once confirmed, you’ll receive an email with all rental details and pickup instructions.",
+    a: "Booking is simple! You can check available dates on our website, choose the motorhome that suits your needs, and complete the booking online. Once confirmed, you’ll receive an email with all rental details and pickup instructions.",
   },
   {
     q: "What is included in the rental?",
-    a: "Each caravan comes fully equipped with essential amenities, including a kitchenette, sleeping areas, a bathroom, and basic cookware. Some models also include extra items, like outdoor furniture and additional storage space—check each caravan’s details for specifics!",
+    a: "Each motorhome comes fully equipped with essential amenities, including a kitchenette, sleeping areas, a bathroom, and basic cookware. Some models also include extra items, like outdoor furniture and additional storage space—check each motorhome’s details for specifics!",
   },
   {
     q: "Where do I pick up and drop off the motorhome?",
