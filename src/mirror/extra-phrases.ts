@@ -51,7 +51,7 @@ const uiPhrases: Record<string, Partial<Record<Lang, string>>> = {
   "Petrol: Diesel": row("Combustible: Diésel", "Carburant : Diesel", "Kraftstoff: Diesel", "Топливо: Дизель", "Пальне: Дизель"),
   "Gear box: Manual": row("Cambio: Manual", "Boîte de vitesses : Manuelle", "Getriebe: Schaltgetriebe", "Коробка: Механика", "Коробка: Механіка"),
   "Length: 6988 cm": row("Longitud: 6,99 m", "Longueur : 6,99 m", "Länge: 6,99 m", "Длина: 6,99 м", "Довжина: 6,99 м", "Length: 6.99 m"),
-  "Width: 2320 cm": row("Anchura: 2,32 m", "Largeur : 2,32 m", "Breite: 2,32 m", "Ширина: 2,32 м", "Ширина: 2,32 м", "Width: 2.32 m"),
+  "Width: 2320 cm": row("Anchura: 2,30 m", "Largeur : 2,30 m", "Breite: 2,30 m", "Ширина: 2,30 м", "Ширина: 2,30 м", "Width: 2.30 m"),
   "Height: 2920 cm": row("Altura: 2,92 m", "Hauteur : 2,92 m", "Höhe: 2,92 m", "Высота: 2,92 м", "Висота: 2,92 м", "Height: 2.92 m"),
   "Seats: 4 person": row("Plazas: 4 personas", "Places : 4 personnes", "Sitze: 4 Personen", "Мест: 4 человека", "Місць: 4 особи"),
   "Beds: 4 person": row("Camas: 4 personas", "Couchages : 4 personnes", "Betten: 4 Personen", "Спальных мест: 4", "Спальних місць: 4"),

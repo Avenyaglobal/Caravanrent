@@ -131,12 +131,12 @@ export const termsPhrases: Record<string, Partial<Record<Lang, string>>> = {
   "Traducción:": t("Translation:", "Traduction :", "Übersetzung:", "Перевод:", "Переклад:"),
   "POLÍTICA DE PRIVACIDAD.": t("PRIVACY.", "CONFIDENTIALITÉ.", "DATENSCHUTZ.", "КОНФИДЕНЦИАЛЬНОСТЬ.", "КОНФІДЕНЦІЙНІСТЬ."),
   "COMUNICACIONES COMERCIALES": t("MARKETING MESSAGES", "MESSAGES COMMERCIAUX", "WERBENACHRICHTEN", "РЕКЛАМНЫЕ СООБЩЕНИЯ", "РЕКЛАМНІ ПОВІДОМЛЕННЯ"),
-  "El kilometraje permitido es de 500 Km por día dentro del período de alquiler con un máximo de 5.000km por contrato. Si se sobrepasase o utilizase el Vehículo habiendo finalizado el Contrato se cobrará un cargo por kilometraje excedido.": t(
-    "The allowance is 500 km per day, and no more than 5,000 km per contract. Extra kilometres, or use after the contract has ended, are charged.",
-    "Le forfait est de 500 km par jour, et 5 000 km au plus par contrat. Les kilomètres au-delà, ou l'usage après la fin du contrat, sont facturés.",
-    "Erlaubt sind 500 km pro Tag und höchstens 5.000 km pro Vertrag. Mehrkilometer oder Nutzung nach Vertragsende werden berechnet.",
-    "Разрешено 500 км в день и не больше 5 000 км на договор. Лишние километры и использование после окончания договора оплачиваются.",
-    "Дозволено 500 км на день і не більше 5 000 км на договір. Зайві кілометри і використання після закінчення договору оплачуються.",
+  "El kilometraje es ilimitado dentro de España. Si se utilizase el Vehículo habiendo finalizado el Contrato se cobrará según la tarifa vigente.": t(
+    "Mileage is unlimited within Spain. Use after the contract has ended is charged at the current tariff.",
+    "Le kilométrage est illimité en Espagne. L'usage après la fin du contrat est facturé au tarif en vigueur.",
+    "Die Kilometer sind innerhalb Spaniens unbegrenzt. Nutzung nach Vertragsende wird nach dem geltenden Tarif berechnet.",
+    "По Испании пробег без ограничений. Использование после окончания договора оплачивается по действующему тарифу.",
+    "Іспанією пробіг без обмежень. Використання після закінчення договору оплачується за чинним тарифом.",
   ),
   "El Arrendatario tiene derecho a recibir un ejemplar en lengua oficial de las presentes condiciones generales y así se hará constar en las versiones de la misma redactadas en otros idiomas, informándole en nuestras instalaciones de cuales idiomas disponemos en ese momento. En caso de discrepancias la versión dirimente será la redactada en español.": t(
     "You can ask for these terms in an official language. If a translation and the Spanish text disagree, the Spanish text decides.",
