@@ -91,7 +91,10 @@ function shownDate(iso: string, lang: Lang) {
   const [year, month, day] = iso.split("-").map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
   const locale = lang === "ua" ? "uk-UA" : lang === "en" ? "en-US" : `${lang}-${lang.toUpperCase()}`;
-  return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(date);
+  return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })
+    .format(date)
+    .replace(/ г\.$/u, "")
+    .replace(/ р\.$/u, "");
 }
 
 function cardHtml(post: SeoPost, lang: Lang) {
