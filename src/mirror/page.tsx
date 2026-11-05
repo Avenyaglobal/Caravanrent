@@ -44,28 +44,28 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
     ua: { title: "Як обрати автодім в оренду | Caravan Rent", description: "На що дивитися перед орендою автодома в Аліканте." },
   },
   "category/blog": {
-    es: { title: "Blog | Caravan Rent Alicante", description: "Artículos sobre viajes en autocaravana por España." },
-    en: { title: "Blog | Caravan Rent Alicante", description: "Articles about motorhome travel in Spain." },
-    fr: { title: "Blog | Caravan Rent Alicante", description: "Articles sur les voyages en camping-car en Espagne." },
-    de: { title: "Blog | Caravan Rent Alicante", description: "Artikel über Wohnmobilreisen in Spanien." },
-    ru: { title: "Блог | Caravan Rent Alicante", description: "Статьи о путешествиях по Испании на автодоме." },
-    ua: { title: "Блог | Caravan Rent Alicante", description: "Статті про подорожі Іспанією автодомом." },
+    es: { title: "Blog | Caravan Rent Alicante", description: "Guías de alquiler de autocaravanas en Alicante, Torrevieja, Elche y el aeropuerto. Consejos prácticos para viajar por la Costa Blanca." },
+    en: { title: "Blog | Caravan Rent Alicante", description: "Guides to motorhome rental in Alicante, Torrevieja, Elche and Alicante Airport. Practical tips for a Costa Blanca trip." },
+    fr: { title: "Blog | Caravan Rent Alicante", description: "Guides de location de camping-car à Alicante, Torrevieja, Elche et à l'aéroport. Conseils pour la Costa Blanca." },
+    de: { title: "Blog | Caravan Rent Alicante", description: "Ratgeber zur Wohnmobilmiete in Alicante, Torrevieja, Elche und am Flughafen. Praktische Tipps für die Costa Blanca." },
+    ru: { title: "Блог | Caravan Rent Alicante", description: "Гиды по аренде автодома в Аликанте, Торревьехе, Эльче и в аэропорту. Практичные советы для поездки по Коста-Бланке." },
+    ua: { title: "Блог | Caravan Rent Alicante", description: "Гіди з оренди автодома в Аліканте, Торрев'єсі, Ельче та в аеропорту. Практичні поради для поїздки Коста-Бланкою." },
   },
   "privacy-policy-2": {
-    es: { title: "Política de privacidad | Caravan Rent Alicante", description: "Cómo recogemos, usamos y protegemos tus datos." },
-    en: { title: "Privacy Policy | Caravan Rent Alicante", description: "How we collect, use and protect your data." },
-    fr: { title: "Politique de confidentialité | Caravan Rent Alicante", description: "Comment nous collectons, utilisons et protégeons vos données." },
-    de: { title: "Datenschutz | Caravan Rent Alicante", description: "Wie wir Ihre Daten erheben, nutzen und schützen." },
-    ru: { title: "Политика конфиденциальности | Caravan Rent Alicante", description: "Как мы собираем, используем и защищаем ваши данные." },
-    ua: { title: "Політика конфіденційності | Caravan Rent Alicante", description: "Як ми збираємо, використовуємо й захищаємо ваші дані." },
+    es: { title: "Política de privacidad | Caravan Rent Alicante", description: "Cómo Caravan Rent Alicante recoge, usa y protege tus datos al reservar una autocaravana en Alicante, Torrevieja o Elche." },
+    en: { title: "Privacy Policy | Caravan Rent Alicante", description: "How Caravan Rent Alicante collects, uses and protects your data when you book a motorhome in Alicante, Torrevieja or Elche." },
+    fr: { title: "Politique de confidentialité | Caravan Rent Alicante", description: "Comment Caravan Rent Alicante collecte, utilise et protège vos données lors d'une location de camping-car." },
+    de: { title: "Datenschutz | Caravan Rent Alicante", description: "Wie Caravan Rent Alicante Ihre Daten erhebt, nutzt und schützt, wenn Sie ein Wohnmobil mieten." },
+    ru: { title: "Политика конфиденциальности | Caravan Rent Alicante", description: "Как Caravan Rent Alicante собирает, использует и защищает ваши данные при бронировании автодома." },
+    ua: { title: "Політика конфіденційності | Caravan Rent Alicante", description: "Як Caravan Rent Alicante збирає, використовує й захищає ваші дані під час бронювання автодома." },
   },
   "terms-conditions": {
-    es: { title: "Condiciones de alquiler | Caravan Rent Alicante", description: "Condiciones generales del alquiler de autocaravanas." },
-    en: { title: "Rental terms | Caravan Rent Alicante", description: "General terms for motorhome rental." },
-    fr: { title: "Conditions de location | Caravan Rent Alicante", description: "Conditions générales de location de camping-car." },
-    de: { title: "Mietbedingungen | Caravan Rent Alicante", description: "Allgemeine Bedingungen für die Wohnmobilmiete." },
-    ru: { title: "Условия аренды | Caravan Rent Alicante", description: "Общие условия аренды автодома." },
-    ua: { title: "Умови оренди | Caravan Rent Alicante", description: "Загальні умови оренди автодома." },
+    es: { title: "Condiciones de alquiler | Caravan Rent Alicante", description: "Condiciones generales del alquiler de autocaravanas de Caravan Rent Alicante: días, depósito, entrega y devolución." },
+    en: { title: "Rental terms | Caravan Rent Alicante", description: "General motorhome rental terms of Caravan Rent Alicante: calendar days, deposit, pickup and return." },
+    fr: { title: "Conditions de location | Caravan Rent Alicante", description: "Conditions générales de location de camping-car : jours, dépôt de garantie, prise en charge et retour." },
+    de: { title: "Mietbedingungen | Caravan Rent Alicante", description: "Allgemeine Bedingungen der Wohnmobilmiete: Kalendertage, Kaution, Abholung und Rückgabe." },
+    ru: { title: "Условия аренды | Caravan Rent Alicante", description: "Общие условия аренды автодома Caravan Rent Alicante: календарные дни, депозит, выдача и возврат." },
+    ua: { title: "Умови оренди | Caravan Rent Alicante", description: "Загальні умови оренди автодома Caravan Rent Alicante: календарні дні, депозит, видача і повернення." },
   },
   "ford-weinsberg": {
     es: { title: "Alquiler Ford Weinsberg en Alicante | Caravan Rent", description: "Ford Weinsberg CaraSuite en Alicante, Torrevieja y Elche. Diésel, manual, 4 plazas y 4 camas. Desde 120 € al día, kilómetros ilimitados." },
@@ -1143,6 +1143,25 @@ export function mirrorHead(lang: Lang, slug = "") {
     "fiat-mclouis-mc4-379": "/og/fiat.jpg",
     "peugeot-chausson": "/og/peugeot.jpg",
   };
+  const crumbSlugs = new Set([
+    "alquiler-autocaravana-alicante",
+    "alquiler-autocaravana-torrevieja",
+    "alquiler-autocaravana-elche",
+    "alquiler-autocaravana-aeropuerto-alicante",
+    "ford-weinsberg",
+    "fiat-mclouis-mc4-379",
+    "peugeot-chausson",
+  ]);
+  const crumbs = crumbSlugs.has(clean)
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Caravan Rent Alicante", item: `${siteOrigin}${pagePath(lang) === "/" ? "/" : pagePath(lang)}` },
+          { "@type": "ListItem", position: 2, name: meta.title.split("|")[0].trim(), item: canonical },
+        ],
+      }
+    : null;
   const shareImage = vehicleOg[clean] ? `${siteOrigin}${vehicleOg[clean]}?v=4` : "";
   return {
     meta: [
@@ -1170,9 +1189,7 @@ export function mirrorHead(lang: Lang, slug = "") {
       { rel: "stylesheet", href: themeCss },
       ...(vehicleCss[clean] ? [{ rel: "stylesheet", href: vehicleCss[clean] }] : []),
     ],
-    scripts: business
-      ? [{ type: "application/ld+json", children: JSON.stringify(business) }]
-      : [],
+    scripts: [business, crumbs].filter(Boolean).map((data) => ({ type: "application/ld+json", children: JSON.stringify(data) })),
   };
 }
 

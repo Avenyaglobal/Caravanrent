@@ -37,7 +37,7 @@ function RootDocument() {
   const lang = languageFromPath(pathname);
 
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang === "ua" ? "uk" : lang} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

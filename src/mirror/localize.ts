@@ -198,6 +198,11 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   let source = html;
   if (slug === "category/blog") source = injectPublishedBlogCards(html, lang);
   if (!slug) source = injectHomeBlogCards(html, lang);
+  if (slug === "category/blog" || slug === "privacy-policy-2" || slug === "terms-conditions") {
+    source = source
+      .replace('<h2 class="breadcrumb-title">', '<h1 class="breadcrumb-title">')
+      .replace('</h2><ol class="breadcrumb">', '</h1><ol class="breadcrumb">');
+  }
   if (!source.includes("elementor-sticky--active")) {
     source = `${siteHeader}<div class="cr-head-spacer" aria-hidden="true"></div>${source}`;
   }

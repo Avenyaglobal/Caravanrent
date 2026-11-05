@@ -148,8 +148,36 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "Отправьте заявку. В ближайшее время мы свяжемся с вами для подтверждения вашего бронирования.",
     ua: "Надішліть заявку. Найближчим часом ми зв'яжемося з вами для підтвердження вашого бронювання.",
   },
+  "Motorhome on the Costa Blanca": {
+    es: "Autocaravana en la Costa Blanca",
+    fr: "Camping-car sur la Costa Blanca",
+    de: "Wohnmobil an der Costa Blanca",
+    ru: "Автодом на Коста-Бланке",
+    ua: "Автодім на Коста-Бланці",
+  },
+  "Ford Weinsberg motorhome": {
+    es: "Autocaravana Ford Weinsberg",
+    fr: "Camping-car Ford Weinsberg",
+    de: "Wohnmobil Ford Weinsberg",
+    ru: "Автодом Ford Weinsberg",
+    ua: "Автодім Ford Weinsberg",
+  },
+  "Fiat McLouis motorhome": {
+    es: "Autocaravana Fiat McLouis",
+    fr: "Camping-car Fiat McLouis",
+    de: "Wohnmobil Fiat McLouis",
+    ru: "Автодом Fiat McLouis",
+    ua: "Автодім Fiat McLouis",
+  },
+  "Peugeot Chausson motorhome": {
+    es: "Autocaravana Peugeot Chausson",
+    fr: "Camping-car Peugeot Chausson",
+    de: "Wohnmobil Peugeot Chausson",
+    ru: "Автодом Peugeot Chausson",
+    ua: "Автодім Peugeot Chausson",
+  },
   "ABOUT OUR COMPANY": { es: "SOBRE NOSOTROS", fr: "À PROPOS", de: "ÜBER UNS", ru: "О КОМПАНИИ", ua: "ПРО КОМПАНІЮ" },
-  "We are your trusted partner for mobile home or autocaravan rentals in the stunning Alicante region of Spain! We’re dedicated to helping travelers experience Costa Blanca with the freedom and flexibility only a caravan can offer.": {
+  "We are your trusted partner for motorhome rentals in the stunning Alicante region of Spain! We’re dedicated to helping travelers experience Costa Blanca with the freedom and flexibility only a caravan can offer.": {
     es: "Somos tu equipo de confianza para alquilar autocaravanas en Alicante. Queremos que vivas la Costa Blanca con la libertad que solo da una casa sobre ruedas.",
     fr: "Nous sommes votre partenaire de confiance pour la location de camping-cars dans la région d'Alicante. Nous aidons les voyageurs à découvrir la Costa Blanca en toute liberté.",
     de: "Wir sind Ihr Partner für Wohnmobilvermietung in der Region Alicante. Wir helfen Reisenden, die Costa Blanca mit der Freiheit eines Wohnmobils zu erleben.",
@@ -184,7 +212,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "Ответы на то, о чём нас спрашивают чаще всего",
     ua: "Відповіді на те, про що нас питають найчастіше",
   },
-  "How do I book a mobile home?": { es: "¿Cómo reservo una autocaravana?", fr: "Comment réserver un camping-car ?", de: "Wie buche ich ein Wohnmobil?", ru: "Как забронировать автодом?", ua: "Як забронювати автодім?" },
+  "How do I book a motorhome?": { es: "¿Cómo reservo una autocaravana?", fr: "Comment réserver un camping-car ?", de: "Wie buche ich ein Wohnmobil?", ru: "Как забронировать автодом?", ua: "Як забронювати автодім?" },
   "Booking is simple! You can check available dates on our website, choose the caravan that suits your needs, and complete the booking online. Once confirmed, you’ll receive an email with all rental details and pickup instructions.": {
     es: "Reservar es fácil. Consulta las fechas libres, elige la autocaravana y confirma la reserva. Cuando esté confirmada, te enviamos un correo con los detalles y las instrucciones de recogida.",
     fr: "Réserver est simple. Consultez les dates, choisissez le camping-car et confirmez. Une fois la réservation validée, vous recevez un e-mail avec les détails et les instructions de prise en charge.",
@@ -200,7 +228,7 @@ const phrases: Record<string, Partial<Record<Lang, string>>> = {
     ru: "В каждом автодоме есть кухня, спальные места, санузел и базовая посуда. В некоторых моделях есть уличная мебель и дополнительное место для вещей. Подробности — в карточке каждого автодома.",
     ua: "У кожному автодомі є кухня, спальні місця, санвузол і базовий посуд. У деяких моделях є вуличні меблі та додаткове місце для речей. Подробиці — у картці кожного автодома.",
   },
-  "Where do I pick up and drop off the mobile home?": { es: "¿Dónde recojo y devuelvo la autocaravana?", fr: "Où prendre et rendre le camping-car ?", de: "Wo hole ich das Wohnmobil ab und bringe es zurück?", ru: "Где забирать и возвращать автодом?", ua: "Де забирати й повертати автодім?" },
+  "Where do I pick up and drop off the motorhome?": { es: "¿Dónde recojo y devuelvo la autocaravana?", fr: "Où prendre et rendre le camping-car ?", de: "Wo hole ich das Wohnmobil ab und bringe es zurück?", ru: "Где забирать и возвращать автодом?", ua: "Де забирати й повертати автодім?" },
   "The pickup and drop-off location will be provided in your confirmation email. Our team will meet you at the designated spot in the Alicante region, ensuring a smooth start and end to your trip.": {
     es: "Recogida y devolución en Alicante, Torrevieja, Elche y en el aeropuerto de Alicante, gratis. El punto concreto va en el correo de confirmación.",
     fr: "Prise en charge et retour à Alicante, Torrevieja, Elche et à l'aéroport d'Alicante, gratuit. Le point exact est dans l'e-mail de confirmation.",

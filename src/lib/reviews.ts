@@ -58,7 +58,7 @@ export const reviews: Review[] = [
 
 export const faqs = [
   {
-    q: "How do I book a mobile home?",
+    q: "How do I book a motorhome?",
     a: "Booking is simple! You can check available dates on our website, choose the caravan that suits your needs, and complete the booking online. Once confirmed, you’ll receive an email with all rental details and pickup instructions.",
   },
   {
@@ -66,7 +66,7 @@ export const faqs = [
     a: "Each caravan comes fully equipped with essential amenities, including a kitchenette, sleeping areas, a bathroom, and basic cookware. Some models also include extra items, like outdoor furniture and additional storage space—check each caravan’s details for specifics!",
   },
   {
-    q: "Where do I pick up and drop off the mobile home?",
+    q: "Where do I pick up and drop off the motorhome?",
     a: "The pickup and drop-off location will be provided in your confirmation email. Our team will meet you at the designated spot in the Alicante region, ensuring a smooth start and end to your trip.",
   },
   {
