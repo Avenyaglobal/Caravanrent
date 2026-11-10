@@ -280,6 +280,11 @@ function nightsBetween(from: string, to: string) {
   return Math.round((parseDay(to).getTime() - parseDay(from).getTime()) / 86400000);
 }
 
+function openedMonth() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
 function rangeBusy(from: string, to: string, ranges: BusyRange[]) {
   return ranges.some((range) => from < range.end && to >= range.start);
 }
@@ -333,10 +338,11 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
   const [error, setError] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "fail">("idle");
   const [busy, setBusy] = useState<BusyRange[]>([]);
-  const [month, setMonth] = useState(() => {
-    const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth(), 1);
-  });
+  const [month, setMonth] = useState(() => openedMonth());
+
+  useEffect(() => {
+    setMonth(openedMonth());
+  }, []);
 
   const linked = Boolean(van);
   const quote = useMemo(() => (van ? quoteFor(van.id, from, to) : null), [van, from, to]);
