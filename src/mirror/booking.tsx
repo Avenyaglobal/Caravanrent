@@ -333,7 +333,10 @@ export function BookingForm({ lang, vehicle }: { lang: Lang; vehicle?: string })
   const [error, setError] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "fail">("idle");
   const [busy, setBusy] = useState<BusyRange[]>([]);
-  const [month, setMonth] = useState(() => new Date(2026, 9, 1));
+  const [month, setMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
 
   const linked = Boolean(van);
   const quote = useMemo(() => (van ? quoteFor(van.id, from, to) : null), [van, from, to]);
