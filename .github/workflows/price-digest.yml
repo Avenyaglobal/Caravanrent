@@ -1,8 +1,9 @@
 name: price-digest
 on:
   schedule:
-    # 08:15, 09:15 and 10:15 Madrid. A failed read is retried by the next run.
-    - cron: "15 6,7,8 * * *"
+    # 05:15, 06:15, 07:15, 08:15 and 15:15 Madrid in winter.
+    # The first finished run writes the letter. A late GitHub start still writes it.
+    - cron: "15 4,5,6,7,14 * * *"
   workflow_dispatch:
 permissions:
   contents: write

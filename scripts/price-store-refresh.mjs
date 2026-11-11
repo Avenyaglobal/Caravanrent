@@ -34,7 +34,7 @@ async function createStore() {
 function keep(row) {
   if (!row || !row.vehicle || !row.from || !row.to) return false;
   const at = Date.parse(row.at || "");
-  return !Number.isFinite(at) || at >= Date.now() - 36 * 60 * 60 * 1000;
+  return !Number.isFinite(at) || at >= Date.now() - 60 * 60 * 60 * 1000;
 }
 
 const current = await readText("data/store-url.txt");
