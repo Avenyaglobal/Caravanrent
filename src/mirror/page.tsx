@@ -84,52 +84,16 @@ const pageCopy: Record<string, Record<Lang, { title: string; description: string
     ua: { title: "Оренда Fiat McLouis в Аліканте | Caravan Rent", description: "Fiat McLouis MC4 379 в Аліканте, Торрев'єсі та Ельче. Дизель, автомат, 5 місць і 5 спальних. Від 130 € на день." },
   },
   "peugeot-chausson": {
-    es: { title: "Alquiler Peugeot Chausson en Alicante | Caravan Rent", description: "Peugeot Chausson 724 en Alicante, Torrevieja y Elche. Diésel, manual, 5 plazas y 6 camas. Desde 100 € al día, kilómetros ilimitados." },
-    en: { title: "Peugeot Chausson motorhome rental in Alicante | Caravan Rent", description: "Peugeot Chausson 724 in Alicante, Torrevieja and Elche. Diesel, manual, 5 seats and 6 beds. From €100 a day, unlimited kilometres." },
-    fr: { title: "Location Peugeot Chausson à Alicante | Caravan Rent", description: "Peugeot Chausson 724 à Alicante, Torrevieja et Elche. Diesel, manuelle, 5 places et 6 couchages. Dès 100 € par jour." },
-    de: { title: "Peugeot Chausson Wohnmobil mieten in Alicante | Caravan Rent", description: "Peugeot Chausson 724 in Alicante, Torrevieja und Elche. Diesel, Schaltung, 5 Sitze und 6 Betten. Ab 100 € pro Tag." },
-    ru: { title: "Аренда Peugeot Chausson в Аликанте | Caravan Rent", description: "Peugeot Chausson 724 в Аликанте, Торревьехе и Эльче. Дизель, механика, 5 мест и 6 спальных. От 100 € в день." },
-    ua: { title: "Оренда Peugeot Chausson в Аліканте | Caravan Rent", description: "Peugeot Chausson 724 в Аліканте, Торрев'єсі та Ельче. Дизель, механіка, 5 місць і 6 спальних. Від 100 € на день." },
+    es: { title: "Alquiler Peugeot Chausson en Alicante | Caravan Rent", description: "Peugeot Chausson 724 en Alicante, Torrevieja y Elche. Diésel, manual, 5 plazas y 6 camas. Desde 120 € al día, kilómetros ilimitados." },
+    en: { title: "Peugeot Chausson motorhome rental in Alicante | Caravan Rent", description: "Peugeot Chausson 724 in Alicante, Torrevieja and Elche. Diesel, manual, 5 seats and 6 beds. From €120 a day, unlimited kilometres." },
+    fr: { title: "Location Peugeot Chausson à Alicante | Caravan Rent", description: "Peugeot Chausson 724 à Alicante, Torrevieja et Elche. Diesel, manuelle, 5 places et 6 couchages. Dès 120 € par jour." },
+    de: { title: "Peugeot Chausson Wohnmobil mieten in Alicante | Caravan Rent", description: "Peugeot Chausson 724 in Alicante, Torrevieja und Elche. Diesel, Schaltung, 5 Sitze und 6 Betten. Ab 120 € pro Tag." },
+    ru: { title: "Аренда Peugeot Chausson в Аликанте | Caravan Rent", description: "Peugeot Chausson 724 в Аликанте, Торревьехе и Эльче. Дизель, механика, 5 мест и 6 спальных. От 120 € в день." },
+    ua: { title: "Оренда Peugeot Chausson в Аліканте | Caravan Rent", description: "Peugeot Chausson 724 в Аліканте, Торрев'єсі та Ельче. Дизель, механіка, 5 місць і 6 спальних. Від 120 € на день." },
   },
 };
 
 const fixes = `
-.cr-promo {
-  position: fixed;
-  inset: 0;
-  z-index: 10000020;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 52px 10px 10px;
-  background: rgba(0, 0, 0, .78);
-}
-.cr-promo-x {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  z-index: 2;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 50%;
-  background: #fff;
-  color: #111;
-  font-size: 30px;
-  line-height: 1;
-  cursor: pointer;
-}
-.cr-promo-link { display: block; max-width: 100%; max-height: 100%; }
-.cr-promo-link img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: calc(100vh - 64px);
-  object-fit: contain;
-  border-radius: 12px;
-}
 .mirror-page { overflow-x: clip; }
 .cr-vehicle-note { max-width: 920px; margin: 8px auto 0; padding: 8px 16px 0; color: #201f1d; }
 .cr-vehicle-note h2 { margin: 0 0 8px; font-size: 22px; line-height: 1.3; }
@@ -1139,7 +1103,7 @@ export function mirrorHead(lang: Lang, slug = "") {
           addressCountry: "ES",
         },
         areaServed: ["Alicante", "Torrevieja", "Elche", "Alicante Airport"],
-        priceRange: "€100-€185",
+        priceRange: "€120-€185",
       }
     : null;
   const vehicleOg: Record<string, string> = {
@@ -1197,44 +1161,6 @@ export function mirrorHead(lang: Lang, slug = "") {
   };
 }
 
-function PeugeotPromo({ lang, slug }: { lang: Lang; slug: string }) {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (slug === "peugeot-chausson") return;
-    try {
-      if (sessionStorage.getItem("cr-peugeot-100")) return;
-    } catch {
-      /* ignore */
-    }
-    setOpen(true);
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [slug]);
-  if (!open) return null;
-  const close = () => {
-    try {
-      sessionStorage.setItem("cr-peugeot-100", "1");
-    } catch {
-      /* ignore */
-    }
-    document.body.style.overflow = "";
-    setOpen(false);
-  };
-  return (
-    <div className="cr-promo" role="dialog" aria-modal="true">
-      <button type="button" className="cr-promo-x" onClick={close} aria-label="Cerrar">
-        ×
-      </button>
-      <a className="cr-promo-link" href={pagePath(lang, "peugeot-chausson")} onClick={close}>
-        <img src="/promo/peugeot-100.png" alt="Peugeot Chausson desde 100 euros al día" />
-      </a>
-    </div>
-  );
-}
-
 export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   const clean = slug.replace(/^\/+|\/+$/g, "");
   const source = placeHtml(clean, lang) ?? getPageHtml(slug, lang);
@@ -1271,7 +1197,6 @@ export function MirrorPage({ lang, slug = "" }: { lang: Lang; slug?: string }) {
   return (
     <div className={vehicle ? "mirror-page vehicle-page" : "mirror-page"} lang={lang === "ua" ? "uk" : lang}>
       <style dangerouslySetInnerHTML={{ __html: extraCss + fixes }} />
-      <PeugeotPromo lang={lang} slug={clean} />
       <div dangerouslySetInnerHTML={{ __html: html }} />
       {slot ? createPortal(<BookingForm lang={lang} vehicle={vehicle ? slug : undefined} />, slot) : null}
       {factsSlot ? createPortal(<RentalFacts lang={lang} />, factsSlot) : null}

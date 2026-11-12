@@ -43,32 +43,32 @@ export const pageMeta: Record<Lang, { title: string; description: string }> = {
   es: {
     title: "Alquiler de autocaravanas en Alicante, Torrevieja y Elche | Caravan Rent",
     description:
-      "Alquiler de autocaravanas en Alicante, Torrevieja y Elche. Autocaravanas nuevas, kilómetros ilimitados y Wi-Fi Starlink. Desde 100 € al día.",
+      "Alquiler de autocaravanas en Alicante, Torrevieja y Elche. Autocaravanas nuevas, kilómetros ilimitados y Wi-Fi Starlink. Desde 120 € al día.",
   },
   en: {
     title: "Motorhome rental in Alicante, Torrevieja and Elche | Caravan Rent",
     description:
-      "Motorhome rental in Alicante, Torrevieja and Elche. New motorhomes, unlimited kilometres and Starlink Wi-Fi. From €100 a day.",
+      "Motorhome rental in Alicante, Torrevieja and Elche. New motorhomes, unlimited kilometres and Starlink Wi-Fi. From €120 a day.",
   },
   fr: {
     title: "Location de camping-car à Alicante, Torrevieja et Elche | Caravan Rent",
     description:
-      "Location de camping-cars à Alicante, Torrevieja et Elche. Véhicules neufs, kilométrage illimité et Wi-Fi Starlink. Dès 100 € par jour.",
+      "Location de camping-cars à Alicante, Torrevieja et Elche. Véhicules neufs, kilométrage illimité et Wi-Fi Starlink. Dès 120 € par jour.",
   },
   de: {
     title: "Wohnmobil mieten in Alicante, Torrevieja und Elche | Caravan Rent",
     description:
-      "Wohnmobil mieten in Alicante, Torrevieja und Elche. Neue Wohnmobile, unbegrenzte Kilometer und Starlink-WLAN. Ab 100 € pro Tag.",
+      "Wohnmobil mieten in Alicante, Torrevieja und Elche. Neue Wohnmobile, unbegrenzte Kilometer und Starlink-WLAN. Ab 120 € pro Tag.",
   },
   ru: {
     title: "Аренда автодомов в Аликанте, Торревьехе и Эльче | Caravan Rent",
     description:
-      "Аренда автодомов в Аликанте, Торревьехе и Эльче. Новые автодома, пробег без лимита и Wi-Fi Starlink. От 100 € в день.",
+      "Аренда автодомов в Аликанте, Торревьехе и Эльче. Новые автодома, пробег без лимита и Wi-Fi Starlink. От 120 € в день.",
   },
   ua: {
     title: "Оренда автодомів в Аліканте, Торрев'єсі та Ельче | Caravan Rent",
     description:
-      "Оренда автодомів в Аліканте, Торрев'єсі та Ельче. Нові автодоми, пробіг без ліміту та Wi-Fi Starlink. Від 100 € на день.",
+      "Оренда автодомів в Аліканте, Торрев'єсі та Ельче. Нові автодоми, пробіг без ліміту та Wi-Fi Starlink. Від 120 € на день.",
   },
 };
 

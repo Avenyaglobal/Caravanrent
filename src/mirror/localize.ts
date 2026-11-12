@@ -304,7 +304,7 @@ export function localizeHtml(html: string, lang: Lang, slug = "") {
   };
   if (!slug && out.includes('id="cr-place-slot"')) out = out.replace('<div id="cr-place-slot"></div>', homePlaceLinks(lang));
   else if (!slug) out = out.replace("</h1>", `</h1><p class="cr-cities">${cities[lang]}</p>${homePlaceLinks(lang)}`);
-  const peugeotPrice = Date.now() <= Date.parse("2026-12-28T23:59:59+01:00") ? "100" : "120";
+  const peugeotPrice = "120";
   const cardMeta: Record<string, Record<Lang, string>> = {
     "Ford - Weinsberg CaraSuite 650 MEG": {
       es: "desde 120 €/día · 4 plazas · 4 camas · manual",
