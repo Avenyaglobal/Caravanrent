@@ -1,9 +1,9 @@
 name: price-digest
 on:
   schedule:
-    # 05:15, 06:15, 07:15, 08:15 and 15:15 Madrid in winter.
-    # The first finished run writes the letter. A late GitHub start still writes it.
-    - cron: "15 4,5,6,7,14 * * *"
+    # 09:30, 10:30 and 12:30 Madrid in winter, after the 09:00 mail.
+    # A run outside 09:00–13:00 does not clear the list.
+    - cron: "30 8,9,11 * * *"
   workflow_dispatch:
 permissions:
   contents: write

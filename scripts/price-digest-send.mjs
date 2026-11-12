@@ -121,7 +121,12 @@ async function readLooks(url) {
 
 const clock = madrid();
 const today = `${clock.year}-${clock.month}-${clock.day}`;
+const hour = Number(clock.hour);
 const forced = process.env.FORCE === "1";
+if (!forced && (hour < 9 || hour > 13)) {
+  console.log(`skip hour ${clock.hour}`);
+  process.exit(0);
+}
 if (!forced && (await readText("data/digest-day.txt")) === today) {
   console.log("already sent today");
   process.exit(0);
