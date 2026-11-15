@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import nodemailer from "nodemailer";
 
-const TO = ["info@caravanrent-alicante.com", "caravanrentalicante@gmail.com"];
+const TO = "caravanrentalicante@gmail.com";
 const ORDER = ["fiat-mclouis-mc4-379", "ford-weinsberg", "peugeot-chausson"] as const;
 const NAMES: Record<(typeof ORDER)[number], string> = {
   "fiat-mclouis-mc4-379": "Фиат",
@@ -102,7 +102,7 @@ export const Route = createFileRoute("/api/price-digest")({
         });
         await transport.sendMail({
           from: "Caravan Rent Alicante <info@caravanrent-alicante.com>",
-          to: TO.join(", "),
+          to: TO,
           subject: `Просмотры цен ${clock.day}.${clock.month}.${clock.year}`,
           text,
         });
