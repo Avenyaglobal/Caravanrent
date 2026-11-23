@@ -1,22 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const FALLBACK = "https://crudcrud.com/api/676d67483d854d3db9c66a1454e7dd6e/looks";
 const known = new Set(["ford-weinsberg", "peugeot-chausson", "fiat-mclouis-mc4-379"]);
-
-async function storeUrl() {
-  try {
-    const response = await fetch("https://raw.githubusercontent.com/Avenyaglobal/Caravanrent/main/data/store-url.txt", {
-      cache: "no-store",
-    });
-    if (response.ok) {
-      const text = (await response.text()).trim();
-      if (text.startsWith("https://crudcrud.com/api/") && text.endsWith("/looks")) return text;
-    }
-  } catch {
-    // The address in the repository is missing. Use the current list.
-  }
-  return FALLBACK;
-}
 
 function realDay(iso: string) {
   const [year, month, day] = iso.split("-").map(Number);
@@ -44,19 +28,7 @@ export const logPriceLook = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data }) => {
-    const payload = JSON.stringify({ ...data, at: new Date().toISOString() });
-    const send = (url) =>
-      fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: payload,
-      });
-    const primary = await storeUrl();
-    const first = await send(primary);
-    if (first.ok) return { ok: true as const };
-    if (primary !== FALLBACK) {
-      const second = await send(FALLBACK);
-      if (second.ok) return { ok: true as const };
-    }
-    throw new Error("store");
+    const { saveLook } = await import("./price-box.server");
+    await saveLook({ ...data, at: new Date().toISOString() });
+    return { ok: true as const };
   });

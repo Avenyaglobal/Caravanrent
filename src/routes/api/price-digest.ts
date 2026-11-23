@@ -63,20 +63,6 @@ function letter(rows: Look[]) {
   return blocks.length ? `${blocks.join("\n\n")}\n` : `${EMPTY}\n`;
 }
 
-async function readStore() {
-  const meta = await fetch("https://raw.githubusercontent.com/Avenyaglobal/Caravanrent/main/data/store-url.txt", {
-    cache: "no-store",
-  });
-  if (!meta.ok) throw new Error("store url");
-  const url = (await meta.text()).trim();
-  if (!url.startsWith("https://crudcrud.com/api/") || !url.endsWith("/looks")) throw new Error("store url");
-  const listed = await fetch(url, { cache: "no-store" });
-  if (!listed.ok) throw new Error(`store ${listed.status}`);
-  const data = (await listed.json()) as Look[];
-  if (!Array.isArray(data)) throw new Error("store");
-  return { url, data };
-}
-
 export const Route = createFileRoute("/api/price-digest")({
   server: {
     handlers: {
@@ -85,15 +71,22 @@ export const Route = createFileRoute("/api/price-digest")({
         const hour = Number(clock.hour);
         if (hour < 9 || hour > 11) return Response.json({ sent: false, reason: "hour", hour });
         const today = `${clock.year}-${clock.month}-${clock.day}`;
-        const { url, data } = await readStore();
+        const pass = process.env.SMTP_PASS;
+        if (!pass) return Response.json({ sent: false, reason: "smtp" }, { status: 500 });
+        const { readLooks, saveLook } = await import("@/mirror/price-box.server");
+        let data: Look[] = [];
+        try {
+          data = await readLooks();
+        } catch (error) {
+          const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : "box";
+          return Response.json({ sent: false, reason: "box", message }, { status: 500 });
+        }
         if (data.some((row) => row.session === `digest-${today}`)) {
           return Response.json({ sent: false, reason: "already" });
         }
         const cutoff = Date.now() - 25 * 60 * 60 * 1000;
         const rows = data.filter((row) => plausible(row) && Date.parse(row.at || "") > cutoff);
         const text = letter(rows);
-        const pass = process.env.SMTP_PASS;
-        if (!pass) return Response.json({ sent: false, reason: "smtp" }, { status: 500 });
         const transport = nodemailer.createTransport({
           host: "smtp.titan.email",
           port: 465,
@@ -106,17 +99,13 @@ export const Route = createFileRoute("/api/price-digest")({
           subject: `Просмотры цен ${clock.day}.${clock.month}.${clock.year}`,
           text,
         });
-        await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            vehicle: "digest",
-            from: today,
-            to: today,
-            total: 0,
-            session: `digest-${today}`,
-            at: new Date().toISOString(),
-          }),
+        await saveLook({
+          vehicle: "digest",
+          from: today,
+          to: today,
+          total: 0,
+          session: `digest-${today}`,
+          at: new Date().toISOString(),
         });
         return Response.json({ sent: true, count: rows.length });
       },

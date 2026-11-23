@@ -1,4 +1,6 @@
-import { readFile, writeFile } from "node:fs/promises";
+console.log("price list is kept in the mailbox");
+process.exit(0);
+
 
 async function readText(path) {
   try {
