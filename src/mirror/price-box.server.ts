@@ -55,8 +55,14 @@ class Box {
   private send(line: string) {
     this.expect = `A${++this.tag}`;
     const pending = this.wait();
+    const timer = setTimeout(() => {
+      if (!this.waiter) return;
+      const finish = this.waiter;
+      this.waiter = null;
+      finish(new Error(`imap timeout ${line.split(" ")[0]}`), "");
+    }, 10000);
     this.socket.write(`${this.expect} ${line}\r\n`);
-    return pending;
+    return pending.finally(() => clearTimeout(timer));
   }
 
   async login(pass: string) {
@@ -122,29 +128,33 @@ class Box {
 }
 
 function connect() {
-  return new Promise<tls.TLSSocket>((resolve, reject) => {
-    const socket = tls.connect({ host: HOST, port: 993, servername: HOST });
-    const timer = setTimeout(() => {
-      socket.destroy();
-      reject(new Error("imap timeout"));
-    }, 15000);
-    socket.once("error", (error) => {
-      clearTimeout(timer);
-      reject(error);
-    });
-    socket.once("data", () => {
-      clearTimeout(timer);
-      resolve(socket);
-    });
-  });
+  const socket = tls.connect({ host: HOST, port: 993, servername: HOST });
+  socket.setTimeout(12000);
+  socket.on("timeout", () => socket.destroy(new Error("imap timeout")));
+  return socket;
 }
 
 async function open() {
   const pass = process.env.SMTP_PASS;
   if (!pass) throw new Error("smtp");
-  const socket = await connect();
+  const socket = connect();
   const box = new Box(socket);
   try {
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("imap greeting")), 12000);
+      const ready = () => {
+        if (!box["buffer"].includes("\n")) return;
+        clearTimeout(timer);
+        socket.off("data", ready);
+        resolve();
+      };
+      socket.on("error", (error) => {
+        clearTimeout(timer);
+        reject(error);
+      });
+      socket.on("data", ready);
+      ready();
+    });
     await box.login(pass);
   } catch (error) {
     box.close();
