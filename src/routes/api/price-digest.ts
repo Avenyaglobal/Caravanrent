@@ -69,7 +69,7 @@ export const Route = createFileRoute("/api/price-digest")({
       GET: async () => {
         const clock = madrid();
         const hour = Number(clock.hour);
-        if (hour < 9 || hour > 11) return Response.json({ sent: false, reason: "hour", hour });
+        if (hour < 9 || hour > 16) return Response.json({ sent: false, reason: "hour", hour });
         const today = `${clock.year}-${clock.month}-${clock.day}`;
         const pass = process.env.SMTP_PASS;
         if (!pass) return Response.json({ sent: false, reason: "smtp" }, { status: 500 });
@@ -92,22 +92,38 @@ export const Route = createFileRoute("/api/price-digest")({
           port: 465,
           secure: true,
           auth: { user: "info@caravanrent-alicante.com", pass },
+          connectionTimeout: 10000,
+          greetingTimeout: 10000,
+          socketTimeout: 15000,
         });
-        await transport.sendMail({
-          from: "Caravan Rent Alicante <info@caravanrent-alicante.com>",
-          to: TO,
-          subject: `Просмотры цен ${clock.day}.${clock.month}.${clock.year}`,
-          text,
-        });
-        await saveLook({
-          vehicle: "digest",
-          from: today,
-          to: today,
-          total: 0,
-          session: `digest-${today}`,
-          at: new Date().toISOString(),
-        });
-        return Response.json({ sent: true, count: rows.length });
+        try {
+          await transport.sendMail({
+            from: "Caravan Rent Alicante <info@caravanrent-alicante.com>",
+            to: TO,
+            subject: `Просмотры цен ${clock.day}.${clock.month}.${clock.year}`,
+            text,
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : "mail";
+          return Response.json({ sent: false, reason: "mail", message }, { status: 500 });
+        }
+        let marked = false;
+        for (let attempt = 0; attempt < 2 && !marked; attempt += 1) {
+          try {
+            await saveLook({
+              vehicle: "digest",
+              from: today,
+              to: today,
+              total: 0,
+              session: `digest-${today}`,
+              at: new Date().toISOString(),
+            });
+            marked = true;
+          } catch {
+            marked = false;
+          }
+        }
+        return Response.json({ sent: true, count: rows.length, marked });
       },
     },
   },
