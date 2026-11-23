@@ -69,20 +69,38 @@ export const Route = createFileRoute("/api/price-digest")({
       GET: async () => {
         const clock = madrid();
         const hour = Number(clock.hour);
-        if (hour < 9 || hour > 16) return Response.json({ sent: false, reason: "hour", hour });
+        if (hour < 9 || hour > 10) return Response.json({ sent: false, reason: "hour", hour });
         const today = `${clock.year}-${clock.month}-${clock.day}`;
         const pass = process.env.SMTP_PASS;
         if (!pass) return Response.json({ sent: false, reason: "smtp" }, { status: 500 });
-        const { readLooks, saveLook } = await import("@/mirror/price-box.server");
+        const { readLooks, saveLook, daySent, takeTurn, releaseTurn } = await import("@/mirror/price-box.server");
+        const failed = (error: unknown, reason: string) => {
+          const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : reason;
+          return Response.json({ sent: false, reason, message }, { status: 500 });
+        };
+        try {
+          if (await daySent(today)) return Response.json({ sent: false, reason: "already" });
+        } catch (error) {
+          return failed(error, "box");
+        }
+        let won = false;
+        try {
+          won = await takeTurn(today);
+        } catch (error) {
+          return failed(error, "box");
+        }
+        if (!won) return Response.json({ sent: false, reason: "already" });
+        try {
+          if (await daySent(today)) return Response.json({ sent: false, reason: "already" });
+        } catch (error) {
+          return failed(error, "box");
+        }
         let data: Look[] = [];
         try {
           data = await readLooks();
         } catch (error) {
-          const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : "box";
-          return Response.json({ sent: false, reason: "box", message }, { status: 500 });
-        }
-        if (data.some((row) => row.session === `digest-${today}`)) {
-          return Response.json({ sent: false, reason: "already" });
+          await releaseTurn(today).catch(() => undefined);
+          return failed(error, "box");
         }
         const cutoff = Date.now() - 25 * 60 * 60 * 1000;
         const rows = data.filter((row) => plausible(row) && Date.parse(row.at || "") > cutoff);
@@ -104,8 +122,8 @@ export const Route = createFileRoute("/api/price-digest")({
             text,
           });
         } catch (error) {
-          const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : "mail";
-          return Response.json({ sent: false, reason: "mail", message }, { status: 500 });
+          await releaseTurn(today).catch(() => undefined);
+          return failed(error, "mail");
         }
         let marked = false;
         for (let attempt = 0; attempt < 2 && !marked; attempt += 1) {
