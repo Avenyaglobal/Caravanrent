@@ -1,24 +1,12 @@
 name: price-digest
 on:
   schedule:
-    # 09:30, 10:30 and 12:30 Madrid in winter, after the 09:00 mail.
-    # A run outside 09:00–13:00 does not clear the list.
-    - cron: "30 8,9,11 * * *"
+    # Extra pushes through the day. The site sends only one letter.
+    - cron: "15 7,8,9,10,12,15,18 * * *"
   workflow_dispatch:
-permissions:
-  contents: write
 jobs:
   send:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: node scripts/price-digest-send.mjs
-      - run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/store-url.txt data/digest-day.txt data/digest-letter.txt public/price-letter.txt
-          git diff --cached --quiet || git commit -m "Send the daily price views"
-          git push
+      - name: Ask the site to send the morning letter
+        run: curl -sS --max-time 45 -w "\n" https://www.caravanrent-alicante.com/api/price-digest

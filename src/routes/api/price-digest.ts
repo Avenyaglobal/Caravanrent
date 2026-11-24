@@ -63,38 +63,50 @@ function letter(rows: Look[]) {
   return blocks.length ? `${blocks.join("\n\n")}\n` : `${EMPTY}\n`;
 }
 
+function answer(body: Record<string, unknown>, status = 200) {
+  return Response.json(body, { status, headers: { "cache-control": "no-store" } });
+}
+
 export const Route = createFileRoute("/api/price-digest")({
   server: {
     handlers: {
       GET: async () => {
         const clock = madrid();
         const hour = Number(clock.hour);
-        if (hour < 9 || hour > 10) return Response.json({ sent: false, reason: "hour", hour });
+        if (hour < 8 || hour > 22) return answer({ sent: false, reason: "hour", hour });
         const today = `${clock.year}-${clock.month}-${clock.day}`;
         const pass = process.env.SMTP_PASS;
-        if (!pass) return Response.json({ sent: false, reason: "smtp" }, { status: 500 });
-        const { readLooks, saveLook, daySent, takeTurn, releaseTurn } = await import("@/mirror/price-box.server");
+        if (!pass) return answer({ sent: false, reason: "smtp" }, 500);
+        const { readLooks, saveLook, daySent, takeTurn, releaseTurn, markStarted, startedAt } = await import(
+          "@/mirror/price-box.server"
+        );
         const failed = (error: unknown, reason: string) => {
           const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : reason;
-          return Response.json({ sent: false, reason, message }, { status: 500 });
+          return answer({ sent: false, reason, message }, 500);
         };
+        const ownTheSend = async () => {
+          if (await daySent(today)) return false;
+          const turn = await takeTurn(today);
+          if (turn === 1) {
+            await markStarted(today);
+            return true;
+          }
+          await new Promise((resolve) => setTimeout(resolve, 2500));
+          if (await daySent(today)) return false;
+          const since = Date.parse(await startedAt(today));
+          if (Number.isFinite(since) && Date.now() - since < 3 * 60 * 1000) return false;
+          await releaseTurn(today);
+          if ((await takeTurn(today)) !== 1) return false;
+          await markStarted(today);
+          return true;
+        };
+        let owned = false;
         try {
-          if (await daySent(today)) return Response.json({ sent: false, reason: "already" });
+          owned = await ownTheSend();
         } catch (error) {
           return failed(error, "box");
         }
-        let won = false;
-        try {
-          won = await takeTurn(today);
-        } catch (error) {
-          return failed(error, "box");
-        }
-        if (!won) return Response.json({ sent: false, reason: "already" });
-        try {
-          if (await daySent(today)) return Response.json({ sent: false, reason: "already" });
-        } catch (error) {
-          return failed(error, "box");
-        }
+        if (!owned) return answer({ sent: false, reason: "already" });
         let data: Look[] = [];
         try {
           data = await readLooks();
@@ -141,7 +153,7 @@ export const Route = createFileRoute("/api/price-digest")({
             marked = false;
           }
         }
-        return Response.json({ sent: true, count: rows.length, marked });
+        return answer({ sent: true, count: rows.length, marked });
       },
     },
   },

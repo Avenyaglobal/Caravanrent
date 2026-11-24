@@ -67,12 +67,29 @@ export async function daySent(day: string) {
   return (await response.text()).includes(`"session":"digest-${day}"`);
 }
 
-// Atomic counter: only the caller that receives "1" may send.
+// Atomic counter. The caller that receives 1 owns the send.
 export async function takeTurn(day: string) {
   const response = await kv(`/n-${day}`, { method: "PATCH", body: "+1" });
-  return (await response.text()).trim() === "1";
+  const value = Number((await response.text()).trim());
+  if (!Number.isFinite(value)) throw new Error("box turn");
+  return value;
 }
 
 export async function releaseTurn(day: string) {
   await kv(`/n-${day}`, { method: "POST", body: "0" });
+}
+
+export async function markStarted(day: string) {
+  await kv(`/s-${day}`, { method: "POST", body: new Date().toISOString() });
+}
+
+export async function startedAt(day: string) {
+  const response = await fetch(`${BASE}/${bust(`s-${day}`)}`, {
+    cache: "no-store",
+    signal: AbortSignal.timeout(8000),
+    headers: { "cache-control": "no-cache" },
+  });
+  if (response.status === 404) return "";
+  if (!response.ok) throw new Error(`box ${response.status}`);
+  return (await response.text()).trim();
 }
