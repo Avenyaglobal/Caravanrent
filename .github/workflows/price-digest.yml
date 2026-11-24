@@ -1,12 +1,38 @@
 name: price-digest
 on:
   schedule:
-    # Extra pushes through the day. The site sends only one letter.
     - cron: "15 7,8,9,10,12,15,18 * * *"
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   send:
     runs-on: ubuntu-latest
     steps:
-      - name: Ask the site to send the morning letter
-        run: curl -sS --max-time 45 -w "\n" https://www.caravanrent-alicante.com/api/price-digest
+      - uses: actions/checkout@v4
+      - name: Send today's price letter once
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          today=$(TZ=Europe/Madrid date +%F)
+          current=$(tr -d '[:space:]' < data/digest-day.txt || true)
+          if [ "$current" = "$today" ]; then
+            echo "already claimed $today"
+            exit 0
+          fi
+          printf '%s\n' "$today" > data/digest-day.txt
+          git add data/digest-day.txt
+          git commit -m "Mark the price letter sent"
+          git push origin main || { echo "another run claimed today"; exit 0; }
+          body=$(curl -sS --max-time 45 "https://www.caravanrent-alicante.com/api/price-digest?key=17c045b1bd4e6cf1ad2832ae" || true)
+          echo "$body"
+          echo "$body" | grep -q '"sent":true\|"reason":"already"' && exit 0
+          git fetch origin main
+          git checkout -B main origin/main
+          printf '%s\n' "$current" > data/digest-day.txt
+          git add data/digest-day.txt
+          git commit -m "Release the price letter claim"
+          git push origin main || true
+          exit 1

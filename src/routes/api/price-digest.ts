@@ -63,6 +63,8 @@ function letter(rows: Look[]) {
   return blocks.length ? `${blocks.join("\n\n")}\n` : `${EMPTY}\n`;
 }
 
+const KEY = "17c045b1bd4e6cf1ad2832ae";
+
 function answer(body: Record<string, unknown>, status = 200) {
   return Response.json(body, { status, headers: { "cache-control": "no-store" } });
 }
@@ -70,39 +72,21 @@ function answer(body: Record<string, unknown>, status = 200) {
 export const Route = createFileRoute("/api/price-digest")({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
+        const key = new URL(request.url).searchParams.get("key");
+        if (key !== KEY) return answer({ sent: false, reason: "key" });
         const clock = madrid();
-        const hour = Number(clock.hour);
-        if (hour < 8 || hour > 22) return answer({ sent: false, reason: "hour", hour });
         const today = `${clock.year}-${clock.month}-${clock.day}`;
         const pass = process.env.SMTP_PASS;
         if (!pass) return answer({ sent: false, reason: "smtp" }, 500);
-        const { readLooks, saveLook, daySent, takeTurn, releaseTurn, markStarted, startedAt } = await import(
-          "@/mirror/price-box.server"
-        );
+        const { readLooks, saveLook, claimDay, releaseDay } = await import("@/mirror/price-box.server");
         const failed = (error: unknown, reason: string) => {
           const message = error instanceof Error ? error.message.replace(pass, "***").slice(-240) : reason;
           return answer({ sent: false, reason, message }, 500);
         };
-        const ownTheSend = async () => {
-          if (await daySent(today)) return false;
-          const turn = await takeTurn(today);
-          if (turn === 1) {
-            await markStarted(today);
-            return true;
-          }
-          await new Promise((resolve) => setTimeout(resolve, 2500));
-          if (await daySent(today)) return false;
-          const since = Date.parse(await startedAt(today));
-          if (Number.isFinite(since) && Date.now() - since < 3 * 60 * 1000) return false;
-          await releaseTurn(today);
-          if ((await takeTurn(today)) !== 1) return false;
-          await markStarted(today);
-          return true;
-        };
         let owned = false;
         try {
-          owned = await ownTheSend();
+          owned = await claimDay(today);
         } catch (error) {
           return failed(error, "box");
         }
@@ -111,7 +95,7 @@ export const Route = createFileRoute("/api/price-digest")({
         try {
           data = await readLooks();
         } catch (error) {
-          await releaseTurn(today).catch(() => undefined);
+          await releaseDay(today).catch(() => undefined);
           return failed(error, "box");
         }
         const cutoff = Date.now() - 25 * 60 * 60 * 1000;
@@ -134,24 +118,21 @@ export const Route = createFileRoute("/api/price-digest")({
             text,
           });
         } catch (error) {
-          await releaseTurn(today).catch(() => undefined);
+          await releaseDay(today).catch(() => undefined);
           return failed(error, "mail");
         }
-        let marked = false;
-        for (let attempt = 0; attempt < 2 && !marked; attempt += 1) {
-          try {
-            await saveLook({
-              vehicle: "digest",
-              from: today,
-              to: today,
-              total: 0,
-              session: `digest-${today}`,
-              at: new Date().toISOString(),
-            });
-            marked = true;
-          } catch {
-            marked = false;
-          }
+        let marked = true;
+        try {
+          await saveLook({
+            vehicle: "digest",
+            from: today,
+            to: today,
+            total: 0,
+            session: `digest-${today}`,
+            at: new Date().toISOString(),
+          });
+        } catch {
+          marked = false;
         }
         return answer({ sent: true, count: rows.length, marked });
       },

@@ -1,4 +1,6 @@
-const BASE = "https://kvdb.io/WTFgBCizawrnS1nj5gw9kg";
+const TOKEN = "308d4b154e16b8bb25317694a3d51da87a2559947e665425e7b4d0468b13";
+const PATH = "Caravan-price-looks-11-24";
+const TITLE = "Caravan price looks";
 
 export type Look = {
   vehicle?: string;
@@ -9,87 +11,77 @@ export type Look = {
   at?: string;
 };
 
-function keyFor(row: Look) {
-  if (row.session?.startsWith("digest-")) return `d-${row.session.slice("digest-".length)}`;
-  const stamp = (row.at || new Date().toISOString()).replace(/[^0-9]/g, "").slice(0, 17);
-  return `l-${stamp}-${Math.random().toString(36).slice(2, 10)}`;
+type State = { sent: string; looks: Look[] };
+
+function textOf(content: unknown) {
+  const node = Array.isArray(content) ? content[0] : undefined;
+  const children = node && typeof node === "object" && "children" in node ? (node as { children: unknown }).children : [];
+  if (!Array.isArray(children)) return "";
+  return children.map((part) => (typeof part === "string" ? part : "")).join("");
 }
 
-function bust(path: string) {
-  const join = path.includes("?") ? "&" : "?";
-  return `${path}${join}t=${Date.now()}`;
+function parseState(content: unknown): State {
+  try {
+    const data = JSON.parse(textOf(content)) as { sent?: string; looks?: Look[] };
+    return { sent: String(data.sent || ""), looks: Array.isArray(data.looks) ? data.looks : [] };
+  } catch {
+    return { sent: "", looks: [] };
+  }
 }
 
-async function kv(path: string, init?: RequestInit) {
-  const response = await fetch(`${BASE}${path}`, {
-    ...init,
+async function getState() {
+  const response = await fetch(`https://api.telegra.ph/getPage/${PATH}?return_content=true`, {
     cache: "no-store",
     signal: AbortSignal.timeout(8000),
-    headers: { "cache-control": "no-cache", ...init?.headers },
+    headers: { "cache-control": "no-cache" },
   });
   if (!response.ok) throw new Error(`box ${response.status}`);
-  return response;
+  const json = (await response.json()) as { ok?: boolean; result?: { content?: unknown } };
+  if (!json.ok) throw new Error("box page");
+  return parseState(json.result?.content);
 }
 
-async function rows(prefix: string) {
-  const response = await kv(bust(`/?prefix=${encodeURIComponent(prefix)}&values=true&format=json`));
-  const data = (await response.json()) as unknown;
-  if (!Array.isArray(data)) return [] as Look[];
-  const looks: Look[] = [];
-  for (const pair of data) {
-    if (!Array.isArray(pair) || typeof pair[1] !== "string") continue;
-    try {
-      looks.push(JSON.parse(pair[1]) as Look);
-    } catch {
-      // Not one of our records.
-    }
-  }
-  return looks;
-}
-
-export async function saveLook(row: Look) {
-  await kv(`/${keyFor(row)}`, { method: "POST", body: JSON.stringify(row) });
+async function putState(state: State) {
+  const body = new URLSearchParams();
+  body.set("access_token", TOKEN);
+  body.set("path", PATH);
+  body.set("title", TITLE);
+  body.set("content", JSON.stringify([{ tag: "pre", children: [JSON.stringify({ sent: state.sent, looks: state.looks })] }]));
+  const response = await fetch("https://api.telegra.ph/editPage", {
+    method: "POST",
+    body,
+    cache: "no-store",
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!response.ok) throw new Error(`box ${response.status}`);
+  const json = (await response.json()) as { ok?: boolean };
+  if (!json.ok) throw new Error("box write");
 }
 
 export async function readLooks() {
-  const [looks, marks] = await Promise.all([rows("l-"), rows("d-")]);
-  return [...looks, ...marks];
+  return (await getState()).looks;
 }
 
-export async function daySent(day: string) {
-  const response = await fetch(`${BASE}/${bust(`d-${day}`)}`, {
-    cache: "no-store",
-    signal: AbortSignal.timeout(8000),
-    headers: { "cache-control": "no-cache" },
-  });
-  if (response.status === 404) return false;
-  if (!response.ok) throw new Error(`box ${response.status}`);
-  return (await response.text()).includes(`"session":"digest-${day}"`);
+export async function saveLook(row: Look) {
+  const state = await getState();
+  const looks = [...state.looks, row]
+    .filter((item) => {
+      const at = Date.parse(item.at || "");
+      return !item.at || Date.now() - at < 4 * 86400000;
+    })
+    .slice(-200);
+  await putState({ sent: state.sent, looks });
 }
 
-// Atomic counter. The caller that receives 1 owns the send.
-export async function takeTurn(day: string) {
-  const response = await kv(`/n-${day}`, { method: "PATCH", body: "+1" });
-  const value = Number((await response.text()).trim());
-  if (!Number.isFinite(value)) throw new Error("box turn");
-  return value;
+export async function claimDay(day: string) {
+  const state = await getState();
+  if (state.sent === day) return false;
+  await putState({ sent: day, looks: state.looks });
+  return true;
 }
 
-export async function releaseTurn(day: string) {
-  await kv(`/n-${day}`, { method: "POST", body: "0" });
-}
-
-export async function markStarted(day: string) {
-  await kv(`/s-${day}`, { method: "POST", body: new Date().toISOString() });
-}
-
-export async function startedAt(day: string) {
-  const response = await fetch(`${BASE}/${bust(`s-${day}`)}`, {
-    cache: "no-store",
-    signal: AbortSignal.timeout(8000),
-    headers: { "cache-control": "no-cache" },
-  });
-  if (response.status === 404) return "";
-  if (!response.ok) throw new Error(`box ${response.status}`);
-  return (await response.text()).trim();
+export async function releaseDay(day: string) {
+  const state = await getState();
+  if (state.sent !== day) return;
+  await putState({ sent: "", looks: state.looks });
 }
