@@ -1,7 +1,7 @@
 name: price-digest
 on:
   schedule:
-    - cron: "15 6,7,8,9 * * *"
+    - cron: "0 7,8 * * *"
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,8 +13,8 @@ jobs:
       - name: Send today's price letter once
         run: |
           hour=$(TZ=Europe/Madrid date +%H)
-          if [ "$((10#$hour))" -lt 8 ] || [ "$((10#$hour))" -gt 11 ]; then
-            echo "letter waits for the morning, now $hour Madrid"
+          if [ "$((10#$hour))" -ne 9 ]; then
+            echo "letter is only at 09:00 Madrid, now $hour"
             exit 0
           fi
           git config user.name "github-actions[bot]"
