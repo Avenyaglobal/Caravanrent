@@ -1,3 +1,6 @@
 {
-  "crons": []
+  "crons": [
+    { "path": "/api/price-digest?key=17c045b1bd4e6cf1ad2832ae", "schedule": "0 7 * * *" },
+    { "path": "/api/price-digest?key=17c045b1bd4e6cf1ad2832ae", "schedule": "0 8 * * *" }
+  ]
 }

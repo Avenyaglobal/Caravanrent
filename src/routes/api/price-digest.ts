@@ -76,6 +76,8 @@ export const Route = createFileRoute("/api/price-digest")({
         const key = new URL(request.url).searchParams.get("key");
         if (key !== KEY) return answer({ sent: false, reason: "key" });
         const clock = madrid();
+        const hour = Number(clock.hour);
+        if (hour < 8 || hour > 11) return answer({ sent: false, reason: "hour", hour });
         const today = `${clock.year}-${clock.month}-${clock.day}`;
         const pass = process.env.SMTP_PASS;
         if (!pass) return answer({ sent: false, reason: "smtp" }, 500);
