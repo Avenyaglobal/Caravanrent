@@ -1130,7 +1130,9 @@ export function mirrorHead(lang: Lang, slug = "") {
         ],
       }
     : null;
-  const shareImage = vehicleOg[clean] ? `${siteOrigin}${vehicleOg[clean]}?v=4` : "";
+  const shareImage = vehicleOg[clean]
+    ? `${siteOrigin}${vehicleOg[clean]}?v=5`
+    : `${siteOrigin}/og.jpg?v=5`;
   return {
     meta: [
       { title: meta.title },
